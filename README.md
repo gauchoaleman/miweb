@@ -7,3 +7,4 @@ php artisan migrate
 
 Mirar:
 https://github.com/thedevdojo/chatter
+https://www.youtube.com/watch?v=76TIyW3_Hm0
