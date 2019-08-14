@@ -2,6 +2,7 @@
 Libro diario hecho con Laravel
 
 Ejecutar esto para instalar:
+composer install
 php artisan make:auth
 php artisan migrate
 
