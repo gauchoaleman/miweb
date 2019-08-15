@@ -1,5 +1,5 @@
 # miweb
-Libro diario hecho con Laravel
+Repositorio Tesina 2019
 
 Ejecutar esto para instalar:
 composer install
