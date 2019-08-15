@@ -4,6 +4,8 @@ Repositorio Tesina 2019
 Ejecutar esto para instalar:
 composer install
 mirar .env
+php artisan key:generate
+php artisan config:cache
 php artisan make:auth
 php artisan migrate
 
