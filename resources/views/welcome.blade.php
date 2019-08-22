@@ -82,7 +82,7 @@
 
             <div class="content">
               <div class="title m-b-md">
-                  Autoayuda adicciones<br>
+                  Autoayuda abuso<br>
                   <img src="/img/autoayuda_portada.jpg">
 
               </div>
