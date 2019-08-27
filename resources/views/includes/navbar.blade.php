@@ -13,6 +13,14 @@
 
 
   <a class="navbar-brand" href="http://localhost:8000/logout">Logout</a>|&nbsp;
+  <a class="navbar-brand" href="http://localhost:8000/auth/update_data">Actualizar datos</a>|&nbsp;
+
+
+    @if ( (Auth::user()->is_admin == 1) )
+<a class="navbar-brand" href="http://localhost:8000/auth/view">
+      ABM Usuarios|&nbsp;
+</a>
+    @endif
 
   @else
 
