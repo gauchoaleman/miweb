@@ -69,10 +69,17 @@
 @include('includes/navbar')
 
 <?php
-if (DB::table('users')->where('id', $_GET['id'])->update(['is_admin' => $_GET['toggle_to']])){
-  echo "<div class='high_text'>Admin actualizado</div>";
+$password = Hash::make($_POST['password']);
+$name = $_POST['name'];
+$email = $_POST['email'];
+$id = Auth::user()->id;
+$res = DB::select( DB::raw("UPDATE users SET name='$name',email='$email',password='$password' WHERE id = '$id'") );
+
+//echo $hashed_password;
+if ($res){
+  echo "<div class='high_text'>Datos actualizados</div>";
 }else{
-  echo "<div class='high_text'>Admin no actualizado</div>";
-}?>
+  echo "<div class='high_text'>Datos no actualizados</div>";
+} ?>
 </body>
 </html>

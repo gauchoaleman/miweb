@@ -67,12 +67,6 @@
     </head>
     <body>
 @include('includes/navbar')
-
-<?php
-if (DB::table('users')->where('id', $_GET['id'])->update(['is_admin' => $_GET['toggle_to']])){
-  echo "<div class='high_text'>Admin actualizado</div>";
-}else{
-  echo "<div class='high_text'>Admin no actualizado</div>";
-}?>
+<div class='high_text'>No tiene acceso a esta página</div>
 </body>
 </html>
