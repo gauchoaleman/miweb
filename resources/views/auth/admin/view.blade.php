@@ -127,7 +127,7 @@ echo "</div>";
           echo "<a class='card-link' href='http://localhost:8000/auth/admin/mod_user?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
           echo "</div>";
           echo "<div class='col-1'>";
-          echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_pass_user?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
+          echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_pass_user?id=".$user->id."'><img src='http://localhost:8000/img/change_password.jpeg'></a>";
           echo "</div>";
           echo "<div class='col-1'>";
           if( $user->is_admin==1 ){
