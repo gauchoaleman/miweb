@@ -72,10 +72,6 @@
     <body>
       @include('includes/navbar')
 
-      <div class="navbar-brand">
-          Ver entradas
-      </div>
-
 
 <div class="container">
 <?php
