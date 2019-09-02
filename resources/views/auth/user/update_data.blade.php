@@ -9,7 +9,7 @@
                 <div class="card-header">{{ __('Actualizar datos') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/auth/write_update_data">
+                    <form method="POST" action="/auth/user/write_update_data">
                         @csrf
 
                         <div class="form-group row">

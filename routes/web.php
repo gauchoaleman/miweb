@@ -23,48 +23,48 @@ Route::get('/logout', function () {
     return view('logout');
 });
 
-Route::get('/auth/view', function () {
+Route::get('/auth/admin/view', function () {
     if (!isset(Auth::user()->name))
       return view('no_access');
     elseif (Auth::user()->is_admin == 0)
       return view('no_access');
     else
-      return view('auth/view');
+      return view('auth/admin/view');
 });
 
-Route::get('/auth/mod_user', function () {
+Route::get('/auth/admin/mod_user', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
   elseif (Auth::user()->is_admin == 0)
     return view('no_access');
   else
-    return view('auth/mod_user');
+    return view('auth/admin/mod_user');
 });
 
-Route::get('/auth/del_user', function () {
+Route::get('/auth/admin/del_user', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
   elseif (Auth::user()->is_admin == 0)
     return view('no_access');
   else
-    return view('auth/del_user');
+    return view('auth/admin/del_user');
 });
 
-Route::get('/auth/update_data', function () {
-    return view('auth/update_data');
+Route::get('/auth/user/update_data', function () {
+    return view('auth/user/update_data');
 });
 
-Route::post('/auth/write_update_data', function () {
-    return view('auth/write_update_data');
+Route::post('/auth/user/write_update_data', function () {
+    return view('auth/user/write_update_data');
 });
 
-Route::get('/auth/toggle_admin', function () {
+Route::get('/auth/admin/toggle_admin', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
   elseif (Auth::user()->is_admin == 0)
     return view('no_access');
   else
-    return view('auth/toggle_admin');
+    return view('auth/admin/toggle_admin');
 });
 
 Auth::routes();

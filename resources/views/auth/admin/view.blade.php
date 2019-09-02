@@ -83,7 +83,6 @@
 
 echo "<div class='row' border-width='1' >";
 echo "<div class='col-2' align='center'>";
-
 echo "Nombre";
 echo "</div>";
 echo "<div class='col-3' align='center'>";
@@ -99,8 +98,12 @@ echo "<div class='col-1' align='center'>";
 echo "Editar";
 echo "</div>";
 echo "<div class='col-1' align='center'>";
+echo "Cambiar clave";
+echo "</div>";
+echo "<div class='col-1' align='center'>";
 echo "Admin <br>(Click para cambiar)";
 echo "</div>";
+
 echo "</div>";
 
 
@@ -118,17 +121,20 @@ echo "</div>";
           echo $date->format('d/m/Y H:i:s');
           echo "</div>";
           echo "<div class='col-1'>";
-          echo "<a class='card-link' href='http://localhost:8000/auth/del_user?id=".$user->id."'><img src='http://localhost:8000/img/delete.png'></a>";
+          echo "<a class='card-link' href='http://localhost:8000/auth/admin/del_user?id=".$user->id."'><img src='http://localhost:8000/img/delete.png'></a>";
           echo "</div>";
           echo "<div class='col-1'>";
-          echo "<a class='card-link' href='http://localhost:8000/auth/mod_user?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
+          echo "<a class='card-link' href='http://localhost:8000/auth/admin/mod_user?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
+          echo "</div>";
+          echo "<div class='col-1'>";
+          echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_pass_user?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
           echo "</div>";
           echo "<div class='col-1'>";
           if( $user->is_admin==1 ){
-            echo "<a class='card-link' href='http://localhost:8000/auth/toggle_admin?id=".$user->id."&toggle_to=0'>Si</a>";
+            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=0'>Si</a>";
           }
           else {
-            echo "<a class='card-link' href='http://localhost:8000/auth/toggle_admin?id=".$user->id."&toggle_to=1'>No</a>";
+            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=1'>No</a>";
           }
 
           echo "</div>";

@@ -13,11 +13,11 @@
 
 
   <a class="navbar-brand" href="http://localhost:8000/logout">Logout</a>|&nbsp;
-  <a class="navbar-brand" href="http://localhost:8000/auth/update_data">Actualizar datos</a>|&nbsp;
+  <a class="navbar-brand" href="http://localhost:8000/auth/user/update_data">Actualizar datos</a>|&nbsp;
 
 
     @if ( (Auth::user()->is_admin == 1) )
-<a class="navbar-brand" href="http://localhost:8000/auth/view">
+<a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
       ABM Usuarios|&nbsp;
 </a>
     @endif
