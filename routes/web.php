@@ -50,6 +50,24 @@ Route::get('/auth/admin/del_user', function () {
     return view('auth/admin/del_user');
 });
 
+Route::get('/auth/admin/change_user_pass', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/change_user_pass');
+});
+
+Route::post('/auth/admin/write_user_pass', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/write_user_pass');
+});
+
 Route::get('/auth/user/update_data', function () {
     return view('auth/user/update_data');
 });
