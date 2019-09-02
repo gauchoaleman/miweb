@@ -73,7 +73,7 @@ $password = Hash::make($_POST['password']);
 $name = $_POST['name'];
 $email = $_POST['email'];
 $id = Auth::user()->id;
-$res = DB::select( DB::raw("UPDATE users SET name='$name',email='$email',password='$password' WHERE id = '$id'") );
+$res = DB::raw("UPDATE users SET name='$name',email='$email',password='$password' WHERE id = '$id'");
 
 //echo $hashed_password;
 if ($res){
