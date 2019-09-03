@@ -1,22 +1,14 @@
 # miweb
 Repositorio Tesina 2019
 
-Ejecutar esto para instalar:
+Hacer esto para instalar:
 
-composer install
+Crear usuario admin con clave adminspassword en mysql: CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminspassword';
 
-mirar .env
+Crear base de datos autoayuda en mysql: CREATE DATABASE autoayuda;
+
+Si hace falta, ejecutar estas 2 líneas:
 
 php artisan key:generate
 
 php artisan config:cache
-
-php artisan make:auth
-
-php artisan migrate
-
-
-Mirar:
-https://github.com/thedevdojo/chatter
-
-https://www.youtube.com/watch?v=76TIyW3_Hm0
