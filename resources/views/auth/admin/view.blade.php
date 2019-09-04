@@ -131,10 +131,10 @@ echo "</div>";
           echo "</div>";
           echo "<div class='col-1'>";
           if( $user->is_admin==1 ){
-            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=0'>Si</a>";
+            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=0'><img src='http://localhost:8000/img/si.jpg'></a>";
           }
           else {
-            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=1'>No</a>";
+            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=1'><img src='http://localhost:8000/img/no.jpg'></a>";
           }
 
           echo "</div>";
