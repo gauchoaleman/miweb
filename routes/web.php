@@ -68,6 +68,33 @@ Route::post('/auth/admin/write_user_pass', function () {
     return view('auth/admin/write_user_pass');
 });
 
+Route::get('/auth/admin/change_user_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/change_user_data');
+});
+
+Route::post('/auth/admin/write_user_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/write_user_data');
+});
+
+Route::get('/auth/admin/view_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/view_user');
+});
+
 Route::get('/auth/user/update_data', function () {
     return view('auth/user/update_data');
 });

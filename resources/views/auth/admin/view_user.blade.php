@@ -75,75 +75,17 @@
 
 <div class="container">
 <?php
-
-//Select del view, se puede usar para filtros
-        $users = DB::table('users')->get();
-
-//Títulos
+$user = DB::table('users')->where('id', $_GET['id'])->first();
 
 echo "<div class='row' border-width='1' >";
-echo "<div class='col-2' align='center'>";
-echo "Nombre";
+echo "<div class='col-12' align='left'>";
+echo "Nombre: ".$user->name."<br>";
+echo "Email: ".$user->email."<br>";
+$date = new DateTime($user->created_at);
+echo "Fecha/Hora de ingreso: ".$date->format('d/m/Y H:i:s');
 echo "</div>";
-echo "<div class='col-3' align='center'>";
-echo "Email";
 echo "</div>";
-echo "<div class='col-3 ' align='center'>";
-echo "Fecha / Hora de ingreso";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Borrar";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Editar";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Cambiar clave";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Admin <br>(Click para cambiar)";
-echo "</div>";
-
-echo "</div>";
-
-
-        foreach ($users as $user) {
-          echo "<div class='row'>";
-          echo "<div class='col-2'>";
-
-          echo "<a href='http://localhost:8000/auth/admin/view_user?id=".$user->id."'>".$user->name."</a>";
-          echo "</div>";
-          echo "<div class='col-3'>";
-          echo "$user->email</a>";
-          echo "</div>";
-          echo "<div class='col-3'>";
-          $date = new DateTime($user->created_at);
-          echo $date->format('d/m/Y H:i:s');
-          echo "</div>";
-          echo "<div class='col-1'>";
-          echo "<a class='card-link' href='http://localhost:8000/auth/admin/del_user?id=".$user->id."'><img src='http://localhost:8000/img/delete.png'></a>";
-          echo "</div>";
-          echo "<div class='col-1'>";
-          echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_user_data?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
-          echo "</div>";
-          echo "<div class='col-1'>";
-          echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_user_pass?id=".$user->id."'><img src='http://localhost:8000/img/change_password.jpeg'></a>";
-          echo "</div>";
-          echo "<div class='col-1'>";
-          if( $user->is_admin==1 ){
-            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=0'>Si</a>";
-          }
-          else {
-            echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=1'>No</a>";
-          }
-
-          echo "</div>";
-          echo "</div>";
-
-        }
-        echo "</div>";
-
-        ?>
+?>
 </div>
     </body>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
