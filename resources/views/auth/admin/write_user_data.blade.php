@@ -81,15 +81,12 @@ $users_same_email = DB::table('users')->where([
 //print_r($users_same_email);
 if( sizeof($users_same_email)){
   echo "<div class='high_text'>Este email está en uso</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_data?id=".$_GET['id']."'>Click aquí</a> para volver</div>";
+  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_data?id=$id'>Click aquí</a> para volver</div>";
 }
 else{
-  DB::enableQueryLog();
   $res = DB::table('users')
   ->where('id', $id)
   ->update(['name' => $name,'email'=>$email]);
-  $query = DB::getQueryLog();
-  print_r($query);
 
   echo "<div class='high_text'>Datos actualizados</div>";
 
