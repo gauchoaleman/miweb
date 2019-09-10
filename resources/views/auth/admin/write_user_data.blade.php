@@ -73,15 +73,27 @@
 $name= $_POST['name'];
 $email= $_POST['email'];
 $id = $_GET["id"];
-$res = DB::table('users')
-            ->where('id', $id)
-            ->update(['name' => $name,'email'=>$email]);
+// Me fijo si ese mail ya está en uso
+$users_same_email = DB::table('users')->where([
+    ['email', '=', $email],
+    ['id', '<>', $id],
+])->get();
+//print_r($users_same_email);
+if( sizeof($users_same_email)){
+  echo "<div class='high_text'>Este email está en uso</div>";
+  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_data?id=".$_GET['id']."'>Click aquí</a> para volver</div>";
+}
+else{
+  DB::enableQueryLog();
+  $res = DB::table('users')
+  ->where('id', $id)
+  ->update(['name' => $name,'email'=>$email]);
+  $query = DB::getQueryLog();
+  print_r($query);
 
-//echo $hashed_password;
-if ($res){
   echo "<div class='high_text'>Datos actualizados</div>";
-}else{
-  echo "<div class='high_text'>Datos no actualizados</div>";
-} ?>
+
+}
+?>
 </body>
 </html>
