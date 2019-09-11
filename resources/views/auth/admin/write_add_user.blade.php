@@ -72,32 +72,30 @@
 $password = Hash::make($_POST['password']);
 $name = $_POST['name'];
 $email = $_POST['email'];
-$id = Auth::user()->id;
 
 // Me fijo si ese mail ya está en uso
 $users_same_email = DB::table('users')->where([
-    ['email', '=', $email],
-    ['id', '<>', $id],
+    ['email', '=', $email]
 ])->get();
 
 if( sizeof($users_same_email)){
   echo "<div class='high_text'>Este email está en uso</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/user/update_data?id=$id'>Click aquí</a> para volver</div>";
+  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/add_user'>Click aquí</a> para volver</div>";
 }
 elseif( strlen($_POST['password'])<8){
   echo "<div class='high_text'>La clave tiene menos de 8 caracteres</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/user/update_data?id=$id'>Click aquí</a> para volver</div>";
+  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/add_user'>Click aquí</a> para volver</div>";
 }
 elseif( $_POST['password'] != $_POST['password_confirmation']){
   echo "<div class='high_text'>La confirmación de la clave no coincide con la clave</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/user/update_data?id=$id'>Click aquí</a> para volver</div>";
+  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/add_user'>Click aquí</a> para volver</div>";
 }
 else{
-$res = DB::table('users')
-            ->where('id', $id)
-            ->update(['name' => $name,'email'=>$email,'password'=>$password]);
+$res = DB::table('users')->insert(
+    ['email' => $email, 'name' => $name, 'password'=>$password]
+);
 
-  echo "<div class='high_text'>Datos actualizados</div>";
+  echo "<div class='high_text'>Usuario agregado</div>";
 }
 ?>
 </body>

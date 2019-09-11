@@ -71,16 +71,18 @@
     </head>
     <body>
       @include('includes/navbar')
-
-
 <div class="container">
+  <div class='row' border-width='1' >
+    <div class='col-12' align='right'>
+      <a class='card-link' href='http://localhost:8000/auth/admin/add_user' ><img src='http://localhost:8000/img/add_user.jpeg'> Agregar usuario</a>
+    </div>
+  </div>
 <?php
 
 //Select del view, se puede usar para filtros
         $users = DB::table('users')->get();
 
 //Títulos
-
 echo "<div class='row' border-width='1' >";
 echo "<div class='col-2' align='center'>";
 echo "Nombre";
@@ -110,7 +112,6 @@ echo "</div>";
         foreach ($users as $user) {
           echo "<div class='row'>";
           echo "<div class='col-2'>";
-
           echo "<a href='http://localhost:8000/auth/admin/view_user?id=".$user->id."'>".$user->name."</a>";
           echo "</div>";
           echo "<div class='col-3'>";

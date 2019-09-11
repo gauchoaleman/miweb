@@ -112,12 +112,26 @@ Route::get('/auth/admin/toggle_admin', function () {
     return view('auth/admin/toggle_admin');
 });
 
+Route::get('/auth/admin/add_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/add_user');
+});
+
+Route::post('/auth/admin/write_add_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/write_add_user');
+});
+
 Auth::routes();
 
 Route::get('/home', function ()  {
   return view('welcome');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

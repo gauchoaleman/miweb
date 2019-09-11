@@ -77,7 +77,7 @@ if( strlen($_POST['password'])<8){
   echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_pass?id=$id'>Click aquí</a> para volver</div>";
 }
 elseif( $_POST['password'] != $_POST['password_confirmation']){
-  echo "<div class='high_text'>La confirmación de la no coincide con la clave</div>";
+  echo "<div class='high_text'>La confirmación de la clave no coincide con la clave</div>";
   echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_pass?id=$id'>Click aquí</a> para volver</div>";
 }
 else{
