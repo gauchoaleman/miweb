@@ -1,47 +1,44 @@
+
+<style>
+rightalign {
+    width: 100%;
+    display: block;
+    text-align: right;
+}
+</style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="http://localhost:8000"><b>Home</b></a>||&nbsp;
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+
+  <a class="navbar-brand" href="http://localhost:8000"><img src='http://localhost:8000/img/home.png'><b>Home</b></a>||&nbsp;
+
 
   @if (Route::has('login'))
   @auth
-  <div class="navbar-brand" >Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}} ||&nbsp; </div>
-
-
-  <a class="navbar-brand" href="http://localhost:8000/logout">Logout</a>|&nbsp;
-  <a class="navbar-brand" href="http://localhost:8000/auth/user/update_data">Actualizar datos</a>|&nbsp;
-
+  <div class="navbar-brand" ><img src='http://localhost:8000/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}} ||&nbsp; </div>
 
     @if ( (Auth::user()->is_admin == 1) )
 <a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
-      ABM Usuarios|&nbsp;
+      <img src='http://localhost:8000/img/crud.png'>ABM Usuarios&nbsp;
 </a>
     @endif
-
-  @else
 
   @endauth
   @endif
 
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
     @if (Route::has('login'))
+      <div  class="rightalign" >
     @auth
-
-
-
-
+    <a class="navbar-brand" href="http://localhost:8000/logout"><img src='http://localhost:8000/img/logout.png'>Logout</a>|&nbsp;
+    <a class="navbar-brand" href="http://localhost:8000/auth/user/update_data"><img src='http://localhost:8000/img/update_data.jpeg'>Actualizar datos</a>|&nbsp;
     @else
-        <a class="navbar-brand" href="{{ route('login') }}">Login</a>&nbsp;<a class="navbar-brand" href="{{ route('register') }}">|&nbsp;&nbsp; Registrarse</a>
+        <a class="navbar-brand" href="{{ route('login') }}"><img src='http://localhost:8000/img/login.png'>Login</a>&nbsp;<a class="navbar-brand" href="{{ route('register') }}">|<img src='http://localhost:8000/img/register.png'> Registrarse</a>
     @endauth
+    </div>
     @endif
 
-  </div>
+
 </nav>
 
 
