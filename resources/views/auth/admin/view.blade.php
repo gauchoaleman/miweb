@@ -83,54 +83,45 @@
         $users = DB::table('users')->get();
 
 //Títulos
-echo "<div class='row' border-width='1' >";
-echo "<div class='col-2' align='center'>";
-echo "Nombre";
-echo "</div>";
-echo "<div class='col-3' align='center'>";
-echo "Email";
-echo "</div>";
-echo "<div class='col-3 ' align='center'>";
-echo "Fecha / Hora de ingreso";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Borrar";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Editar";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Cambiar clave";
-echo "</div>";
-echo "<div class='col-1' align='center'>";
-echo "Admin <br>(Click para cambiar)";
-echo "</div>";
-
-echo "</div>";
+?>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Email</th>
+      <th scope="col">Fecha / Hora de ingreso</th>
+      <th scope="col">Borrar</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Clave</th>
+      <th scope="col">Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+<?php
 
 
         foreach ($users as $user) {
-          echo "<div class='row'>";
-          echo "<div class='col-2'>";
+          echo "<tr>";
+          echo "<td>";
           echo "<a href='http://localhost:8000/auth/admin/view_user?id=".$user->id."'>".$user->name."</a>";
-          echo "</div>";
-          echo "<div class='col-3'>";
+          echo "</td>";
+          echo "<td>";
           echo "$user->email</a>";
-          echo "</div>";
-          echo "<div class='col-3'>";
+          echo "</td>";
+          echo "<td>";
           $date = new DateTime($user->created_at);
           echo $date->format('d/m/Y H:i:s');
-          echo "</div>";
-          echo "<div class='col-1'>";
+          echo "</td>";
+          echo "<td>";
           echo "<a class='card-link' href='http://localhost:8000/auth/admin/del_user?id=".$user->id."'><img src='http://localhost:8000/img/delete.png'></a>";
-          echo "</div>";
-          echo "<div class='col-1'>";
+          echo "</td>";
+          echo "<td>";
           echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_user_data?id=".$user->id."'><img src='http://localhost:8000/img/edit.png'></a>";
-          echo "</div>";
-          echo "<div class='col-1'>";
+          echo "</td>";
+          echo "<td>";
           echo "<a class='card-link' href='http://localhost:8000/auth/admin/change_user_pass?id=".$user->id."'><img src='http://localhost:8000/img/change_password.jpeg'></a>";
-          echo "</div>";
-          echo "<div class='col-1'>";
+          echo "</td>";
+          echo "<td>";
           if( $user->is_admin==1 ){
             echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=0'><img src='http://localhost:8000/img/si.jpg'></a>";
           }
@@ -138,11 +129,12 @@ echo "</div>";
             echo "<a class='card-link' href='http://localhost:8000/auth/admin/toggle_admin?id=".$user->id."&toggle_to=1'><img src='http://localhost:8000/img/no.jpg'></a>";
           }
 
-          echo "</div>";
-          echo "</div>";
+          echo "</td>";
+          echo "</tr>";
 
         }
-        echo "</div>";
+        echo "</tbody>";
+        echo "</table>";
 
         ?>
 </div>
