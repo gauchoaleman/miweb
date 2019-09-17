@@ -70,8 +70,9 @@
 
 <?php
 if (DB::table('users')->where('id',$_GET['id'])->delete()) {
-  ?><div class='high_text'>Entrada borrada</div><br><?php
+  ?><div class='high_text'>Usuario borrada</div><br><?php
 }else{
-  ?><div class='high_text'>No se pudo borrar entrada</div><br><?php }?>
+  ?><div class='high_text'>No se pudo borrar usuario/div><br><?php }?>
+  @include('auth.admin.tables.view_table')
 </body>
 </html>
