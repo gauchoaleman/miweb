@@ -67,25 +67,26 @@
     </head>
     <body>
 @include('includes/navbar')
-
+<br>
 <?php
 
 $password = Hash::make($_POST['password']);
 $id = $_GET["id"];
 if( strlen($_POST['password'])<8){
-  echo "<div class='high_text'>La clave tiene menos de 8 caracteres</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_pass?id=$id'>Click aquí</a> para volver</div>";
+  $error = "La clave tiene menos de 8 caracteres";
+  ?>@include('auth.admin.forms.change_user_pass_form', ['error' => $error])<?php
 }
 elseif( $_POST['password'] != $_POST['password_confirmation']){
-  echo "<div class='high_text'>La confirmación de la clave no coincide con la clave</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_pass?id=$id'>Click aquí</a> para volver</div>";
+  $error = "La confirmación de la clave no coincide con la clave";
+  ?>@include('auth.admin.forms.change_user_pass_form', ['error' => $error])<?php
 }
 else{
   $res = DB::table('users')
             ->where('id', $id)
             ->update(['password' => $password]);
 
-  echo "<div class='high_text'>Datos actualizados</div>";
+  echo "<div class='high_text'>Clave actualizada</div>";
+  ?>@include('auth.admin.tables.view_table')<?php
 }
  ?>
 </body>

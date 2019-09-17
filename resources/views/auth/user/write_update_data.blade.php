@@ -67,7 +67,7 @@
     </head>
     <body>
 @include('includes/navbar')
-
+<br>
 <?php
 $password = Hash::make($_POST['password']);
 $name = $_POST['name'];
@@ -81,16 +81,16 @@ $users_same_email = DB::table('users')->where([
 ])->get();
 
 if( sizeof($users_same_email)){
-  echo "<div class='high_text'>Este email está en uso</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/user/update_data?id=$id'>Click aquí</a> para volver</div>";
+  $error =  "Este email está en uso";
+  ?>@include('auth.user.forms.update_data_form', ['error' => $error])<?php
 }
 elseif( strlen($_POST['password'])<8){
-  echo "<div class='high_text'>La clave tiene menos de 8 caracteres</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/user/update_data?id=$id'>Click aquí</a> para volver</div>";
+  $error = "La clave tiene menos de 8 caracteres";
+  ?>@include('auth.user.forms.update_data_form', ['error' => $error])<?php
 }
 elseif( $_POST['password'] != $_POST['password_confirmation']){
-  echo "<div class='high_text'>La confirmación de la clave no coincide con la clave</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/user/update_data?id=$id'>Click aquí</a> para volver</div>";
+  $error = "La confirmación de la clave no coincide con la clave";
+  ?>@include('auth.user.forms.update_data_form', ['error' => $error])<?php
 }
 else{
 $res = DB::table('users')
@@ -98,6 +98,8 @@ $res = DB::table('users')
             ->update(['name' => $name,'email'=>$email,'password'=>$password]);
 
   echo "<div class='high_text'>Datos actualizados</div>";
+  ?>@include('content/welcome_content')<?php
+
 }
 ?>
 </body>

@@ -70,7 +70,6 @@ Session::flush();
     @include('includes/navbar');
 
     <div class='high_text'>
-
-    Sesión finalizada.</div><br>
+    </div><br>
        </body>
     </html>

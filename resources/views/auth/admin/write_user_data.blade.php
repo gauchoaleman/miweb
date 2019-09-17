@@ -67,7 +67,7 @@
     </head>
     <body>
 @include('includes/navbar')
-
+<br>
 <?php
 
 $name= $_POST['name'];
@@ -80,8 +80,8 @@ $users_same_email = DB::table('users')->where([
 ])->get();
 //print_r($users_same_email);
 if( sizeof($users_same_email)){
-  echo "<div class='high_text'>Este email está en uso</div>";
-  echo "<div class='high_text'><a href='http://localhost:8000/auth/admin/change_user_data?id=$id'>Click aquí</a> para volver</div>";
+  $error =  "Este email está en uso";
+  ?>@include('auth.admin.forms.change_user_data_form', ['error' => $error])<?php
 }
 else{
   $res = DB::table('users')
@@ -89,6 +89,7 @@ else{
   ->update(['name' => $name,'email'=>$email]);
 
   echo "<div class='high_text'>Datos actualizados</div>";
+  ?>@include('auth.admin.tables.view_table')<?php
 
 }
 ?>
