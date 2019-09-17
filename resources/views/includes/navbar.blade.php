@@ -20,7 +20,10 @@ rightalign {
 
     @if ( (Auth::user()->is_admin == 1) )
 <a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
-      <img src='http://localhost:8000/img/crud.png'>ABM Usuarios&nbsp;
+      <img src='http://localhost:8000/img/user_crud.png'>ABM Usuarios&nbsp;|
+</a>
+<a class="navbar-brand" href="http://localhost:8000/calendar/admin/view">
+      <img src='http://localhost:8000/img/calendar.png'>ABM Eventos&nbsp;|
 </a>
     @endif
 
@@ -28,7 +31,7 @@ rightalign {
   @endif
 
     @if (Route::has('login'))
-      <div  class="rightalign" >
+      <div>
     @auth
     <a class="navbar-brand" href="http://localhost:8000/logout"><img src='http://localhost:8000/img/logout.png'>Logout</a>|&nbsp;
     <a class="navbar-brand" href="http://localhost:8000/auth/user/update_data"><img src='http://localhost:8000/img/update_data.jpeg'>Actualizar datos</a>|&nbsp;
