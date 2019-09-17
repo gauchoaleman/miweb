@@ -130,6 +130,33 @@ Route::post('/auth/admin/write_add_user', function () {
     return view('auth/admin/write_add_user');
 });
 
+Route::get('/calendar/admin/add_event', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/add_event');
+});
+
+Route::post('/calendar/admin/write_add_event', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/write_add_event');
+});
+
+Route::get('/calendar/admin/view_events', function () {
+    if (!isset(Auth::user()->name))
+      return view('no_access');
+    elseif (Auth::user()->is_admin == 0)
+      return view('no_access');
+    else
+      return view('calendar/admin/view_events');
+});
+
 Auth::routes();
 
 Route::get('/home', function ()  {

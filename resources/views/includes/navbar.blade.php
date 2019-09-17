@@ -22,7 +22,7 @@ rightalign {
 <a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
       <img src='http://localhost:8000/img/user_crud.png'>ABM Usuarios&nbsp;|
 </a>
-<a class="navbar-brand" href="http://localhost:8000/calendar/admin/view">
+<a class="navbar-brand" href="http://localhost:8000/calendar/admin/view_events">
       <img src='http://localhost:8000/img/calendar.png'>ABM Eventos&nbsp;|
 </a>
     @endif
