@@ -14,3 +14,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (16, 'probando2', 'prueba@prueba.com', NULL, '$2y$10$wMLXV.WOkDptNBdksYyQXeia.dsqtAcNPRanBl95D62rOhg32jAaq', NULL, '2019-08-31 00:57:15', '2019-08-31 00:57:15', 1),
 (17, 'Admin', 'admin@admin.com', NULL, '$2y$10$Y4WpqYtldMUbuHHGzxcpYe/esBb.Z1eDYzt8ACUlZokLqdYdgYN6q', NULL, '2019-09-02 03:22:11', '2019-09-02 03:22:11', 1),
 (18, 'Userrr', 'user@user.com', NULL, '$2y$10$fQRritgLCGZAGxelMcrltelEy38yhvAWhZslNmgqk2geDSLcj7k1W', NULL, '2019-09-02 03:24:34', '2019-09-02 03:24:34', 0);
+
+--
+-- Volcado de datos para la tabla `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `description`, `address`, `datetime`, `created_at`) VALUES
+(3, 'evento 333', 'desccccccccccccc', 'dirrrrr', '2021-12-31 23:58:00', '2019-09-17 17:38:21'),
+(4, 'Stefan Ronacherrrr', 'fgraegarrrr', 'gafgdagrrr', '2019-05-02 06:05:00', '2019-09-18 19:06:21'),
+(5, 'adminn', 'rgesgr', 'gser', '2021-05-02 02:03:00', '2019-09-18 19:07:17');
