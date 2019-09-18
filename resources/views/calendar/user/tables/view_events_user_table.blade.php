@@ -7,7 +7,7 @@
 <?php
 
 //Select del view, se puede usar para filtros
-        $events = DB::table('events')->get();
+        $events = DB::table('events')->orderBy('datetime', 'asc')->get();
 
 //Títulos
 ?>
@@ -18,9 +18,6 @@
       <th scope="col">Descripción</th>
       <th scope="col">Dirección</th>
       <th scope="col">Fecha/Hora</th>
-      <th scope="col">Creado</th>
-      <th scope="col">Borrar</th>
-      <th scope="col">Editar</th>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +27,7 @@
         foreach ($events as $event) {
           echo "<tr>";
           echo "<td>";
-          echo "<a href='http://localhost:8000/calendar/admin/view_event?id=".$event->id."'>".$event->name."</a>";
+          echo "<a href='http://localhost:8000/calendar/user/view_event_user?id=".$event->id."'>".$event->name."</a>";
           echo "</td>";
           echo "<td>";
           echo "$event->description</a>";
@@ -41,16 +38,6 @@
           echo "<td>";
           $datetime = new DateTime($event->datetime);
           echo $datetime->format('d/m/Y H:i:s');
-          echo "</td>";
-          echo "<td>";
-          $created_at = new DateTime($event->created_at);
-          echo $created_at->format('d/m/Y H:i:s');
-          echo "</td>";
-          echo "<td>";
-          echo "<a class='card-link' href='http://localhost:8000/calendar/admin/del_event?id=".$event->id."'><img src='http://localhost:8000/img/delete.png'></a>";
-          echo "</td>";
-          echo "<td>";
-          echo "<a class='card-link' href='http://localhost:8000/calendar/admin/change_event_data?id=".$event->id."'><img src='http://localhost:8000/img/edit.png'></a>";
           echo "</td>";
           echo "</tr>";
 

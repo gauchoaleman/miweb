@@ -30,7 +30,7 @@
         foreach ($events as $event) {
           echo "<tr>";
           echo "<td>";
-          echo "<a href='http://localhost:8000/calendar/admin/view_event?id=".$event->id."'>".$event->name."</a>";
+          echo "<a href='http://localhost:8000/calendar/admin/view_event_admin?id=".$event->id."'>".$event->name."</a>";
           echo "</td>";
           echo "<td>";
           echo "$event->description</a>";

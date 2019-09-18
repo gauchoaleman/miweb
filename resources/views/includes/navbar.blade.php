@@ -17,13 +17,14 @@ rightalign {
   @if (Route::has('login'))
   @auth
   <div class="navbar-brand" ><img src='http://localhost:8000/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}} ||&nbsp; </div>
+  <div class="navbar-brand" ><img src='http://localhost:8000/img/calendar.png'><a class="navbar-brand" href="http://localhost:8000/calendar/user/view_events_user">Eventos</a> ||&nbsp; </div>
 
     @if ( (Auth::user()->is_admin == 1) )
 <a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
       <img src='http://localhost:8000/img/user_crud.png'>ABM Usuarios&nbsp;|
 </a>
 <a class="navbar-brand" href="http://localhost:8000/calendar/admin/view_events">
-      <img src='http://localhost:8000/img/calendar.png'>ABM Eventos&nbsp;|
+      <img src='http://localhost:8000/img/calendar_crud.png'>ABM Eventos&nbsp;|
 </a>
     @endif
 

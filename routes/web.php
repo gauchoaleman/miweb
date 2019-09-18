@@ -184,6 +184,18 @@ Route::post('/calendar/admin/write_event_data', function () {
     return view('calendar/admin/write_event_data');
 });
 
+Route::get('/calendar/user/view_events_user', function () {
+    return view('/calendar/user/view_events_user');
+});
+
+Route::get('/calendar/user/view_event_user', function () {
+    return view('/calendar/user/view_event_user');
+});
+
+Route::get('/calendar/admin/view_event_admin', function () {
+    return view('/calendar/admin/view_event_admin');
+});
+
 Auth::routes();
 
 Route::get('/home', function ()  {
