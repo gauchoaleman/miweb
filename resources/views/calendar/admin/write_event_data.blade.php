@@ -69,17 +69,20 @@
 @include('includes/navbar')
 <br>
 <?php
-$name = $_POST['name'];
-$description = $_POST['description'];
-$address = $_POST['address'];
-$datetime=$_POST['datetime'];
 
-$res = DB::table('events')->insert(
-    ['name' => $name, 'description' => $description, 'address'=>$address, 'datetime'=>$datetime]
-);
+$name= $_POST['name'];
+$description= $_POST['description'];
+$address= $_POST['address'];
+$datetime= $_POST['datetime'];
+$id = $_GET["id"];
 
-  echo "<div class='high_text'>Evento agregado</div>";
+  $res = DB::table('events')
+  ->where('id', $id)
+  ->update(['name' => $name,'description'=>$description,'address'=>$address,'datetime'=>$datetime]);
+
+  echo "<div class='high_text'>Datos actualizados</div>";
   ?>@include('calendar.admin.tables.view_events_table')<?php
+
 ?>
 </body>
 </html>

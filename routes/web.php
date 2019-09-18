@@ -157,6 +157,33 @@ Route::get('/calendar/admin/view_events', function () {
       return view('calendar/admin/view_events');
 });
 
+Route::get('/calendar/admin/del_event', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/del_event');
+});
+
+Route::get('/calendar/admin/change_event_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/change_event_data');
+});
+
+Route::post('/calendar/admin/write_event_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/write_event_data');
+});
+
 Auth::routes();
 
 Route::get('/home', function ()  {
