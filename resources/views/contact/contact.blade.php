@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @include('includes/navbar')
 @section('content')
-@include('auth.admin.forms.add_user_form')
+@include('contact.forms.contact_form')
 @include('includes/bottom_bar')
 @endsection

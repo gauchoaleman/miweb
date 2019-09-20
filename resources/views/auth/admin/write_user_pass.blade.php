@@ -89,5 +89,6 @@ else{
   ?>@include('auth.admin.tables.view_table')<?php
 }
  ?>
+@include('includes/bottom_bar')
 </body>
 </html>

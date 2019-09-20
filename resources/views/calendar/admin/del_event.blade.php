@@ -74,5 +74,6 @@ if (DB::table('events')->where('id',$_GET['id'])->delete()) {
 }else{
   ?><div class='high_text'>No se pudo borrar usuario</div><br><?php }?>
   @include('calendar.admin.tables.view_events_table')
+  @include('includes/bottom_bar')
 </body>
 </html>

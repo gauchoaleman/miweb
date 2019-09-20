@@ -66,5 +66,6 @@
     <body>
       @include('includes/navbar');
       @include('content/welcome_content');
+      @include('includes/bottom_bar');
     </body>
 </html>

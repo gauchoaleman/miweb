@@ -74,5 +74,6 @@ Session::flush();
     <div class='high_text'>
 
     Sesión finalizada.</div><br>
+    @include('includes/bottom_bar')
        </body>
     </html>

@@ -99,5 +99,6 @@ $res = DB::table('users')->insert(
   ?>@include('auth.admin.tables.view_table')<?php
 }
 ?>
+@include('includes/bottom_bar')
 </body>
 </html>

@@ -22,3 +22,4 @@
     </div>
 </div>
 @endsection
+@include('includes/bottom_bar');

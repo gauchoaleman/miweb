@@ -68,18 +68,7 @@
     <body>
 @include('includes/navbar')
 <br>
-<?php
-$name = $_POST['name'];
-$description = $_POST['description'];
-$address = $_POST['address'];
-$datetime=$_POST['datetime'];
-
-$res = DB::table('events')->insert(
-    ['name' => $name, 'description' => $description, 'address'=>$address, 'datetime'=>$datetime]
-);
-
-  echo "<div class='high_text'>Evento agregado</div>";
-  ?>@include('calendar.admin.tables.view_events_table')
-  @include('includes/bottom_bar')
+@include('content/welcome_content')
+@include('includes/bottom_bar')
 </body>
 </html>

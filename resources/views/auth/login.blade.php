@@ -60,4 +60,5 @@
         </div>
     </div>
 </div>
+@include('includes/bottom_bar')
 @endsection

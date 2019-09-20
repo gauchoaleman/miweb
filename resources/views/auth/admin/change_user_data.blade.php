@@ -2,4 +2,5 @@
 @include('includes/navbar')
 @section('content')
 @include('auth.admin.forms.change_user_data_form')
+@include('includes/bottom_bar')
 @endsection

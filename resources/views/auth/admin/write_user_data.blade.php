@@ -93,5 +93,6 @@ else{
 
 }
 ?>
+@include('includes/bottom_bar')
 </body>
 </html>

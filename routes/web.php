@@ -196,6 +196,15 @@ Route::get('/calendar/admin/view_event_admin', function () {
     return view('/calendar/admin/view_event_admin');
 });
 
+Route::post('/contact/send_contact', function () {
+    return view('/contact/send_contact');
+});
+
+Route::get('/contact/contact', function () {
+    return view('/contact/contact');
+});
+
+
 Auth::routes();
 
 Route::get('/home', function ()  {
