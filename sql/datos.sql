@@ -20,6 +20,6 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `address`, `datetime`, `created_at`) VALUES
-(3, 'evento 333', 'desccccccccccccc', 'dirrrrr', '2021-12-31 23:58:00', '2019-09-17 17:38:21'),
-(4, 'Stefan Ronacherrrr', 'fgraegarrrr', 'gafgdagrrr', '2019-05-02 06:05:00', '2019-09-18 19:06:21'),
-(5, 'adminn', 'rgesgr', 'gser', '2021-05-02 02:03:00', '2019-09-18 19:07:17');
+(6, 'Navidad', 'Se festeja el nacimiento de Cristo', 'En el cielo', '2019-12-24 22:00:00', '2019-09-20 16:42:50'),
+(7, 'Año nuevo', 'Se festeja la venida del año que viene', 'En casa (hay fiesta)', '2019-12-31 23:00:00', '2019-09-20 16:43:33'),
+(8, 'Reyes', 'Se festeja los reyes magos', 'En el cielo', '2020-01-06 20:00:00', '2019-09-20 16:44:21');
