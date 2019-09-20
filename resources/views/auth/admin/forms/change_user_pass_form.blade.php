@@ -3,7 +3,7 @@
         <div class="col-md-8">
             <div class="card">
               @if (isset($error))
-              <div class="card-header">{{ $error }}</div>
+              <div class="card-header" style="color:orange">{{ $error }}</div>
               @endif
                 <div class="card-header">{{ __('Cambiar clave usuario') }}</div>
 

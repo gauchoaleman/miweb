@@ -7,7 +7,7 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
             <div class="card">
               @if (isset($error))
 
-              <div class="card-header">{{ $error }}</div>
+              <div class="card-header" style="color:orange">{{ $error }}</div>
               @endif
                 <div class="card-header">{{ __('Cambiar datos usuario') }}</div>
 
