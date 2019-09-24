@@ -78,6 +78,21 @@ $res = DB::table('events')->insert(
     ['name' => $name, 'description' => $description, 'address'=>$address, 'datetime'=>$datetime]
 );
 
+
+$subject = "Nuevo Evento";
+$content = "Nombre: $name\r\n";
+$content.= "Descripción: $description\r\n";
+$content.= "Dirección: $address\r\n";
+$content.= "Fecha / Hora: $datetime";
+$headers = "From: eventos@autoayuda.com";
+
+$users = DB::table('users')->get();
+
+foreach ($users as $user) {
+  $to = $user->email;
+  mail($to,$subject,$content,$headers);
+}
+
   echo "<div class='high_text'>Evento agregado</div>";
   ?>@include('calendar.admin.tables.view_events_table')
   @include('includes/bottom_bar')
