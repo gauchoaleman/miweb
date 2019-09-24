@@ -1,16 +1,16 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
   <a class="navbar-brand" href="http://localhost:8000"><img src='http://localhost:8000/img/home.png'><b>Home</b></a>||&nbsp;
 
 
-  @if (Route::has('login'))
-  @auth
+    @if (Route::has('login'))
+    @auth
   <div class="navbar-brand" ><img src='http://localhost:8000/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}} ||&nbsp; </div>
-  <div class="navbar-brand" ><img src='http://localhost:8000/img/calendar.png'><a class="navbar-brand" href="http://localhost:8000/calendar/user/view_events_user">Eventos</a> ||&nbsp; </div>
+  <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/calendar.png'>Eventos</a> ||&nbsp; </div>
 
     @if ( (Auth::user()->is_admin == 1) )
 <a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
@@ -34,8 +34,52 @@
     @endauth
     </div>
     @endif
+</nav>
+-->
 
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="http://localhost:8000"><img src='http://localhost:8000/img/home.png'><b>Home</b></a>&nbsp;
+
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      @if (Route::has('login'))
+      @auth
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" href="#"><img src='http://localhost:8000/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}} &nbsp; </a></div>-
+      </li>
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/calendar.png'>Eventos</a> &nbsp; </div>
+      </li>
+
+      @if ( (Auth::user()->is_admin == 1) )
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
+              <img src='http://localhost:8000/img/user_crud.png'>ABM Usuarios&nbsp;</a></div>
+      </li>
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/calendar/admin/view_events">
+              <img src='http://localhost:8000/img/calendar_crud.png'>ABM Eventos&nbsp;
+        </a></div>
+      </li>
+
+      @endif
+
+      @endauth
+      @endif
+    </ul>
+    @if (Route::has('login'))
+      <div>
+    @auth
+    <a class="navbar-brand" href="http://localhost:8000/logout"><img src='http://localhost:8000/img/logout.png'>Logout</a>&nbsp;
+    <a class="navbar-brand" href="http://localhost:8000/auth/user/update_data"><img src='http://localhost:8000/img/update_data.jpeg'>Actualizar datos</a>&nbsp;
+    @else
+        <a class="navbar-brand" href="{{ route('login') }}"><img src='http://localhost:8000/img/login.png'>Login</a>&nbsp;<a class="navbar-brand" href="{{ route('register') }}"><img src='http://localhost:8000/img/register.png'> Registrarse</a>
+    @endauth
+    </div>
+    @endif
 </nav>
 
 
