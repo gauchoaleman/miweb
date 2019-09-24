@@ -14,13 +14,13 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Email</th>
-      <th scope="col">Fecha / Hora de ingreso</th>
-      <th scope="col">Borrar</th>
-      <th scope="col">Editar</th>
-      <th scope="col">Clave</th>
-      <th scope="col">Admin</th>
+      <th scope="col" style="color:orange">Nombre</th>
+      <th scope="col"  style="color:orange">Email</th>
+      <th scope="col"  style="color:orange">Fecha / Hora de ingreso</th>
+      <th scope="col"  style="color:orange">Borrar</th>
+      <th scope="col"  style="color:orange">Editar</th>
+      <th scope="col"  style="color:orange">Clave</th>
+      <th scope="col"  style="color:orange">Admin</th>
     </tr>
   </thead>
   <tbody>
