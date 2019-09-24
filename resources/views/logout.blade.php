@@ -71,7 +71,7 @@ Session::flush();
         <body>
     @include('includes/navbar')
 
-    <div class='high_text'>
+    <div class='high_text' style='color:orange'>
 
     Sesión finalizada.</div><br>
     @include('includes/bottom_bar')

@@ -85,7 +85,7 @@ else{
             ->where('id', $id)
             ->update(['password' => $password]);
 
-  echo "<div class='high_text'>Clave actualizada</div>";
+  echo "<div class='high_text' style='color:orange'>Clave actualizada</div>";
   ?>@include('auth.admin.tables.view_table')<?php
 }
  ?>

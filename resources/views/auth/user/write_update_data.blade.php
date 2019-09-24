@@ -97,7 +97,7 @@ $res = DB::table('users')
             ->where('id', $id)
             ->update(['name' => $name,'email'=>$email,'password'=>$password]);
 
-  echo "<div class='high_text'>Datos actualizados</div>";
+  echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
   ?>@include('content/welcome_content')<?php
 
 }

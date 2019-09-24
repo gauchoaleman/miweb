@@ -93,7 +93,7 @@ foreach ($users as $user) {
   mail($to,$subject,$content,$headers);
 }
 
-  echo "<div class='high_text'>Evento agregado</div>";
+  echo "<div class='high_text' style='color:orange'>Evento agregado</div>";
   ?>@include('calendar.admin.tables.view_events_table')
   @include('includes/bottom_bar')
 </body>

@@ -80,7 +80,7 @@ $id = $_GET["id"];
   ->where('id', $id)
   ->update(['name' => $name,'description'=>$description,'address'=>$address,'datetime'=>$datetime]);
 
-  echo "<div class='high_text'>Datos actualizados</div>";
+  echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
   ?>@include('calendar.admin.tables.view_events_table')
   @include('includes/bottom_bar')
 </body>

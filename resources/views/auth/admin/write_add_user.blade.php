@@ -95,7 +95,7 @@ $res = DB::table('users')->insert(
     ['email' => $email, 'name' => $name, 'password'=>$password]
 );
 
-  echo "<div class='high_text'>Usuario agregado</div>";
+  echo "<div class='high_text' style='color:orange'>Usuario agregado</div>";
   ?>@include('auth.admin.tables.view_table')<?php
 }
 ?>

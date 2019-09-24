@@ -88,7 +88,7 @@ else{
   ->where('id', $id)
   ->update(['name' => $name,'email'=>$email]);
 
-  echo "<div class='high_text'>Datos actualizados</div>";
+  echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
   ?>@include('auth.admin.tables.view_table')<?php
 
 }

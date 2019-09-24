@@ -69,7 +69,7 @@ Session::flush();
         <body>
     @include('includes/navbar');
 
-    <div class='high_text'>
+    <div class='high_text' style='color:orange'>
     </div><br>
        </body>
     </html>
