@@ -14,7 +14,7 @@
     @endif
 
     <div class="content">
-      <div class="title m-b-md">
+      <div class="title m-b-md" style="color:orange">
           Autoayuda Suicidios<br>
           <img src="/img/autoayuda_portada.jpg">
 
