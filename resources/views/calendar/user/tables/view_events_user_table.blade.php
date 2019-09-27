@@ -1,9 +1,6 @@
+
 <div class="container">
-  <div class='row' border-width='1' >
-    <div class='col-12' align='right'>
-      <a class='card-link' href='http://localhost:8000/calendar/admin/add_event' ><img src='http://localhost:8000/img/add_event.jpeg'> Agregar evento</a>
-    </div>
-  </div>
+
 <?php
 
 //Select del view, se puede usar para filtros

@@ -71,6 +71,7 @@
     </head>
     <body>
       @include('includes/navbar')
+      <br>
       @include('calendar.user.tables.view_events_user_table')
       @include('includes/bottom_bar')
     </body>

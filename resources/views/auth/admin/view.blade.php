@@ -71,6 +71,7 @@
     </head>
     <body>
       @include('includes/navbar')
+      <br>
       @include('auth.admin.tables.view_table')
       @include('includes/bottom_bar')
     </body>
