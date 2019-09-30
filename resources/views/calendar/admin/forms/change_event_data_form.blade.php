@@ -9,7 +9,7 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
 
               <div class="card-header" style="color:orange">{{ $error }}</div>
               @endif
-                <div class="card-header">{{ __('Agregar evento') }}</div>
+                <div class="card-header">{{ __('Editar evento') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="/calendar/admin/write_event_data?id={{ $_GET["id"] }}">
@@ -44,13 +44,24 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                         </div>
 
                         <div class="form-group row">
-                            <label for="datetime" class="col-md-4 col-form-label text-md-right">{{ __('Fecha/Hora') }}</label>
+                            <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Fecha') }}</label>
 
                             <div class="col-md-6">
                               <?php
-                              $time4value = strftime('%Y-%m-%dT%H:%M:%S',strtotime($event->datetime));
+                              $date4value = strftime('%Y-%m-%d',strtotime($event->date));
                               ?>
-                              <input type="datetime-local" name="datetime" value="<?php echo $time4value; ?>"  required>
+                              <input type="date" name="date" value="<?php echo $date4value; ?>"  required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Hora') }}</label>
+
+                            <div class="col-md-6">
+                              <?php
+                              $time4value = strftime('%H:%M:%S',strtotime($event->time));
+                              ?>
+                              <input type="time" name="time" value="<?php echo $time4value; ?>"  required>
                             </div>
                         </div>
 

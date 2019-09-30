@@ -4,7 +4,7 @@
 <?php
 
 //Select del view, se puede usar para filtros
-        $events = DB::table('events')->orderBy('datetime', 'asc')->get();
+        $events = DB::table('events')->orderBy('date', 'asc')->get();
 
 //Títulos
 ?>
@@ -14,7 +14,8 @@
       <th scope="col" style="color:orange">Nombre</th>
       <th scope="col" style="color:orange">Descripción</th>
       <th scope="col" style="color:orange">Dirección</th>
-      <th scope="col" style="color:orange">Fecha/Hora</th>
+      <th scope="col" style="color:orange">Fecha</th>
+      <th scope="col" style="color:orange">Hora</th>
     </tr>
   </thead>
   <tbody>
@@ -33,8 +34,13 @@
           echo "$event->address</a>";
           echo "</td>";
           echo "<td>";
-          $datetime = new DateTime($event->datetime);
-          echo $datetime->format('d/m/Y H:i:s');
+          $date = new DateTime($event->date);
+          echo $date->format('d/m/Y');
+          //echo $event->date;
+          echo "</td>";
+          echo "<td>";
+          $time = new DateTime($event->time);
+          echo $time->format('H:i');
           echo "</td>";
           echo "</tr>";
 

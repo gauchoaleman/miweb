@@ -19,7 +19,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- Volcado de datos para la tabla `events`
 --
 
-INSERT INTO `events` (`id`, `name`, `description`, `address`, `datetime`, `created_at`) VALUES
-(6, 'Navidad', 'Se festeja el nacimiento de Cristo', 'En el cielo', '2019-12-24 22:00:00', '2019-09-20 16:42:50'),
-(7, 'Año nuevo', 'Se festeja la venida del año que viene', 'En casa (hay fiesta)', '2019-12-31 23:00:00', '2019-09-20 16:43:33'),
-(8, 'Reyes', 'Se festeja los reyes magos', 'En el cielo', '2020-01-06 20:00:00', '2019-09-20 16:44:21');
+INSERT INTO `events` (`id`, `name`, `description`, `address`, `date`, `time`, `created_at`) VALUES
+(6, 'Navidad', 'Se festeja el nacimiento de Cristo', 'En el cielo todos', '2019-12-24', '20:00:00', '2019-09-20 16:42:50'),
+(7, 'Año nuevo', 'Se festeja la venida del año que viene', 'En casa (hay fiesta)', '2019-12-31', '22:30:00', '2019-09-20 16:43:33'),
+(9, 'Reyes', 'Festejando reyes con regalitos', 'En casa, todes invitades', '2020-01-06', '17:00:00', '2019-09-20 18:08:14'),
+(10, 'Charla de prevención', 'Abierta a la comunidad', 'Bolsón', '2019-11-15', '20:30:00', '2019-09-25 17:18:44');

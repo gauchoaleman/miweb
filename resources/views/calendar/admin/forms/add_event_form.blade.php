@@ -41,10 +41,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="datetime" class="col-md-4 col-form-label text-md-right">{{ __('Fecha/Hora') }}</label>
+                            <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Fecha') }}</label>
 
                             <div class="col-md-6">
-                              <input type="datetime-local" name="datetime" required>
+                              <input type="date" name="date" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="time" class="col-md-4 col-form-label text-md-right">{{ __('Hora') }}</label>
+
+                            <div class="col-md-6">
+                              <input type="time" name="time" required>
                             </div>
                         </div>
 

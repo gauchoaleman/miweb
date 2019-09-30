@@ -46,9 +46,11 @@ CREATE TABLE `events` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `address` text NOT NULL,
-  `datetime` datetime NOT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 --

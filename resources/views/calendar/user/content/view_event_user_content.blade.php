@@ -24,10 +24,23 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-4  text-md-right">Fecha/Hora</div>
+                            <div class="col-md-4  text-md-right">Fecha</div>
 
                             <div class="col-md-6">
-                                <?php echo $event->datetime; ?>
+                                <?php
+                                $date = new DateTime($event->date);
+                                echo $date->format('d/m/Y');
+                                ?>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4  text-md-right">Hora</div>
+
+                            <div class="col-md-6">
+                                <?php
+                                $time = new DateTime($event->time);
+                                echo $time->format('H:i');
+                                ?>
                             </div>
                         </div>
                 </div>
