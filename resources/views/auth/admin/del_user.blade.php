@@ -7,6 +7,6 @@ if (DB::table('users')->where('id',$_GET['id'])->delete()) {
 }else{
   ?><div class='high_text' style='color:orange'>No se pudo borrar usuario/div><br><?php }?>
 
-@include('auth.admin.tables.view_table')
+@include('auth.admin.tables.view_users_admin_table')
 @include('includes/bottom_bar')
 @include('includes/bottom')

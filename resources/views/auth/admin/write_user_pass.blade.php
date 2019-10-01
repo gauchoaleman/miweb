@@ -19,7 +19,7 @@ else{
             ->update(['password' => $password]);
 
   echo "<div class='high_text' style='color:orange'>Clave actualizada</div>";
-  ?>@include('auth.admin.tables.view_table')<?php
+  ?>@include('auth.admin.tables.view_users_admin_table')<?php
 }
  ?>
 @include('includes/bottom_bar')

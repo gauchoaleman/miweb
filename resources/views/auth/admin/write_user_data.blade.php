@@ -22,7 +22,7 @@ else{
   ->update(['name' => $name,'email'=>$email]);
 
   echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
-  ?>@include('auth.admin.tables.view_table')<?php
+  ?>@include('auth.admin.tables.view_users_admin_table')<?php
 
 }
 ?>

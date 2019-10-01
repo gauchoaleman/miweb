@@ -34,10 +34,10 @@
           echo "<a href='http://localhost:8000/calendar/admin/view_event_admin?id=".$event->id."'>".$event->name."</a>";
           echo "</td>";
           echo "<td>";
-          echo "$event->description</a>";
+          echo "$event->description";
           echo "</td>";
           echo "<td>";
-          echo "$event->address</a>";
+          echo "$event->address";
           echo "</td>";
           echo "<td>";
           $date = new DateTime($event->date);

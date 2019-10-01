@@ -1,5 +1,5 @@
 @include('includes/head')
 @include('includes/navbar')
-@include('auth.admin.tables.view_table')
+@include('categories.admin.forms.change_category_data_form')
 @include('includes/bottom_bar')
 @include('includes/bottom')

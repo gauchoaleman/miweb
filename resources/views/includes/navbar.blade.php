@@ -59,12 +59,17 @@
 
       @if ( (Auth::user()->is_admin == 1) )
       <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/auth/admin/view">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/auth/admin/view_users_admin">
               <img src='http://localhost:8000/img/user_crud.png'>ABM Usuarios&nbsp;</a></div>
       </li>
       <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/calendar/admin/view_events">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/calendar/admin/view_events_admin">
               <img src='http://localhost:8000/img/calendar_crud.png'>ABM Eventos&nbsp;
+        </a></div>
+      </li>
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/categories/admin/view_categories_admin">
+              <img src='http://localhost:8000/img/calendar_crud.png'>ABM Categorías&nbsp;
         </a></div>
       </li>
 

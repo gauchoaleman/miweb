@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('auth.admin.tables.view_users_admin_table')
+@include('includes/bottom_bar')
+@include('includes/bottom')

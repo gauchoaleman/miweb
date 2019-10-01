@@ -23,13 +23,13 @@ Route::get('/logout', function () {
     return view('logout');
 });
 
-Route::get('/auth/admin/view', function () {
+Route::get('/auth/admin/view_users_admin', function () {
     if (!isset(Auth::user()->name))
       return view('no_access');
     elseif (Auth::user()->is_admin == 0)
       return view('no_access');
     else
-      return view('auth/admin/view');
+      return view('auth/admin/view_users_admin');
 });
 
 Route::get('/auth/admin/mod_user', function () {
@@ -148,13 +148,13 @@ Route::post('/calendar/admin/write_add_event', function () {
     return view('calendar/admin/write_add_event');
 });
 
-Route::get('/calendar/admin/view_events', function () {
+Route::get('/calendar/admin/view_events_admin', function () {
     if (!isset(Auth::user()->name))
       return view('no_access');
     elseif (Auth::user()->is_admin == 0)
       return view('no_access');
     else
-      return view('calendar/admin/view_events');
+      return view('calendar/admin/view_events_admin');
 });
 
 Route::get('/calendar/admin/del_event', function () {
@@ -204,6 +204,59 @@ Route::get('/contact/contact', function () {
     return view('/contact/contact');
 });
 
+Route::get('/categories/admin/add_category', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('categories/admin/add_category');
+});
+
+Route::post('/categories/admin/write_add_category', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('categories/admin/write_add_category');
+});
+
+Route::get('/categories/admin/view_categories_admin', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('categories/admin/view_categories_admin');
+});
+
+Route::get('/categories/admin/del_category', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('categories/admin/del_category');
+});
+
+Route::get('/categories/admin/change_category_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('categories/admin/change_category_data');
+});
+
+Route::post('/categories/admin/write_category_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('categories/admin/write_category_data');
+});
 
 Auth::routes();
 

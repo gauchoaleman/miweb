@@ -29,7 +29,7 @@ $res = DB::table('users')->insert(
 );
 
   echo "<div class='high_text' style='color:orange'>Usuario agregado</div>";
-  ?>@include('auth.admin.tables.view_table')<?php
+  ?>@include('auth.admin.tables.view_users_admin_table')<?php
 }
 ?>
 @include('includes/bottom_bar')

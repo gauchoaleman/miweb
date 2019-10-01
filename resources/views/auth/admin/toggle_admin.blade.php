@@ -7,6 +7,6 @@ if (DB::table('users')->where('id', $_GET['id'])->update(['is_admin' => $_GET['t
 }else{
   echo "<div class='high_text' style='color:orange'>Admin no actualizado</div>";
 }?>
-@include('auth.admin.tables.view_table')
+@include('auth.admin.tables.view_users_admin_table')
 @include('includes/bottom_bar')
 @include('includes/bottom')

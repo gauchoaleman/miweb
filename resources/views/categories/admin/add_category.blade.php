@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('categories.admin.forms.add_category_form')
+@include('includes/bottom_bar')
+@include('includes/bottom')

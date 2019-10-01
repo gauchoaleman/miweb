@@ -29,7 +29,7 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}</label>
 
                             <div class="col-md-6">
-                              <textarea rows="4" cols="50" name="description" required  ><?php echo $event->description; ?></textarea>
+                              <textarea rows="4" cols="45" name="description" required  ><?php echo $event->description; ?></textarea>
 
                             </div>
                         </div>
@@ -38,7 +38,7 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                             <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
                             <div class="col-md-6">
-                              <textarea rows="4" cols="50" name="address" required ><?php echo $event->address; ?></textarea>
+                              <textarea rows="4" cols="45" name="address" required ><?php echo $event->address; ?></textarea>
 
                             </div>
                         </div>
