@@ -43,7 +43,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="http://localhost:8000"><img src='http://localhost:8000/img/home.png'><b>Home</b></a>&nbsp;
+  <a class="navbar-brand" href="http://localhost:8000" style="color:orange"><img src='http://localhost:8000/img/home.png'><b>Home</b></a>&nbsp;
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,20 +52,18 @@
     <ul class="navbar-nav mr-auto">
       @if (Route::has('login'))
       @auth
+
       <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" href="#"><img src='http://localhost:8000/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}} &nbsp; </a></div>-
-      </li>
-      <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/calendar.png'>Eventos</a> &nbsp; </div>
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/calendar.png'>Eventos</a> &nbsp; </div>
       </li>
 
       @if ( (Auth::user()->is_admin == 1) )
       <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/auth/admin/view">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/auth/admin/view">
               <img src='http://localhost:8000/img/user_crud.png'>ABM Usuarios&nbsp;</a></div>
       </li>
       <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" href="http://localhost:8000/calendar/admin/view_events">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/calendar/admin/view_events">
               <img src='http://localhost:8000/img/calendar_crud.png'>ABM Eventos&nbsp;
         </a></div>
       </li>
@@ -77,14 +75,22 @@
       @endif
     </ul>
     @if (Route::has('login'))
-      <div>
     @auth
-    <a class="navbar-brand" href="http://localhost:8000/logout"><img src='http://localhost:8000/img/logout.png'>Logout</a>&nbsp;
-    <a class="navbar-brand" href="http://localhost:8000/auth/user/update_data"><img src='http://localhost:8000/img/update_data.jpeg'>Actualizar datos</a>&nbsp;
+      <div>
+<div class="dropdown">
+    <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img src='http://localhost:8000/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" style="color:orange" href="http://localhost:8000/logout"><img src='http://localhost:8000/img/logout.png'>Logout</a>
+      <a class="dropdown-item" style="color:orange" href="http://localhost:8000/auth/user/update_data"><img src='http://localhost:8000/img/update_data.jpeg'>Actualizar datos</a>
+    </div>
+</div>
     @else
         <a class="navbar-brand" href="{{ route('login') }}"><img src='http://localhost:8000/img/login.png'>Login</a>&nbsp;<a class="navbar-brand" href="{{ route('register') }}"><img src='http://localhost:8000/img/register.png'> Registrarse</a>
-    @endauth
+
     </div>
+    @endauth
     @endif
 </nav>
 <br>
