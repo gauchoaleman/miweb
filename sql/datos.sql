@@ -24,3 +24,11 @@ INSERT INTO `events` (`id`, `name`, `description`, `address`, `date`, `time`, `c
 (7, 'Año nuevo', 'Se festeja la venida del año que viene', 'En casa (hay fiesta)', '2019-12-31', '22:30:00', '2019-09-20 16:43:33'),
 (9, 'Reyes', 'Festejando reyes con regalitos', 'En casa, todes invitades', '2020-01-06', '17:00:00', '2019-09-20 18:08:14'),
 (10, 'Charla de prevención', 'Abierta a la comunidad', 'Bolsón', '2019-11-15', '20:30:00', '2019-09-25 17:18:44');
+
+--
+-- Volcado de datos para la tabla `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(7, 'Protocolos e información'),
+(8, 'Protocolo');
