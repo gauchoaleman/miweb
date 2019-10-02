@@ -21,9 +21,10 @@
       <?php
       $categories = DB::table('categories')->get();
        ?>
-      <div class="dropdown">
+
+      <li class="dropdown">
           <a class="navbar-brand" valign="bottom" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Documentos
+            <img src='http://localhost:8000/img/documents.png'>Documentos
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <?php
@@ -31,7 +32,7 @@
              ?><a class="dropdown-item" style="color:orange" href="http://localhost:8000/documents?category_id=<?php echo $category->id ?>"><?php echo $category->name ?></a>
            <?php } ?>
           </div>
-      </div>
+      </li>
 
       @if ( (Auth::user()->is_admin == 1) )
       <li class="nav-item active">
@@ -45,7 +46,7 @@
       </li>
       <li class="nav-item active">
         <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/categories/admin/view_categories_admin">
-              <img src='http://localhost:8000/img/calendar_crud.png'>ABM Categorías&nbsp;
+              <img src='http://localhost:8000/img/category_crud.png'>ABM Categorías&nbsp;
         </a></div>
       </li>
 
