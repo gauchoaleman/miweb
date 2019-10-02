@@ -22,8 +22,8 @@
       $categories = DB::table('categories')->get();
        ?>
 
-      <li class="dropdown">
-          <a class="navbar-brand" valign="bottom" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="dropdown">
+          <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src='http://localhost:8000/img/documents.png'>Documentos
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -32,7 +32,7 @@
              ?><a class="dropdown-item" style="color:orange" href="http://localhost:8000/documents?category_id=<?php echo $category->id ?>"><?php echo $category->name ?></a>
            <?php } ?>
           </div>
-      </li>
+      </div>
 
       @if ( (Auth::user()->is_admin == 1) )
       <li class="nav-item active">
@@ -66,6 +66,7 @@
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
       <a class="dropdown-item" style="color:orange" href="http://localhost:8000/logout"><img src='http://localhost:8000/img/logout.png'>Logout</a>
       <a class="dropdown-item" style="color:orange" href="http://localhost:8000/auth/user/update_data"><img src='http://localhost:8000/img/update_data.jpeg'>Actualizar datos</a>
+      <a class="dropdown-item" style="color:orange" href="http://localhost:8000/auth/user/update_password"><img src='http://localhost:8000/img/change_user_password.png'>Actualizar clave</a>
     </div>
 </div>
     @else

@@ -1,7 +1,7 @@
 <div class="container">
   <div class='row' border-width='1' >
     <div class='col-12' align='right'>
-      <a class='card-link' href='http://localhost:8000/categories/admin/add_category' ><img src='http://localhost:8000/img/add_event.jpeg'> Agregar categoría</a>
+      <a class='card-link' href='http://localhost:8000/categories/admin/add_category' ><img src='http://localhost:8000/img/add_category.jpeg'> Agregar categoría</a>
     </div>
   </div>
 <?php

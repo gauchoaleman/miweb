@@ -6,19 +6,19 @@
 
               <div class="card-header" style="color:orange">{{ $error }}</div>
               @endif
-                <div class="card-header">{{ __('Actualizar datos') }}</div>
+                <div class="card-header">{{ __('Actualizar clave') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/auth/user/write_update_data">
+                    <form method="POST" action="/auth/user/write_update_password">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Clave') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{{Auth::user()->name}}}" required autocomplete="name" autofocus>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                @error('name')
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -27,16 +27,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Reingrese clave') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{{Auth::user()->email }}}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 

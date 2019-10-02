@@ -103,6 +103,14 @@ Route::post('/auth/user/write_update_data', function () {
     return view('auth/user/write_update_data');
 });
 
+Route::get('/auth/user/update_password', function () {
+    return view('auth/user/update_password');
+});
+
+Route::post('/auth/user/write_update_password', function () {
+    return view('auth/user/write_update_password');
+});
+
 Route::get('/auth/admin/toggle_admin', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
