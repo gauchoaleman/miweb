@@ -70,7 +70,8 @@
     </div>
 </div>
     @else
-        <a class="navbar-brand" href="{{ route('login') }}"><img src='http://localhost:8000/img/login.png'>Login</a>&nbsp;<a class="navbar-brand" href="{{ route('register') }}"><img src='http://localhost:8000/img/register.png'> Registrarse</a>
+        <a class="navbar-brand" href="{{ route('login') }}"><img src='http://localhost:8000/img/login.png'>Login</a>&nbsp;
+        <a class="navbar-brand" href="/auth/user/register"><img src='http://localhost:8000/img/register.png'> Registrarse</a>
 
     </div>
     @endauth

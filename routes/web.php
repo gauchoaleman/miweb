@@ -96,18 +96,30 @@ Route::get('/auth/admin/view_user', function () {
 });
 
 Route::get('/auth/user/update_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
     return view('auth/user/update_data');
 });
 
 Route::post('/auth/user/write_update_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
     return view('auth/user/write_update_data');
 });
 
 Route::get('/auth/user/update_password', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
     return view('auth/user/update_password');
 });
 
 Route::post('/auth/user/write_update_password', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
     return view('auth/user/write_update_password');
 });
 
@@ -193,10 +205,16 @@ Route::post('/calendar/admin/write_event_data', function () {
 });
 
 Route::get('/calendar/user/view_events_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
     return view('/calendar/user/view_events_user');
 });
 
 Route::get('/calendar/user/view_event_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
     return view('/calendar/user/view_event_user');
 });
 
@@ -264,6 +282,14 @@ Route::post('/categories/admin/write_category_data', function () {
     return view('no_access');
   else
     return view('categories/admin/write_category_data');
+});
+
+Route::get('/auth/user/register', function () {
+  return view('auth/user/register');
+});
+
+Route::post('/auth/user/write_register', function () {
+  return view('auth/user/write_register');
 });
 
 Auth::routes();

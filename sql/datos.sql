@@ -2,18 +2,17 @@
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`) VALUES
-(2, 'Rona', 'rona@rona.com', NULL, '$2y$10$i5Oyt4SvjT7lTIIui.hgsumr.p/6.H8aIFIh.BcMAFEbktRrRMY5C', NULL, '2019-06-08 00:33:18', '2019-06-08 00:33:18', 1),
-(6, 'ComputerMan', 'stefan.ronacher.78@gmail.com', NULL, '$2y$10$7m/63pCQo.sGAnXIQGTACusUE8NYjqpuCmc1P6E3onSSIoPcfrFPW', NULL, '2019-06-13 01:04:48', '2019-06-13 01:04:48', 0),
-(7, 'Nuevo', 'nuevo@nuevo.com', NULL, '$2y$10$p8agxYThEWzjP439pcWRa.lvbp20s0iVg/lzk6iz.0a3XErsi8R8m', NULL, '2019-06-28 01:42:00', '2019-06-28 01:42:00', 0),
-(8, 'Tesina', 'tesina@gmail.com', NULL, '$2y$10$a0WShu2/fM9Dwajz8eWk2eBRPSKA67X0y0aHZ96J9NILjwpKV5oW2', NULL, '2019-07-02 01:48:22', '2019-07-02 01:48:22', 0),
-(11, 'Tal para cual', 'tal@paracual.com', NULL, '$2y$10$cQwfbep0rVI7u.MeVGp8VOYFX0gFn5q9ANkm.90h.XlhXoY2qnMfy', '', '2019-08-22 01:49:31', '2019-08-22 01:49:31', 1),
-(12, 'Lucas', 'lucaspassa@gmail.com', NULL, '$2y$10$a7aFlN1XKtUNd84c4.HX0envqVFvRKquW52YKJ2/aRuSKmwb1nImy', NULL, '2019-08-24 02:39:07', '2019-08-24 02:39:07', 1),
-(13, 'prueba acceso', 'prueba_acceso@p.com', NULL, '$2y$10$NQ0oSQo4o0mVR7HrYFZzb.uNpw9tN5A8neiA4M5guZkr6A6KIKs1K', NULL, '2019-08-28 19:07:28', '2019-08-28 19:07:28', 0),
-(15, 'prueba', 'pr@reg.com', NULL, '$2y$10$JveCI2QoiDenQw1a2AXY5.h/yUdKYRP3M9NTSzfxkFwkJ4tn9mEUa', NULL, '2019-08-30 19:19:06', '2019-08-30 19:19:06', 0),
-(16, 'probando2', 'prueba@prueba.com', NULL, '$2y$10$wMLXV.WOkDptNBdksYyQXeia.dsqtAcNPRanBl95D62rOhg32jAaq', NULL, '2019-08-31 00:57:15', '2019-08-31 00:57:15', 1),
-(17, 'Admin', 'admin@admin.com', NULL, '$2y$10$Y4WpqYtldMUbuHHGzxcpYe/esBb.Z1eDYzt8ACUlZokLqdYdgYN6q', NULL, '2019-09-02 03:22:11', '2019-09-02 03:22:11', 1),
-(18, 'Userrr', 'user@user.com', NULL, '$2y$10$fQRritgLCGZAGxelMcrltelEy38yhvAWhZslNmgqk2geDSLcj7k1W', NULL, '2019-09-02 03:24:34', '2019-09-02 03:24:34', 0);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `is_admin`) VALUES
+(12, 'Lucas', 'lucaspassa@gmail.com', NULL, '$2y$10$a7aFlN1XKtUNd84c4.HX0envqVFvRKquW52YKJ2/aRuSKmwb1nImy', NULL, '2019-08-24 02:39:07', 0),
+(17, 'Administrador', 'admin@admin.com', NULL, '$2y$10$xv0EUF3vwTaxIJBhchJa9Oi5ysYCedDRwkwVF34rkZGreCRh3mZ0S', NULL, '2019-09-02 03:22:11', 1),
+(18, 'User', 'user@user.com', NULL, '$2y$10$va7Lz3zkhdv1Pu9QjshaQ.fuGymFEseSR.VtRUIXXf0g/7HOHyFgy', NULL, '2019-09-02 03:24:34', 0),
+(20, 'testing', 'rona@rona.com', NULL, '$2y$10$o1hu9rbWr./G42aUE7ZIXO2PdrlcyW7mRUGcAwDy8oSIWVd4QYVd6', NULL, '2019-09-09 23:29:06', 1),
+(21, '|isto', 'rona@rona.comm', NULL, '$2y$10$DBYpJbnibXVwT2BlvYKBs.KAHolRzkzw7btrJ2iZ4sDp9Z6KGIFwG', NULL, '2019-09-09 23:30:12', 0),
+(24, 'prueb', 'pr@reg.com.ar', NULL, '$2y$10$pTiXeL9kwUM4RlnDfMCKiOWeRhaZQqMRRKYJ70McBrma9gCsACUtO', NULL, '2019-09-16 21:54:34', 0),
+(25, 'Stefan Ronacher', 'a@b.com', NULL, '$2y$10$tAZm4Rzb2TMRti8QJSNareaUwtI5op8uKmftH2T2YNJiyws.d40BK', NULL, NULL, 1),
+(26, 'prueba timezone', 'time@time.com', NULL, '$2y$10$7aMI1f8r10IpKkBRbEpiaOqUcZ19sPmbYqds5OyYOPzQFEDtVh1s2', NULL, NULL, 0),
+(27, 'Andrea Rosales', 'andrearosalespsi@gmail.com', NULL, '$2y$10$.IppyzadSsayUHMKTKj6H.BA4ESHNzPvN86XVLLxRC99Ir.NhQrtq', NULL, '2019-09-25 20:10:28', 1),
+(28, 'Stefan Ronacher', 'prueba@p.com', NULL, '$2y$10$2gEQZen6s7pOspRX6CT9dO.JqKR6Z/1sbQgjIbnmukXmBUiF08nli', NULL, NULL, 0);
 
 --
 -- Volcado de datos para la tabla `events`

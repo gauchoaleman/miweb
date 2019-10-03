@@ -13,7 +13,9 @@ $users_same_email = DB::table('users')->where([
 
 if( sizeof($users_same_email)){
   $error =  "Este email está en uso";
-  ?>@include('auth.user.forms.update_data_form', ['error' => $error])<?php
+  ?>
+  @include('includes/navbar')
+  @include('auth.user.forms.update_data_form', ['error' => $error])<?php
 }
 else{
 $res = DB::table('users')
@@ -23,16 +25,11 @@ $res = DB::table('users')
   $user->name = $name;
   $user->email = $email;
   $user->save();
-  $ok=1;
+  ?>@include('includes/navbar')<?php
+  echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
+  ?>
+  @include('content/welcome_content')<?php
 }
 ?>
-
-@include('includes/navbar')
-<?php if(isset($ok)){
-  echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
-  ?>@include('content/welcome_content')<?php
-
-}?>
-
 @include('includes/bottom_bar')
 @include('includes/bottom')
