@@ -292,6 +292,24 @@ Route::post('/auth/user/write_register', function () {
   return view('auth/user/write_register');
 });
 
+Route::get('/documents/admin/add_document', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('documents/admin/add_document');
+});
+
+Route::post('/documents/admin/write_add_document', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('documents/admin/write_add_document');
+});
+
 Auth::routes();
 
 Route::get('/home', function ()  {

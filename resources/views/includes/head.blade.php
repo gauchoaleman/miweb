@@ -66,3 +66,4 @@
         </style>
     </head>
     <body>
+@include('includes/php_functions')
