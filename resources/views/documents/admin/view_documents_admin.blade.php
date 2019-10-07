@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('documents.admin.tables.view_documents_admin_table')
+@include('includes/bottom_bar')
+@include('includes/bottom')

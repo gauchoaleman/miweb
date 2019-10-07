@@ -33,7 +33,7 @@
 
                               $categories_array = transform_result2array($categories,"id","name");
                               ?>
-                              {{ Form::select('category_id', $categories_array,array('required' => 'required') }}
+                              {{ Form::select('category_id', $categories_array) }}
 
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Archivo') }}</label>
 
                             <div class="col-md-6">
-                                {{ Form::file('file',array('required' => 'required') }}
+                                {{ Form::file('file',array('required' => 'required')) }}
 
 
                             </div>

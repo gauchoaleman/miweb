@@ -17,7 +17,7 @@ if( sizeof($documents_same_title)){
   @include('includes/navbar')
   @include('documents.admin.forms.add_document_form', ['error' => $error])<?php
 }
-elseif( !preg_match('/^[\w ]+$/', $message)){
+elseif( !preg_match('/^[\w áéíóúÁÉÍÓÚ]+$/', $title)){
   $error = "El título no tiene sólo números y letras";
   ?>
   @include('includes/navbar')
@@ -31,7 +31,7 @@ else{
   //phpinfo();
   ?>@include('includes/navbar')<?php
   echo "<div class='high_text' style='color:orange'>Documento agregado</div>";
-  /*?>@include('documents.admin.tables.view_documents_admin_table')<?php*/
+  ?>@include('documents.admin.tables.view_documents_admin_table')<?php
 }
 ?>
 

@@ -44,6 +44,11 @@
               <img src='http://localhost:8000/img/category_crud.png'>ABM Categorías&nbsp;
         </a></div>
       </li>
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/documents/admin/view_documents_admin">
+              <img src='http://localhost:8000/img/document_crud.png'>ABM Documentos&nbsp;
+        </a></div>
+      </li>
 
 
       @endif
