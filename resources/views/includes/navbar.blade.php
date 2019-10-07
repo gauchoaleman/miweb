@@ -7,8 +7,9 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      @if (Route::has('login'))
 
+      @if (Route::has('login'))
+      @auth
 
       <li class="nav-item active">
         <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/calendar.png'>Eventos</a> &nbsp; </div>
@@ -51,13 +52,20 @@
               <img src='http://localhost:8000/img/category_crud.png'>ABM Categorías&nbsp;
         </a></div>
       </li>
+      <li class="nav-item active">
+        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/documents/admin/view_documents_admin">
+              <img src='http://localhost:8000/img/document_crud.png'>ABM Documentos&nbsp;
+        </a></div>
+      </li>
 
 
       @endif
+      @endauth
       @endif
+
     </ul>
     @if (Route::has('login'))
-
+    @auth
       <div>
 <div class="dropdown">
     <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -74,7 +82,7 @@
         <a class="navbar-brand" href="/auth/user/register"><img src='http://localhost:8000/img/register.png'> Registrarse</a>
 
     </div>
-
+    @endauth
     @endif
 </nav>
 <br>
