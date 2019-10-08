@@ -19,7 +19,7 @@ $event = DB::table('categories')->where('id', $_GET['id'])->first();
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="<?php echo $event->name; ?>" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$event->name}}" required autocomplete="name" autofocus>
 
 
                             </div>

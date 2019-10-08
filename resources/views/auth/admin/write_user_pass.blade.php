@@ -2,7 +2,6 @@
 @include('includes/navbar')
 
 <?php
-
 $password = Hash::make($_POST['password']);
 $id = $_GET["id"];
 if( strlen($_POST['password'])<8){

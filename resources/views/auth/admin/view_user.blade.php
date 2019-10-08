@@ -16,21 +16,22 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
                             <div class="col-md-4  text-md-right">Nombre</div>
 
                             <div class="col-md-6">
-                                <?php echo $user->name; ?>
+                                {{$user->name}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-4  text-md-right">Email</div>
 
                             <div class="col-md-6">
-                                <?php echo $user->email; ?>
+                                {{$user->email}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-4  text-md-right">Ingreso</div>
 
                             <div class="col-md-6">
-                                <?php echo $user->created_at; ?>
+                              <?php $date = new DateTime($user->created_at);?>
+                                {{$date->format('d/m/Y H:i:s')}}
                             </div>
                         </div>
 

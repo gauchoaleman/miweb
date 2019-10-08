@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('documents.admin.forms.change_document_data_form')
+@include('includes/bottom_bar')
+@include('includes/bottom')

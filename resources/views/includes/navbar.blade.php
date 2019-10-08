@@ -29,7 +29,7 @@
                     <ul class="dropdown-menu">
                     <?php $category_documents = DB::table('documents')->where('category_id', $category->id)->get(); ?>
                     @foreach ($category_documents as $category_document)
-                       <li><a href="http://localhost:8000/documents/{{ $category_document->title }}.{{ $category_document->extension }}">{{ $category_document->title }}</a></li>
+                       <li><a target="_blank" href="http://localhost:8000/documents/{{ $category_document->title }}.{{ $category_document->extension }}">{{ $category_document->title }}</a></li>
                     @endforeach
                   </ul>
               </li>

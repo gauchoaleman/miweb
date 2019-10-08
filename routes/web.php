@@ -328,6 +328,24 @@ Route::get('/documents/admin/del_document', function () {
     return view('documents/admin/del_document');
 });
 
+Route::get('/documents/admin/change_document_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('documents/admin/change_document_data');
+});
+
+Route::post('/documents/admin/write_document_data', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('documents/admin/write_document_data');
+});
+
 Auth::routes();
 
 Route::get('/home', function ()  {
