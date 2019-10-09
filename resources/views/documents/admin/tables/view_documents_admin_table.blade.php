@@ -17,7 +17,9 @@ get();
       <th scope="col"  style="color:orange">Categoría</th>
       <th scope="col"  style="color:orange">Fecha / Hora de ingreso</th>
       <th scope="col"  style="color:orange">Borrar</th>
-      <th scope="col"  style="color:orange">Editar</th>
+      <th scope="col"  style="color:orange">Editar título</th>
+      <th scope="col"  style="color:orange">Editar categoría</th>
+      <th scope="col"  style="color:orange">Editar archivo</th>
     </tr>
   </thead>
   <tbody>
@@ -37,7 +39,13 @@ get();
   <a class='card-link' href='http://localhost:8000/documents/admin/del_document?id={{$document->id}}'><img src='http://localhost:8000/img/delete.png'></a>
   </td>
   <td>
-    <a class='card-link' href='http://localhost:8000/documents/admin/change_document_data?id={{$document->id}}'><img src='http://localhost:8000/img/edit.png'></a>
+    <a class='card-link' href='http://localhost:8000/documents/admin/change_document_title?id={{$document->id}}'><div align="center"><img src='http://localhost:8000/img/edit.png'></div></a>
+  </td>
+  <td>
+    <a align="center" class='card-link' href='http://localhost:8000/documents/admin/change_document_category?id={{$document->id}}'><div align="center"><img src='http://localhost:8000/img/edit.png'></div></a>
+  </td>
+  <td>
+    <a align="center" class='card-link' href='http://localhost:8000/documents/admin/change_document_file?id={{$document->id}}'><div align="center"><img src='http://localhost:8000/img/edit.png'></div></a>
   </td>
   </tr>
 @endforeach

@@ -6,7 +6,7 @@ $title = $_POST['title'];
 $category_id = $_POST['category_id'];
 $extension = strtolower($file->getClientOriginalExtension());
 
-// Me fijo si ese mail ya está en uso
+// Me fijo si ese título ya está en uso
 $documents_same_title = DB::table('documents')->where([
     ['title', '=', $title],
 ])->get();
