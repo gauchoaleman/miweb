@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('calendar.user.content.view_event_review_user_content')
+@include('includes/bottom_bar')
+@include('includes/bottom')

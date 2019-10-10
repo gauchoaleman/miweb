@@ -29,7 +29,7 @@
                             <div class="col-md-6">
                               <?php
 
-                              $categories = DB::table('categories')->get();
+                              $categories = DB::table('categories')->orderBy('name')->get();
 
                               $categories_array = transform_result2array($categories,"id","name");
                               ?>

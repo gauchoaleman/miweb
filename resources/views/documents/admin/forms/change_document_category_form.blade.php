@@ -22,7 +22,7 @@ $id = $_GET["id"];
 
                             <div class="col-md-6">
                               <?php
-                              $categories = DB::table('categories')->get();
+                              $categories = DB::table('categories')->orderBy('name')->get();
                               $categories_array = transform_result2array($categories,"id","name");
                               ?>
                               {{ Form::select('category_id', $categories_array,$document->category_id) }}

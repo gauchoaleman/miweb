@@ -4,7 +4,7 @@
 <?php
 
 //Select del view, se puede usar para filtros
-        $events = DB::table('events')->where('date','>','cast(now() as date)')->orderBy('date', 'asc')->get();
+        $events = DB::table('events')->where('date','<','now()')->where('review','!=','NULL')->orderBy('date', 'asc')->get();
 
 //Títulos
 ?>
@@ -25,7 +25,7 @@
         foreach ($events as $event) {
           echo "<tr>";
           echo "<td>";
-          echo "<a href='http://localhost:8000/calendar/user/view_event_user?id=".$event->id."'>".$event->name."</a>";
+          echo "<a href='http://localhost:8000/calendar/user/view_event_review_user?id=".$event->id."'>".$event->name."</a>";
           echo "</td>";
           echo "<td>";
           echo "$event->description</a>";

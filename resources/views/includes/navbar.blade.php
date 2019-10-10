@@ -11,11 +11,17 @@
       @if (Route::has('login'))
       @auth
 
-      <li class="nav-item active">
-        <div class="navbar-brand" ><a class="navbar-brand" style="color:orange" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/calendar.png'>Eventos</a> &nbsp; </div>
-      </li>
+      <div class="dropdown">
+          <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src='http://localhost:8000/img/calendar.png'>Eventos
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" style="color:orange" href="http://localhost:8000/calendar/user/view_events_user"><img src='http://localhost:8000/img/future.png'>Futuros</a>
+            <a class="dropdown-item" style="color:orange" href="http://localhost:8000/calendar/user/view_events_review_user"><img src='http://localhost:8000/img/past.png'>Pasados</a>
+          </div>
+      </div>
       <?php
-      $categories = DB::table('categories')->get();
+      $categories = DB::table('categories')->orderBy('name')->get();
        ?>
 
       <div class="dropdown">

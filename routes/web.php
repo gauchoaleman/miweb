@@ -236,6 +236,20 @@ Route::get('/calendar/user/view_event_user', function () {
     return view('/calendar/user/view_event_user');
 });
 
+Route::get('/calendar/user/view_events_review_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
+    return view('/calendar/user/view_events_review_user');
+});
+
+Route::get('/calendar/user/view_event_review_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  else
+    return view('/calendar/user/view_event_review_user');
+});
+
 Route::get('/calendar/admin/view_event_admin', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');

@@ -4,7 +4,7 @@
       <a class='card-link' href='http://localhost:8000/categories/admin/add_category' ><img src='http://localhost:8000/img/add_category.jpeg'> Agregar categoría</a>
     </div>
   </div>
-<?php $categories = DB::table('categories')->get();?>
+<?php $categories = DB::table('categories')->orderBy('name')->get();?>
 <table class="table">
   <thead>
     <tr>
