@@ -204,6 +204,24 @@ Route::post('/calendar/admin/write_event_data', function () {
     return view('calendar/admin/write_event_data');
 });
 
+Route::get('/calendar/admin/event_review', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/event_review');
+});
+
+Route::post('/calendar/admin/write_event_review', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('calendar/admin/write_event_review');
+});
+
 Route::get('/calendar/user/view_events_user', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
@@ -219,6 +237,11 @@ Route::get('/calendar/user/view_event_user', function () {
 });
 
 Route::get('/calendar/admin/view_event_admin', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
     return view('/calendar/admin/view_event_admin');
 });
 

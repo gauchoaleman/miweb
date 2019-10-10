@@ -37,7 +37,8 @@ ALTER TABLE `users`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-  --
+
+--
 -- Estructura de tabla para la tabla `events`
 --
 
@@ -48,6 +49,7 @@ CREATE TABLE `events` (
   `address` text NOT NULL,
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
+  `review` text,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -16,6 +16,7 @@
       <th scope="col" style="color:orange">Creado</th>
       <th scope="col" style="color:orange">Borrar</th>
       <th scope="col" style="color:orange">Editar</th>
+      <th scope="col" style="color:orange">Escribir reseña</th>
     </tr>
   </thead>
   <tbody>
@@ -49,6 +50,9 @@
   </td>
   <td>
   <a class='card-link' href='http://localhost:8000/calendar/admin/change_event_data?id={{$event->id}}'><img src='http://localhost:8000/img/edit.png'></a>
+  </td>
+  <td>
+  <a class='card-link' href='http://localhost:8000/calendar/admin/event_review?id={{$event->id}}'><img src='http://localhost:8000/img/review.png'></a>
   </td>
   </tr>
 @endforeach

@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('calendar.admin.forms.event_review_form')
+@include('includes/bottom_bar')
+@include('includes/bottom')
