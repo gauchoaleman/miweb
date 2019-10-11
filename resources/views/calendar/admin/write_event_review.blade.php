@@ -26,12 +26,12 @@ else {
   $res = DB::table('events')->where('id', $id)->update(['review' => $review]);
   //Copiar archivos
   if( $file1 ){
-    del_old_event_image($id,1);
+    del_old_event_pic($id,1);
     move_uploaded_file($file1->getRealPath(), $_SERVER['DOCUMENT_ROOT']."/img/events/$id.1.$file1_extension");
   }
   if( $file2 )
   {
-    del_old_event_image($id,2);
+    del_old_event_pic($id,2);
     move_uploaded_file($file2->getRealPath(), $_SERVER['DOCUMENT_ROOT']."/img/events/$id.2.$file2_extension");
   }
 

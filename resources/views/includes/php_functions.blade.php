@@ -8,7 +8,7 @@ function transform_result2array($result,$key,$value)
   return $ret;
 }
 
-function del_old_event_image($event_id,$pic_id)
+function del_old_event_pic($event_id,$pic_id)
 {
   $files = glob($_SERVER['DOCUMENT_ROOT']."/img/events/$event_id.$pic_id.*");
   foreach($files as $file)
