@@ -1,7 +1,7 @@
 <div class="container">
   <div class='row' border-width='1' >
     <div class='col-12' align='right'>
-      <a class='card-link' href='http://localhost:8000/documents/admin/add_document' ><img src='http://localhost:8000/img/add_document.png'> Agregar documento</a>
+      <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/add_document' ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/add_document.png'> Agregar documento</a>
     </div>
   </div>
 <?php
@@ -26,7 +26,7 @@ get();
 @foreach($documents as $document)
   <tr>
   <td>
-  <a target='_blank' href='http://localhost:8000/documents/{{$document->title}}.{{$document->extension}}'>{{$document->title}}</a>
+  <a target='_blank' href='http://{{$_SERVER['HTTP_HOST']}}/documents/{{$document->title}}.{{$document->extension}}'>{{$document->title}}</a>
   </td>
   <td>
   {{$document->name}}
@@ -36,16 +36,16 @@ get();
   {{$date->format('d/m/Y H:i:s')}}
   </td>
   <td>
-  <a class='card-link' href='http://localhost:8000/documents/admin/del_document?id={{$document->id}}'><img src='http://localhost:8000/img/delete.png'></a>
+  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/del_document?id={{$document->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
   </td>
   <td>
-    <a class='card-link' href='http://localhost:8000/documents/admin/change_document_title?id={{$document->id}}'><div align="center"><img src='http://localhost:8000/img/edit.png'></div></a>
+    <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_title?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
   </td>
   <td>
-    <a align="center" class='card-link' href='http://localhost:8000/documents/admin/change_document_category?id={{$document->id}}'><div align="center"><img src='http://localhost:8000/img/edit.png'></div></a>
+    <a align="center" class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_category?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
   </td>
   <td>
-    <a align="center" class='card-link' href='http://localhost:8000/documents/admin/change_document_file?id={{$document->id}}'><div align="center"><img src='http://localhost:8000/img/edit.png'></div></a>
+    <a align="center" class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_file?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
   </td>
   </tr>
 @endforeach

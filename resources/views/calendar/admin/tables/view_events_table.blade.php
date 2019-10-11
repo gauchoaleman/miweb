@@ -1,7 +1,7 @@
 <div class="container">
   <div class='row' border-width='1' >
     <div class='col-12' align='right'>
-      <a class='card-link' href='http://localhost:8000/calendar/admin/add_event' ><img src='http://localhost:8000/img/add_event.jpeg'> Agregar evento</a>
+      <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/add_event' ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/add_event.jpeg'> Agregar evento</a>
     </div>
   </div>
 <?php $events = DB::table('events')->get(); ?>
@@ -25,7 +25,7 @@
 @foreach($events as $event)
   <tr>
   <td>
-  <a href='http://localhost:8000/calendar/admin/view_event_admin?id={{$event->id}}'>{{$event->name}}</a>
+  <a href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/view_event_admin?id={{$event->id}}'>{{$event->name}}</a>
   </td>
   <td>
   {{$event->description}}
@@ -46,13 +46,13 @@
   {{$created_at->format('d/m/Y H:i:s')}}
   </td>
   <td>
-  <a class='card-link' href='http://localhost:8000/calendar/admin/del_event?id={{$event->id}}'><img src='http://localhost:8000/img/delete.png'></a>
+  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/del_event?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
   </td>
   <td>
-  <a class='card-link' href='http://localhost:8000/calendar/admin/change_event_data?id={{$event->id}}'><img src='http://localhost:8000/img/edit.png'></a>
+  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/change_event_data?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></a>
   </td>
   <td>
-  <a class='card-link' href='http://localhost:8000/calendar/admin/event_review?id={{$event->id}}'><img src='http://localhost:8000/img/review.png'></a>
+  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/event_review?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/review.png'></a>
   </td>
   </tr>
 @endforeach

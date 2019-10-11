@@ -18,7 +18,7 @@ function del_old_event_image($event_id,$pic_id)
 function get_event_pic_url($event_id,$pic_id)
 {
   $files = glob($_SERVER['DOCUMENT_ROOT']."/img/events/$event_id.$pic_id.*");
-
-  return "http://localhost:8000/img/events/".basename($files[0]);
+  if( isset($files[0]) )
+    return "http://".$_SERVER['HTTP_HOST']."/img/events/".basename($files[0]);
 }
 ?>
