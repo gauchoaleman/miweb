@@ -31,11 +31,11 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             @foreach($categories as $category)
               <li class="dropdown-submenu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">{{ $category->name }}</span><span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label"><div class="navbar-brand" style="color:orange">&nbsp;&nbsp;{{ $category->name }}</div></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                     <?php $category_documents = DB::table('documents')->where('category_id', $category->id)->get(); ?>
                     @foreach ($category_documents as $category_document)
-                       <li><a target="_blank" href="http://{{$_SERVER['HTTP_HOST']}}/documents/{{ $category_document->title }}.{{ $category_document->extension }}">{{ $category_document->title }}</a></li>
+                       <li>&nbsp;&nbsp;<a target="_blank" href="http://{{$_SERVER['HTTP_HOST']}}/documents/{{ $category_document->title }}.{{ $category_document->extension }}"><div class="navbar-brand">{{ $category_document->title }}</div></a></li>
                     @endforeach
                   </ul>
               </li>

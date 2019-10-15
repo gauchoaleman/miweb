@@ -43,7 +43,7 @@
   @if( $user->is_admin==1 )
   <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/toggle_admin?id={{$user->id}}&toggle_to=0'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/si.jpg'></a>
   @else
-  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/toggle_admin?id={{$user->id}}&toggle_to=1'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/no.jpg'></a>
+  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/toggle_admin?id={{$user->id}}&toggle_to=1'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/no.png'></a>
   @endif
   </td>
   </tr>
