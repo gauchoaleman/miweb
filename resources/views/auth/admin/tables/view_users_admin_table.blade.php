@@ -44,7 +44,7 @@
   <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/change_user_data?id={{$user->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></a>
   </td>
   <td>
-  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/change_user_pass?id={{$user->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/change_password.jpeg'></a>
+  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/change_user_pass?id={{$user->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/change_password.png'></a>
   </td>
   <td>
   @if( $user->is_admin==1 )
