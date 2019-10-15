@@ -1,11 +1,16 @@
 <div class="container">
+
+  <div class="card">
+    <div class="card-header" style="color:orange">ABM categorías</div>
+    <div class="card-body">
+
   <div class='row' border-width='1' >
     <div class='col-12' align='right'>
       <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/categories/admin/add_category' ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/add_category.jpeg'> Agregar categoría</a>
     </div>
   </div>
 <?php $categories = DB::table('categories')->orderBy('name')->get();?>
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col" style="color:orange">Nombre</th>
@@ -29,4 +34,6 @@
 @endforeach
 </tbody>
 </table>
+</div>
+</div>
 </div>

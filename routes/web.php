@@ -259,13 +259,13 @@ Route::get('/calendar/admin/view_event_admin', function () {
     return view('/calendar/admin/view_event_admin');
 });
 
-Route::get('/calendar/admin/del_event_pictures', function () {
+Route::get('/calendar/admin/del_event_picture', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
   elseif (Auth::user()->is_admin == 0)
     return view('no_access');
   else
-    return view('calendar/admin/del_event_pictures');
+    return view('calendar/admin/del_event_picture');
 });
 
 Route::post('/contact/send_contact', function () {

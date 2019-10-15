@@ -1,4 +1,9 @@
 <div class="container">
+
+  <div class="card">
+    <div class="card-header" style="color:orange">ABM documentos</div>
+    <div class="card-body">
+
   <div class='row' border-width='1' >
     <div class='col-12' align='right'>
       <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/add_document' ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/add_document.png'> Agregar documento</a>
@@ -10,7 +15,7 @@ join('categories', 'documents.category_id', '=', 'categories.id')->
 select('documents.*', 'categories.name')->
 get();
 ?>
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col" style="color:orange">Título</th>
@@ -51,4 +56,6 @@ get();
 @endforeach
 </tbody>
 </table>
+</div>
+</div>
 </div>

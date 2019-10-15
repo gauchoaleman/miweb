@@ -1,11 +1,18 @@
 <div class="container">
-  <div class='row' border-width='1' >
-    <div class='col-12' align='right'>
-      <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/add_user' ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/add_user.jpeg'> Agregar usuario</a>
-    </div>
-  </div>
+
 <?php $users = DB::table('users')->get();?>
-<table class="table">
+
+<div class="card">
+  <div class="card-header" style="color:orange">ABM usuarios</div>
+  <div class="card-body">
+
+    <div class='row' border-width='1' >
+      <div class='col-12' align='right'>
+        <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/auth/admin/add_user' ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/add_user.jpeg'> Agregar usuario</a>
+      </div>
+    </div>
+
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col" style="color:orange">Nombre</th>
@@ -50,4 +57,8 @@
 @endforeach
 </tbody>
 </table>
+</div>
+</div>
+
+
 </div>
