@@ -1,52 +1,41 @@
 
 <div class="container">
 
-<?php
+<?php $events = DB::table('events')->whereRaw('date<now()')->where('review','!=','NULL')->orderBy('date', 'asc')->get(); ?>
 
-//Select del view, se puede usar para filtros
-        $events = DB::table('events')->whereRaw('date<now()')->where('review','!=','NULL')->orderBy('date', 'asc')->get();
-
-//Títulos
-?>
-<table class="table">
+<div class="card">
+  <div class="card-header" style="color:orange">Eventos pasados</div>
+  <div class="card-body">
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col" style="color:orange">Nombre</th>
-      <th scope="col" style="color:orange">Descripción</th>
       <th scope="col" style="color:orange">Dirección</th>
       <th scope="col" style="color:orange">Fecha</th>
       <th scope="col" style="color:orange">Hora</th>
     </tr>
   </thead>
   <tbody>
-<?php
-
-
-        foreach ($events as $event) {
-          echo "<tr>";
-          echo "<td>";
-          echo "<a href='http://".$_SERVER['HTTP_HOST']."/calendar/user/view_event_review_user?id=".$event->id."'>".$event->name."</a>";
-          echo "</td>";
-          echo "<td>";
-          echo "$event->description</a>";
-          echo "</td>";
-          echo "<td>";
-          echo "$event->address</a>";
-          echo "</td>";
-          echo "<td>";
-          $date = new DateTime($event->date);
-          echo $date->format('d/m/Y');
-          //echo $event->date;
-          echo "</td>";
-          echo "<td>";
-          $time = new DateTime($event->time);
-          echo $time->format('H:i');
-          echo "</td>";
-          echo "</tr>";
-
-        }
-        echo "</tbody>";
-        echo "</table>";
-
-        ?>
+        @foreach ($events as $event)
+          <tr>
+          <td>
+          <a href='http://{{$_SERVER['HTTP_HOST']}}/calendar/user/view_event_review_user?id={{$event->id}}'>{{$event->name}}</a>
+          </td>
+          <td>
+          {{$event->address}}
+          </td>
+          <td>
+          <?php $date = new DateTime($event->date); ?>
+          {{$date->format('d/m/Y')}}
+          </td>
+          <td>
+          <?php $time = new DateTime($event->time); ?>
+          {{$time->format('H:i')}}
+          </td>
+          </tr>
+        @endforeach
+        </tbody>
+        </table>
+</div>
+</div>
 </div>

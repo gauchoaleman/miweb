@@ -19,7 +19,7 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                             <label for="review" class="col-md-4 col-form-label text-md-right">{{ __('Contenido') }}</label>
 
                             <div class="col-md-6">
-                              <textarea rows="4" cols="45" name="review" required>{{$event->review}}</textarea>
+                              <textarea rows="4" cols="40" name="review" required>{{$event->review}}</textarea>
 
                             </div>
                         </div>
@@ -32,9 +32,9 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
 
                             </div>
                             <?php if( $foto1_url = get_event_pic_url($_GET['id'],1)){?>
-                                    <img src="{{$foto1_url}}" width=100>
+                                    <img src="{{$foto1_url}}" width=75 align=right>
                                     <a href="/calendar/admin/del_event_picture?id={{$_GET['id']}}&pic_id=1">
-                                      <img src="http://{{$_SERVER['HTTP_HOST']}}/img/delete.png" width=10 height=10>
+                                      <img src="http://{{$_SERVER['HTTP_HOST']}}/img/delete.png" width=10 height=10 align=right>
                                     </a>
                           <?php } ?>
 
@@ -46,12 +46,12 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                                 {{ Form::file('pic2') }}
 
                             </div>
-                            <?php if( $foto2_url = get_event_pic_url($_GET['id'],2)){?>
-                                    <img src="{{$foto2_url}}" width=100>
+                          @if( $foto2_url = get_event_pic_url($_GET['id'],2))
+                                    <img src="{{$foto2_url}}" width=75 align=right>
                                     <a href="/calendar/admin/del_event_picture?id={{$_GET['id']}}&pic_id=2">
-                                      <img src="http://{{$_SERVER['HTTP_HOST']}}/img/delete.png" width=10 height=10>
-                                    </a
-                          <?php } ?>
+                                      <img src="http://{{$_SERVER['HTTP_HOST']}}/img/delete.png" width=10 height=10 align=right>
+                                    </a>
+                          @endif
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
