@@ -43,6 +43,9 @@
                     @foreach ($category_documents as $category_document)
                        <li>&nbsp;&nbsp;<a target="_blank" href="http://{{$_SERVER['HTTP_HOST']}}/documents/{{ $category_document->title }}.{{ $category_document->extension }}"><div style="color:orange" class="navbar-brand">{{ $category_document->title }}</div></a></li>
                     @endforeach
+                    @if (!sizeof($category_documents))
+                       <li>&nbsp;</li>
+                    @endif
                   </ul>
               </li>
               @endforeach
