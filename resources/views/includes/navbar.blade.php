@@ -99,7 +99,7 @@
 <div class="dropdown">
     <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#F8F8F8';" class="navbar_item">
-        <img src='http://{{$_SERVER['HTTP_HOST']}}/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+        <img src='http://{{$_SERVER['HTTP_HOST']}}/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}&nbsp;&nbsp;
       </div>
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
