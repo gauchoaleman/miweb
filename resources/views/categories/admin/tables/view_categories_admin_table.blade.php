@@ -25,7 +25,7 @@
   {{$category->name}}
   </td>
   <td>
-  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/categories/admin/del_category?id={{$category->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
+  <a class='card-link' onclick="confirm_del_category()" href="#" ><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
   </td>
   <td>
   <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/categories/admin/change_category_data?id={{$category->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></a>
@@ -37,3 +37,11 @@
 </div>
 </div>
 </div>
+<script>
+function confirm_del_category() {
+  var txt;
+  if (confirm("¿Está seguro que quiere borrar la categoría? ¡Todos sus documentos se borrarán!")) {
+    window.open("http://{{$_SERVER['HTTP_HOST']}}/categories/admin/del_category?id={{$category->id}}");;
+  }
+}
+</script>
