@@ -1,5 +1,14 @@
 .navbar_item {
     color: orange;
+    border-radius: 25px;
+    border: 10px solid #ffdca4;
+}
+
+.active_navbar_item {
+    color: orange;
+    border-radius: 25px;
+    border: 10px solid #ffdca4;
+    background-color: #ffdca4;
 }
 
 a { color: orange; }
