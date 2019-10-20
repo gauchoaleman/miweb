@@ -53,42 +53,34 @@
       </div>
 
       @if ( (Auth::user()->is_admin == 1) )
-      <li class="nav-item active">
-        <div class="navbar-brand" >
-          <a class="navbar-brand" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/auth/admin/view_users_admin">
+
+      <div class="dropdown">
+          <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#F8F8F8';" class="navbar_item">
-              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/user_crud.png'>ABM Usuarios&nbsp;
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/configuration.png'>Configuración
             </div>
           </a>
-        </div>
-      </li>
-      <li class="nav-item active">
-        <div class="navbar-brand" >
-          <a class="navbar-brand" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/view_events_admin">
-            <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#F8F8F8';" class="navbar_item">
-              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/calendar_crud.png'>ABM Eventos&nbsp;
-            </div>
-          </a>
-        </div>
-      </li>
-      <li class="nav-item active">
-        <div class="navbar-brand" >
-          <a class="navbar-brand" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/categories/admin/view_categories_admin">
-            <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#F8F8F8';" class="navbar_item">
-              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/category_crud.png'>ABM Categorías&nbsp;
-            </div>
-          </a>
-        </div>
-      </li>
-      <li class="nav-item active">
-        <div class="navbar-brand" >
-          <a class="navbar-brand" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/documents/admin/view_documents_admin">
-            <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#F8F8F8';" class="navbar_item">
-              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/document_crud.png'>ABM Documentos&nbsp;
-            </div>
-          </a>
-        </div>
-      </li>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+            <a class="dropdown-item" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/view_events_admin">
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/calendar_crud.png'>Eventos&nbsp;
+            </a>
+
+            <a class="dropdown-item" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/auth/admin/view_users_admin">
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/user_crud.png'>Usuarios&nbsp;
+            </a>
+
+            <a class="dropdown-item" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/categories/admin/view_categories_admin">
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/category_crud.png'>Categorías&nbsp;
+            </a>
+
+            <a class="dropdown-item" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/documents/admin/view_documents_admin">
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/document_crud.png'>Documentos&nbsp;
+            </a>
+
+          </div>
+      </div>
+
 
 
       @endif
