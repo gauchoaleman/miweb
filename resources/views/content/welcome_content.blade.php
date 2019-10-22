@@ -1,4 +1,6 @@
+<img src="/img/collage.jpg" width=100%>
 <div class="container">
+
 <div class="title m-b-md" style="color:orange" align="center" valign="top">
 Desde tu lugar se puede prevenir<br>
 </div>
@@ -11,4 +13,18 @@ Ademas otras actividades brindaremos cursos, talleres y asesoramiento a docentes
 Se concientizara y sensibilizara a la población de la problemática de suicidio en general con fines de prevención.<br>
 Para finalizar nos regimos con el paradigma biopsicosocial y espiritual por lo tanto somos respetuosos de todos los credos e ideologías.
 </h4>
+<br>
+<hr>
+<br>
+<div class="row">
+<div class="col-sm" align=center>
+  <img src="/img/foto_home1.png" width=200><br>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div>
+
+<div class="col-sm" align=center>
+<img src="/img/foto_home2.png" width=200><br>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div>
+</div>
 </div>

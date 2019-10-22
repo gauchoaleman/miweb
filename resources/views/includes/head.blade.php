@@ -1,3 +1,4 @@
+@include('includes/php_functions')
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -12,4 +13,3 @@
         <link rel="stylesheet" href="/css/custom_styles.css" crossorigin="anonymous">
     </head>
     <body>
-@include('includes/php_functions')
