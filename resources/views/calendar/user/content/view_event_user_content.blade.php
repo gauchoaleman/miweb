@@ -12,7 +12,7 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                         <div class="form-group row">
                             <div class="col-md-4  text-md-right">Descripción</div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6"  style="text-align:justify">
                                 <?php echo $event->description; ?>
                             </div>
                         </div>
