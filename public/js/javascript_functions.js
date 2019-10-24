@@ -4,3 +4,7 @@ function confirm_del_category() {
     window.open("http://{{$_SERVER['HTTP_HOST']}}/categories/admin/del_category?id={{$category->id}}");;
   }
 }
+
+function go_back() {
+  window.history.back();
+}

@@ -70,6 +70,9 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Modifique evento') }}
                                 </button>
+                                <button type="cancel" class="btn btn-primary" onclick="onclick="go_back()">
+                                  Cancelar
+                                </button>
                             </div>
                         </div>
                     </form>

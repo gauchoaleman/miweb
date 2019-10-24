@@ -36,6 +36,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Cambiar clave') }}
                                 </button>
+                                <button type="cancel" class="btn btn-primary" onclick="go_back()">
+                                  Cancelar
+                                </button>
                             </div>
                         </div>
                     </form>

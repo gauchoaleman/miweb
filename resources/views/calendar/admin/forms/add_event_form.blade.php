@@ -61,6 +61,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Agregue evento') }}
                                 </button>
+                                <button type="cancel" class="btn btn-primary" onclick="onclick="go_back()">
+                                  Cancelar
+                                </button>
+
                             </div>
                         </div>
                     </form>

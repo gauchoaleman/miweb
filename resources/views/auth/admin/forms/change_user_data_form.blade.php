@@ -50,6 +50,9 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Enviar') }}
                                 </button>
+                                <button type="cancel" class="btn btn-primary" onclick="go_back()">
+                                  Cancelar
+                                </button>
                             </div>
                         </div>
                     </form>

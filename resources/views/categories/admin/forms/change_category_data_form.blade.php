@@ -30,6 +30,9 @@ $event = DB::table('categories')->where('id', $_GET['id'])->first();
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Modifique categoría') }}
                                 </button>
+                                <button type="cancel" class="btn btn-primary" onclick="go_back()">
+                                  Cancelar
+                                </button>
                             </div>
                         </div>
                     </form>

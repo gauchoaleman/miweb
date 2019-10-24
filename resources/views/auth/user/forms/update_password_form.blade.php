@@ -40,6 +40,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Actualize datos') }}
                                 </button>
+                                <button type="cancel" class="btn btn-primary" onclick="go_back()">
+                                  Cancelar
+                                </button>
                             </div>
                         </div>
                     </form>
