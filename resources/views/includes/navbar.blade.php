@@ -1,9 +1,9 @@
+<?php if( !isset($there_is_error)) $there_is_error=FALSE; ?>
 
-{{$_SERVER['REQUEST_URI']}}
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d2d8d8;">
   <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}">
     <div
-    @if( where_i_am()=="Home")
+    @if( where_i_am($there_is_error)=="Home")
       class="active_navbar_item"
     @else
       onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
@@ -17,19 +17,21 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
 
-      @if (Route::has('login'))
-      @auth
-
       <div class="dropdown">
           <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div
-            @if( where_i_am()=="Calendar")
+            @if( where_i_am($there_is_error)=="Calendar")
               class="active_navbar_item"
             @else
               onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
             @endif
             >
               <img src='http://{{$_SERVER['HTTP_HOST']}}/img/calendar.png'>Eventos
+
+              @if( week_event() )
+                &nbsp;(!)
+              @endif
+
             </div>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -54,7 +56,7 @@
                     <ul class="dropdown-menu">
                     <?php $category_documents = DB::table('documents')->where('category_id', $category->id)->get(); ?>
                     @foreach ($category_documents as $category_document)
-                       <li>&nbsp;&nbsp;<a target="_blank" href="http://{{$_SERVER['HTTP_HOST']}}/documents/{{ $category_document->title }}.{{ $category_document->extension }}"><div style="color:orange" class="navbar-brand">{{ $category_document->title }}</div></a></li>
+                       <li>&nbsp;&nbsp;<a href="/documents/user/show_document_user?id={{ $category_document->id }}"><div style="color:orange" class="navbar-brand">{{ $category_document->title }}</div></a></li>
                     @endforeach
                     @if (!sizeof($category_documents))
                        <li>&nbsp;</li>
@@ -65,12 +67,13 @@
           </div>
       </div>
 
+      @auth
       @if ( (Auth::user()->is_admin == 1) )
 
       <div class="dropdown">
           <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div
-            @if( where_i_am()=="Configuration")
+            @if( where_i_am($there_is_error)=="Configuration")
               class="active_navbar_item"
             @else
               onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
@@ -104,7 +107,7 @@
 
       @endif
       @endauth
-      @endif
+
 
     </ul>
     @if (Route::has('login'))
@@ -113,7 +116,7 @@
 <div class="dropdown">
     <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <div
-      @if( where_i_am()=="Hello")
+      @if( where_i_am($there_is_error)=="Hello")
         class="active_navbar_item"
       @else
         onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
@@ -129,7 +132,7 @@
 </div>
     @else
     <div
-    @if( where_i_am()=="Login")
+    @if( where_i_am($there_is_error)=="Login")
       class="active_navbar_item"
     @else
       onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
@@ -137,7 +140,7 @@
     >
         <a class="navbar-brand" href="{{ route('login') }}"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/login.png'>Login</a></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div
-        @if( where_i_am()=="Register")
+        @if( where_i_am($there_is_error)=="Register")
           class="active_navbar_item"
         @else
           onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
@@ -149,4 +152,7 @@
     @endauth
     @endif
 </nav>
+@if( where_i_am(FALSE)=="Home")
+<div  id="home_gradient">
+@endif
 <br>

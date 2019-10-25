@@ -223,31 +223,19 @@ Route::post('/calendar/admin/write_event_review', function () {
 });
 
 Route::get('/calendar/user/view_events_user', function () {
-  if (!isset(Auth::user()->name))
-    return view('no_access');
-  else
-    return view('/calendar/user/view_events_user');
+  return view('/calendar/user/view_events_user');
 });
 
 Route::get('/calendar/user/view_event_user', function () {
-  if (!isset(Auth::user()->name))
-    return view('no_access');
-  else
-    return view('/calendar/user/view_event_user');
+  return view('/calendar/user/view_event_user');
 });
 
 Route::get('/calendar/user/view_events_review_user', function () {
-  if (!isset(Auth::user()->name))
-    return view('no_access');
-  else
-    return view('/calendar/user/view_events_review_user');
+  return view('/calendar/user/view_events_review_user');
 });
 
 Route::get('/calendar/user/view_event_review_user', function () {
-  if (!isset(Auth::user()->name))
-    return view('no_access');
-  else
-    return view('/calendar/user/view_event_review_user');
+  return view('/calendar/user/view_event_review_user');
 });
 
 Route::get('/calendar/admin/view_event_admin', function () {
@@ -269,11 +257,11 @@ Route::get('/calendar/admin/del_event_picture', function () {
 });
 
 Route::post('/contact/send_contact', function () {
-    return view('/contact/send_contact');
+  return view('/contact/send_contact');
 });
 
 Route::get('/contact/contact', function () {
-    return view('/contact/contact');
+  return view('/contact/contact');
 });
 
 Route::get('/categories/admin/add_category', function () {
@@ -427,6 +415,15 @@ Route::post('/documents/admin/write_document_file', function () {
     return view('no_access');
   else
     return view('documents/admin/write_document_file');
+});
+
+Route::get('/documents/user/show_document_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('/documents/user/show_document_user');
 });
 
 Auth::routes();

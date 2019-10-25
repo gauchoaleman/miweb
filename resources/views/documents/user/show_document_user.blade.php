@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('documents/user/content/show_document_user_content')
+@include('includes/bottom_bar')
+@include('includes/bottom')

@@ -1,5 +1,4 @@
 @include('includes/head')
-@include('includes/navbar')
 <?php
 
 $name= $_POST['name'];
@@ -27,9 +26,9 @@ foreach ($users as $user) {
   $to = $user->email;
   mail($to,$subject,$content,$headers);
 }
-
-echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
 ?>
+@include('includes/navbar')
+<div class='high_text' style='color:orange'>Datos actualizados</div>
 @include('calendar.admin.tables.view_events_table')
 @include('includes/bottom_bar')
 @include('includes/bottom')

@@ -104,3 +104,32 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+  --
+  -- Estructura de tabla para la tabla `documents`
+  --
+
+  CREATE TABLE `documents` (
+    `id` bigint(20) NOT NULL,
+    `category_id` bigint(20) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `extension` varchar(10) NOT NULL,
+    `review` text,
+    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+  --
+  -- Indices de la tabla `documents`
+  --
+
+  ALTER TABLE `documents`
+    ADD PRIMARY KEY (`id`);
+
+    --
+    -- AUTO_INCREMENT de la tabla `documents`
+    --
+    ALTER TABLE `documents`
+      MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+    /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+    /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+    /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

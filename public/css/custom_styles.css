@@ -11,6 +11,8 @@
     background-color: #ffdca4;
 }
 
+#home_gradient {
+background: linear-gradient(#d2d8d8, white);}
 
 a { color: orange; }
 a:hover { color: orange;}
