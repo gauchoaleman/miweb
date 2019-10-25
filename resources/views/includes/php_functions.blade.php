@@ -27,8 +27,10 @@ function where_i_am($there_is_error)
 
   if( strpos($_SERVER['REQUEST_URI'],"/admin/") !== FALSE )
     return "Configuration";
-  elseif ($_SERVER['REQUEST_URI']=="/contact/contact")
+  elseif ( $_SERVER['REQUEST_URI']=="/contact/contact" )
     return "Contact";
+  elseif ( strpos($_SERVER['REQUEST_URI'],"/documents/user/show_document_user") !== FALSE )
+    return "Documents";
   elseif(strpos($_SERVER['REQUEST_URI'],"/calendar/user") !== FALSE )
     return "Calendar";
   elseif ($_SERVER['REQUEST_URI']=="/login")

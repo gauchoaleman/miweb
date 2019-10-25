@@ -1,5 +1,5 @@
 <?php if( !isset($there_is_error)) $there_is_error=FALSE; ?>
-
+{{$_SERVER['REQUEST_URI']}}
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d2d8d8;">
   <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}">
     <div
@@ -45,8 +45,13 @@
 
       <div class="dropdown">
           <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item">
-              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/documents.png'>Documentos
+            <div
+            @if( where_i_am($there_is_error)=="Documents")
+              class="active_navbar_item"
+            @else
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+            @endif
+            >              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/documents.png'>Documentos
             </div>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
