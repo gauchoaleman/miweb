@@ -8,5 +8,6 @@ Session::flush();
   Sesión finalizada.
 </div>
 <br>
+@include('content/welcome_content')
 @include('includes/bottom_bar')
 @include('includes/bottom')

@@ -1,7 +1,14 @@
 
+{{$_SERVER['REQUEST_URI']}}
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d2d8d8;">
   <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}">
-    <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item">
+    <div
+    @if( where_i_am()=="Home")
+      class="active_navbar_item"
+    @else
+      onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+    @endif
+    >
       <img src='http://{{$_SERVER['HTTP_HOST']}}/img/home.png'>Home</div></a>&nbsp;
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,7 +22,13 @@
 
       <div class="dropdown">
           <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item">
+            <div
+            @if( where_i_am()=="Calendar")
+              class="active_navbar_item"
+            @else
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+            @endif
+            >
               <img src='http://{{$_SERVER['HTTP_HOST']}}/img/calendar.png'>Eventos
             </div>
           </a>
@@ -56,8 +69,14 @@
 
       <div class="dropdown">
           <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item">
-              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/configuration.png'>Configuración
+            <div
+            @if( where_i_am()=="Configuration")
+              class="active_navbar_item"
+            @else
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+            @endif
+            >
+            <img src='http://{{$_SERVER['HTTP_HOST']}}/img/configuration.png'>Configuración
             </div>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -93,8 +112,13 @@
       <div>
 <div class="dropdown">
     <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item">
-        <img src='http://{{$_SERVER['HTTP_HOST']}}/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}&nbsp;&nbsp;
+      <div
+      @if( where_i_am()=="Hello")
+        class="active_navbar_item"
+      @else
+        onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+      @endif
+      >        <img src='http://{{$_SERVER['HTTP_HOST']}}/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}&nbsp;&nbsp;
       </div>
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -104,8 +128,22 @@
     </div>
 </div>
     @else
-        <a class="navbar-brand" href="{{ route('login') }}"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/login.png'>Login</a>&nbsp;
-        <a class="navbar-brand" href="/auth/user/register"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/register.png'> Registrarse</a>
+    <div
+    @if( where_i_am()=="Login")
+      class="active_navbar_item"
+    @else
+      onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+    @endif
+    >
+        <a class="navbar-brand" href="{{ route('login') }}"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/login.png'>Login</a></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div
+        @if( where_i_am()=="Register")
+          class="active_navbar_item"
+        @else
+          onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+        @endif
+        >
+        <a class="navbar-brand" href="/auth/user/register"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/register.png'> Registrarse</a></div>
 
     </div>
     @endauth
