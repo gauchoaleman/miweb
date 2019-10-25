@@ -25,6 +25,7 @@ get();
       <th scope="col"  style="color:orange">Editar título</th>
       <th scope="col"  style="color:orange">Editar categoría</th>
       <th scope="col"  style="color:orange">Editar archivo</th>
+      <th scope="col"  style="color:orange">Editar reseña</th>
     </tr>
   </thead>
   <tbody>
@@ -51,6 +52,9 @@ get();
   </td>
   <td>
     <a align="center" class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_file?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
+  </td>
+  <td>
+    <a align="center" class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_review?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
   </td>
   </tr>
 @endforeach

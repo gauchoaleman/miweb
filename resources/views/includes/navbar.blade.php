@@ -1,5 +1,4 @@
 <?php if( !isset($there_is_error)) $there_is_error=FALSE; ?>
-{{$_SERVER['REQUEST_URI']}}
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d2d8d8;">
   <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}">
     <div

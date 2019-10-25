@@ -417,6 +417,24 @@ Route::post('/documents/admin/write_document_file', function () {
     return view('documents/admin/write_document_file');
 });
 
+Route::get('/documents/admin/change_document_review', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('documents/admin/change_document_review');
+});
+
+Route::post('/documents/admin/write_document_review', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('documents/admin/write_document_review');
+});
+
 Route::get('/documents/user/show_document_user', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
