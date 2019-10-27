@@ -1,17 +1,17 @@
 <?php if( !isset($there_is_error)) $there_is_error=FALSE; ?>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d2d8d8;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
   <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}">
     <div
     @if( where_i_am($there_is_error)=="Home")
       class="active_navbar_item"
     @else
-      onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+      onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
     @endif
     >
       <img src='http://{{$_SERVER['HTTP_HOST']}}/img/home.png'>Home</div></a>&nbsp;
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+  </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -22,7 +22,7 @@
             @if( where_i_am($there_is_error)=="Calendar")
               class="active_navbar_item"
             @else
-              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
             @endif
             >
               <img src='http://{{$_SERVER['HTTP_HOST']}}/img/calendar.png'>Eventos
@@ -48,7 +48,7 @@
             @if( where_i_am($there_is_error)=="Documents")
               class="active_navbar_item"
             @else
-              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
             @endif
             >              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/documents.png'>Documentos
             </div>
@@ -80,7 +80,7 @@
             @if( where_i_am($there_is_error)=="Configuration")
               class="active_navbar_item"
             @else
-              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
             @endif
             >
             <img src='http://{{$_SERVER['HTTP_HOST']}}/img/configuration.png'>Configuración
@@ -123,7 +123,7 @@
       @if( where_i_am($there_is_error)=="Hello")
         class="active_navbar_item"
       @else
-        onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+        onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
       @endif
       >        <img src='http://{{$_SERVER['HTTP_HOST']}}/img/hello.png'>Hola {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}&nbsp;&nbsp;
       </div>
@@ -139,7 +139,7 @@
     @if( where_i_am($there_is_error)=="Login")
       class="active_navbar_item"
     @else
-      onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+      onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
     @endif
     >
         <a class="navbar-brand" href="{{ route('login') }}"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/login.png'>Login</a></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -147,7 +147,7 @@
         @if( where_i_am($there_is_error)=="Register")
           class="active_navbar_item"
         @else
-          onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item"
+          onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
         @endif
         >
         <a class="navbar-brand" href="/auth/user/register"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/register.png'> Registrarse</a></div>
@@ -156,7 +156,5 @@
     @endauth
     @endif
 </nav>
-@if( where_i_am(FALSE)=="Home")
-<div  id="home_gradient">
-@endif
+<div  id="home_gradient" style="min-height:795px">
 <br>

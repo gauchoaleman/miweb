@@ -2,13 +2,15 @@
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`) VALUES
-(12, 'Lucas', 'lucaspassa@gmail.com', NULL, '$2y$10$a7aFlN1XKtUNd84c4.HX0envqVFvRKquW52YKJ2/aRuSKmwb1nImy', NULL, '2019-08-24 02:39:07', NULL, 1),
-(17, 'Admin', 'admin@admin.com', NULL, '$2y$10$xv0EUF3vwTaxIJBhchJa9Oi5ysYCedDRwkwVF34rkZGreCRh3mZ0S', NULL, '2019-09-02 03:22:11', NULL, 1),
-(18, 'User', 'user@user.com', NULL, '$2y$10$va7Lz3zkhdv1Pu9QjshaQ.fuGymFEseSR.VtRUIXXf0g/7HOHyFgy', NULL, '2019-09-02 03:24:34', NULL, 0),
-(27, 'Andrea Rosales', 'andrearosalespsi@gmail.com', NULL, '$2y$10$.IppyzadSsayUHMKTKj6H.BA4ESHNzPvN86XVLLxRC99Ir.NhQrtq', NULL, '2019-09-25 20:10:28', NULL, 1),
-(28, 'Maria Eugenia Aparicio', 'eugeapa0125@gmail.com', NULL, '$2y$10$RMPvBQOG3Y415bj5HLSfb.ZMFQNFV8viCW4EgMRrXy/ZrCTSHfg4i', NULL, '2019-10-11 22:24:55', NULL, 1);
-
+INSERT INTO `users` (`id`, `name`, `email`, `send_mail`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`) VALUES
+(17, 'Adm', 'admin@admin.com', 0, NULL, '$2y$10$iXUKFz9rLX9GrU1yqB8Kb.36FMnIFKhuFFlRQoLgPT1aIZ8u1irB.', NULL, '2019-09-02 03:22:11', '2019-10-25 19:35:13', 1),
+(18, 'User', 'user@user.com', 0, NULL, '$2y$10$va7Lz3zkhdv1Pu9QjshaQ.fuGymFEseSR.VtRUIXXf0g/7HOHyFgy', NULL, '2019-09-02 03:24:34', NULL, 0),
+(27, 'Andrea Rosales', 'andrearosalespsi@gmail.com', 1, NULL, '$2y$10$.IppyzadSsayUHMKTKj6H.BA4ESHNzPvN86XVLLxRC99Ir.NhQrtq', NULL, '2019-09-25 20:10:28', NULL, 1),
+(28, 'Maria Eugenia Aparicio', 'eugeapa0125@gmail.com', 0, NULL, '$2y$10$RMPvBQOG3Y415bj5HLSfb.ZMFQNFV8viCW4EgMRrXy/ZrCTSHfg4i', NULL, '2019-10-11 22:24:55', NULL, 0),
+(29, 'Prueba sendmail', 'hola@holap.com', 1, NULL, '$2y$10$FwEWFNOPKxdEUYeMmzV0VOMX3emaufnQI57ulUPivNgTUuW0Mjlzy', NULL, '2019-10-27 18:11:05', NULL, 0),
+(30, 'Sin sendmail', 'sin@sin.com', 0, NULL, '$2y$10$c9/eVD3GGzass/vGz.Su5u7WCSD/YyK4Ia60pW4hFxIuudq3LADly', NULL, '2019-10-27 18:48:34', NULL, 0),
+(31, 'con sendmail', 'a@a.com', 1, NULL, '$2y$10$xCMb3DZMO0K4ITPQWc.k9e8S3BNl9OJ5xG7OzQqVuu3oDOWTIT7ZS', NULL, '2019-10-27 18:49:06', NULL, 0),
+(32, 'sin sendmail', 'aaa@bbb.com', 0, NULL, '$2y$10$o7q8Mrj0Q9IGalc6Tino2ON83L9aBJjddAiSIYHLJTVQB3htRIdOi', NULL, '2019-10-27 18:57:00', NULL, 0);
 --
 -- Volcado de datos para la tabla `events`
 --

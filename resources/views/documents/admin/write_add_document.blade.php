@@ -3,6 +3,7 @@
 <?php
 $file = \Request::file('file');
 $title = $_POST['title'];
+$review = $_POST['review'];
 $category_id = $_POST['category_id'];
 $extension = strtolower($file->getClientOriginalExtension());
 
@@ -17,7 +18,7 @@ if( sizeof($documents_same_title)){
   @include('includes/navbar')
   @include('documents.admin.forms.add_document_form', ['error' => $error])<?php
 }
-elseif( !preg_match('/^[\w áéíóúÁÉÍÓÚ]+$/', $title)){
+elseif( !preg_match('/^[\w áéíóúÁÉÍÓÚñÑ]+$/', $title)){
   $error = "El título no tiene sólo números y letras";
   ?>
   @include('includes/navbar')
@@ -25,7 +26,7 @@ elseif( !preg_match('/^[\w áéíóúÁÉÍÓÚ]+$/', $title)){
 }
 else{
   $res = DB::table('documents')->insert(
-    ['title' => $title, 'category_id' => $category_id, 'extension' => $extension]);
+    ['title' => $title, 'category_id' => $category_id, 'extension' => $extension, 'review' => $review]);
 
   move_uploaded_file($file->getRealPath(), $_SERVER['DOCUMENT_ROOT']."/documents/".$title.".".strtolower($file->getClientOriginalExtension()));
   //phpinfo();

@@ -4,6 +4,10 @@
 $name = $_POST['name'];
 $email = $_POST['email'];
 $id = Auth::user()->id;
+if( isset($_POST['send_mail']) )
+  $send_mail=TRUE;
+else
+  $send_mail=FALSE;
 
 // Me fijo si ese mail ya está en uso
 $users_same_email = DB::table('users')->where([
@@ -20,7 +24,7 @@ if( sizeof($users_same_email)){
 else{
 $res = DB::table('users')
             ->where('id', $id)
-            ->update(['name' => $name,'email'=>$email]);
+            ->update(['name' => $name,'email'=>$email,'send_mail'=>$send_mail]);
   $user = Auth::user();
   $user->name = $name;
   $user->email = $email;

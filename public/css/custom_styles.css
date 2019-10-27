@@ -12,7 +12,7 @@
 }
 
 #home_gradient {
-background: linear-gradient(#d2d8d8, white);}
+background: linear-gradient(white,#d2d8d8);}
 
 a { color: orange; }
 a:hover { color: orange;}

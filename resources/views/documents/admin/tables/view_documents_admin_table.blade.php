@@ -21,11 +21,11 @@ get();
       <th scope="col" style="color:orange">Título</th>
       <th scope="col"  style="color:orange">Categoría</th>
       <th scope="col"  style="color:orange">Fecha / Hora de ingreso</th>
-      <th scope="col"  style="color:orange">Borrar</th>
       <th scope="col"  style="color:orange">Editar título</th>
       <th scope="col"  style="color:orange">Editar categoría</th>
       <th scope="col"  style="color:orange">Editar archivo</th>
       <th scope="col"  style="color:orange">Editar reseña</th>
+      <th scope="col"  style="color:orange">Borrar</th>
     </tr>
   </thead>
   <tbody>
@@ -42,9 +42,6 @@ get();
   {{$date->format('d/m/Y H:i:s')}}
   </td>
   <td>
-  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/del_document?id={{$document->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
-  </td>
-  <td>
     <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_title?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
   </td>
   <td>
@@ -55,6 +52,9 @@ get();
   </td>
   <td>
     <a align="center" class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/documents/admin/change_document_review?id={{$document->id}}'><div align="center"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></div></a>
+  </td>
+  <td>
+  <a class='card-link' onclick="confirm_del_document({{$document->id}})" href="#"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
   </td>
   </tr>
 @endforeach

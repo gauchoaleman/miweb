@@ -12,6 +12,7 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `send_mail` tinyint(1) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -19,6 +20,7 @@ CREATE TABLE `users` (
   `updated_at` datetime DEFAULT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 --
 -- Indices de la tabla `users`

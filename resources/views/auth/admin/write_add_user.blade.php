@@ -5,6 +5,10 @@
 $password = Hash::make($_POST['password']);
 $name = $_POST['name'];
 $email = $_POST['email'];
+if( isset($_POST['send_mail']) )
+  $send_mail=TRUE;
+else
+  $send_mail=FALSE;
 
 // Me fijo si ese mail ya está en uso
 $users_same_email = DB::table('users')->where([
@@ -25,7 +29,7 @@ elseif( $_POST['password'] != $_POST['password_confirmation']){
 }
 else{
 $res = DB::table('users')->insert(
-    ['email' => $email, 'name' => $name, 'password'=>$password]
+    ['email' => $email, 'name' => $name, 'password'=>$password,'send_mail'=>$send_mail]
 );
 
   echo "<div class='high_text' style='color:orange'>Usuario agregado</div>";

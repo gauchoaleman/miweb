@@ -12,14 +12,13 @@
   <thead>
     <tr>
       <th scope="col" style="color:orange">Nombre</th>
-      <th scope="col" style="color:orange">Descripción</th>
       <th scope="col" style="color:orange">Dirección</th>
       <th scope="col" style="color:orange">Fecha</th>
       <th scope="col" style="color:orange">Hora</th>
       <th scope="col" style="color:orange">Creado</th>
-      <th scope="col" style="color:orange">Borrar</th>
       <th scope="col" style="color:orange">Editar</th>
       <th scope="col" style="color:orange">Escribir reseña</th>
+      <th scope="col" style="color:orange">Borrar</th>
     </tr>
   </thead>
   <tbody>
@@ -29,9 +28,6 @@
   <tr>
   <td>
   <a href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/view_event_admin?id={{$event->id}}'>{{$event->name}}</a>
-  </td>
-  <td>
-  {{$event->description}}
   </td>
   <td>
   {{$event->address}}
@@ -49,13 +45,13 @@
   {{$created_at->format('d/m/Y H:i:s')}}
   </td>
   <td>
-  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/del_event?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
-  </td>
-  <td>
   <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/change_event_data?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/edit.png'></a>
   </td>
   <td>
-  <a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/event_review?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/review.png'></a>
+  <div align=center><a class='card-link' href='http://{{$_SERVER['HTTP_HOST']}}/calendar/admin/event_review?id={{$event->id}}'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/review.png'></a></div>
+  </td>
+  <td>
+  <a class='card-link' onclick="confirm_del_event({{$event->id}})" href="#"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/delete.png'></a>
   </td>
   </tr>
 @endforeach

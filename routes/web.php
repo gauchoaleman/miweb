@@ -132,6 +132,15 @@ Route::get('/auth/admin/toggle_admin', function () {
     return view('auth/admin/toggle_admin');
 });
 
+Route::get('/auth/admin/toggle_send_mail', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('auth/admin/toggle_send_mail');
+});
+
 Route::get('/auth/admin/add_user', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
