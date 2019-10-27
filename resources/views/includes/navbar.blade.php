@@ -70,7 +70,15 @@
               @endforeach
           </div>
       </div>
-
+      <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/numbers">
+        <div
+        @if( where_i_am($there_is_error)=="Numbers")
+          class="active_navbar_item"
+        @else
+          onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
+        @endif
+        >
+          <img src='http://{{$_SERVER['HTTP_HOST']}}/img/number.png'>Nros. de emergencia</div></a>&nbsp;
       @auth
       @if ( (Auth::user()->is_admin == 1) )
 

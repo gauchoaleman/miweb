@@ -53,10 +53,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Actualize datos') }}
                                 </button>
-                                <a href="/"><button type="cancel" class="btn btn-primary">
+                                <button type="cancel" onclick="window.location='/';return false;" class="btn btn-primary">
                                   Cancelar
                                 </button>
-                                </a>
                             </div>
                         </div>
                     </form>

@@ -23,6 +23,10 @@ Route::get('/logout', function () {
     return view('logout');
 });
 
+Route::get('/numbers', function () {
+    return view('numbers');
+});
+
 Route::get('/auth/admin/view_users_admin', function () {
     if (!isset(Auth::user()->name))
       return view('no_access');

@@ -35,6 +35,8 @@ function where_i_am($there_is_error)
     return "Calendar";
   elseif ($_SERVER['REQUEST_URI']=="/login")
     return "Login";
+  elseif ($_SERVER['REQUEST_URI']=="/numbers")
+    return "Numbers";
   elseif( $_SERVER['REQUEST_URI']=="/auth/user/register" ||
           ($_SERVER['REQUEST_URI']=="/auth/user/write_register" && $there_is_error==TRUE )
           )
