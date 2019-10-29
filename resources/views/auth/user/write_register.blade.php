@@ -35,10 +35,13 @@ elseif( $_POST['password'] != $_POST['password_confirmation']){
 else{
 $res = DB::table('users')->insert(
     ['email' => $email, 'name' => $name, 'password'=>$password, 'send_mail'=>$send_mail]);
-?>@include('includes/navbar', ['there_is_error' => FALSE])<?php
-echo "<div class='high_text' style='color:orange'>Registro exitoso. <a href='/login'>Click aquí</a> para loguearse</div>";
 
-?>@include('content/welcome_content')<?php
+$last_insert_id_res = DB::select( DB::raw("SELECT LAST_INSERT_ID() as LID") );
+//Logueo usuario registrado
+Auth::loginUsingId($last_insert_id_res[0]->LID);
+?>
+@include('includes/navbar', ['there_is_error' => FALSE])
+@include('content/welcome_content')<?php
 }
 ?>
 @include('includes/bottom_bar')

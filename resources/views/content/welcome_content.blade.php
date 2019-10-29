@@ -1,4 +1,3 @@
-
 <img src="/img/collage.png" width=100%>
 <div class="container">
 
