@@ -6,19 +6,19 @@
 
               <div class="card-header" style="color:orange">{{ $error }}</div>
               @endif
-                <div class="card-header">{{ __('Actualizar clave') }}</div>
+                <div class="card-header">{{ __('Olvidó la clave') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/auth/user/write_update_password">
+                    <form method="POST" action="/auth/user/send_forgot_password_mail">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Clave') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Ingrese su email') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" required autocomplete="email">
 
-                                @error('password')
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -26,21 +26,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Reingrese clave') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Actualize clave') }}
+                                    {{ __('Enviar') }}
                                 </button>
-                                <button type="cancel" class="btn btn-primary" onclick="window.location='/';return false;">
+                                <button type="cancel" onclick="window.location='/';return false;" class="btn btn-primary">
                                   Cancelar
                                 </button>
                             </div>

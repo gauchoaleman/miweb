@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('auth/user/forms/forgot_password_form')
+@include('includes/bottom_bar')
+@include('includes/bottom')

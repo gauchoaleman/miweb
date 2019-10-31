@@ -47,7 +47,7 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" href="/auth/user/forgot_password">
                                         {{ __('¿Olvidó la clave?') }}
                                     </a>
                                 @endif

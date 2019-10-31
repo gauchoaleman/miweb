@@ -19,7 +19,7 @@ $content.= "Fecha: $date\r\n";
 $content.= "Hora : $time";
 $headers = "From: eventos@autoayuda.com";
 
-$users = DB::table('users')->get();
+$users = DB::table('users')->where('send_mail',TRUE)->get();
 
 foreach ($users as $user) {
   $to = $user->email;

@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+function db_hashtag( $user_id )
+{
+  $hash_user = DB::table('password_resets')->where([['user_id', '=', $user_id]])->orderBy('created_at','desc')->first();
+  return $hash_user->hashtag;
+}
 
 Route::get('no_access', function () {
     return view('no_access');
@@ -134,6 +139,25 @@ Route::get('/auth/admin/toggle_admin', function () {
     return view('no_access');
   else
     return view('auth/admin/toggle_admin');
+});
+
+Route::get('/auth/user/forgot_password', function () {
+  return view('auth/user/forgot_password');
+});
+
+Route::post('/auth/user/send_forgot_password_mail', function () {
+  return view('auth/user/send_forgot_password_mail');
+});
+
+Route::get('/auth/user/reset_password', function () {
+  if( $_GET['hashtag'] == db_hashtag($_GET['user_id']))
+    return view('auth/user/reset_password');
+  else
+    return view('no_access');
+});
+
+Route::post('/auth/user/write_reset_password', function () {
+  return view('auth/user/write_reset_password');
 });
 
 Route::get('/auth/admin/toggle_send_mail', function () {

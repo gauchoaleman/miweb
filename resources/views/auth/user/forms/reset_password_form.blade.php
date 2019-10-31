@@ -9,7 +9,7 @@
                 <div class="card-header">{{ __('Actualizar clave') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/auth/user/write_update_password">
+                    <form method="POST" action="/auth/user/write_reset_password?id={{$_GET['user_id']}}">
                         @csrf
 
                         <div class="form-group row">
