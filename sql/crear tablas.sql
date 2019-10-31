@@ -135,3 +135,9 @@ ALTER TABLE `categories`
     /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
     /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
     /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+    CREATE TABLE `password_resets` (
+      `user_id` bigint(20) NOT NULL,
+      `hashtag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

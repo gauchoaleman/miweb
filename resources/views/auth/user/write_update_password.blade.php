@@ -29,7 +29,7 @@ $res = DB::table('users')
 
 <?php if(isset($ok)){
   ?>@include('includes/navbar', ['there_is_error' => FALSE])<?php
-  echo "<div class='high_text' style='color:orange'>Datos actualizados</div>";
+  echo "<div class='high_text' style='color:orange'>Clave actualizada</div>";
   ?>
 
   @include('content/welcome_content')<?php
