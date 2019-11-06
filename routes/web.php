@@ -473,12 +473,7 @@ Route::post('/documents/admin/write_document_review', function () {
 });
 
 Route::get('/documents/user/show_document_user', function () {
-  if (!isset(Auth::user()->name))
-    return view('no_access');
-  elseif (Auth::user()->is_admin == 0)
-    return view('no_access');
-  else
-    return view('/documents/user/show_document_user');
+  return view('/documents/user/show_document_user');
 });
 
 Auth::routes();
