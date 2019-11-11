@@ -39,8 +39,8 @@ class HttpKernelBrowserTest extends TestCase
         $this->assertEquals('Request: /', $client->getResponse()->getContent(), '->doRequest() uses the request handler to make the request');
         $this->assertEquals('www.example.com', $client->getRequest()->getHost(), '->doRequest() uses the request handler to make the request');
 
-        $client->request('GET', 'http://www.example.com/?parameter=http://google.com');
-        $this->assertEquals('http://www.example.com/?parameter='.urlencode('http://google.com'), $client->getRequest()->getUri(), '->doRequest() uses the request handler to make the request');
+        $client->request('GET', 'http://www.example.com/?parameter=http://example.com');
+        $this->assertEquals('http://www.example.com/?parameter='.urlencode('http://example.com'), $client->getRequest()->getUri(), '->doRequest() uses the request handler to make the request');
     }
 
     public function testGetScript()
@@ -156,11 +156,11 @@ class HttpKernelBrowserTest extends TestCase
         /* should be modified when the getClientSize will be removed */
         $file->expects($this->any())
             ->method('getSize')
-            ->will($this->returnValue(INF))
+            ->willReturn(INF)
         ;
         $file->expects($this->any())
             ->method('getClientSize')
-            ->will($this->returnValue(INF))
+            ->willReturn(PHP_INT_MAX)
         ;
 
         $client->request('POST', '/', [], [$file]);

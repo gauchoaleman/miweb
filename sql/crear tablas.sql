@@ -141,3 +141,52 @@ ALTER TABLE `categories`
       `hashtag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    --
+    -- Estructura de tabla para la tabla `jobs`
+    --
+
+    CREATE TABLE `jobs` (
+      `id` bigint(20) UNSIGNED NOT NULL,
+      `queue` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+      `attempts` tinyint(3) UNSIGNED NOT NULL,
+      `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+      `available_at` int(10) UNSIGNED NOT NULL,
+      `created_at` int(10) UNSIGNED NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    -- --------------------------------------------------------
+
+    --
+    -- Estructura de tabla para la tabla `messages`
+    --
+
+    CREATE TABLE `messages` (
+      `id` int(10) UNSIGNED NOT NULL,
+      `user_id` int(10) UNSIGNED NOT NULL,
+      `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+      `created_at` timestamp NULL DEFAULT NULL,
+      `updated_at` timestamp NULL DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    -- --------------------------------------------------------
+
+
+
+    --
+    -- Índices para tablas volcadas
+    --
+
+    --
+    -- Indices de la tabla `jobs`
+    --
+    ALTER TABLE `jobs`
+      ADD PRIMARY KEY (`id`),
+      ADD KEY `jobs_queue_reserved_at_index` (`queue`,`reserved_at`);
+
+    --
+    -- Indices de la tabla `messages`
+    --
+    ALTER TABLE `messages`
+      ADD PRIMARY KEY (`id`);

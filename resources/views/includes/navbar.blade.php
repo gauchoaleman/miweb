@@ -79,6 +79,17 @@
         @endif
         >
           <img src='http://{{$_SERVER['HTTP_HOST']}}/img/number.png'>Nros. de emergencia</div></a>&nbsp;
+
+          <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/user/chat_window_user">
+            <div
+            @if( where_i_am($there_is_error)=="UserChat")
+              class="active_navbar_item"
+            @else
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
+            @endif
+            >
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/chat.png'>Chat</div></a>&nbsp;
+
       @auth
       @if ( (Auth::user()->is_admin == 1) )
 
@@ -124,7 +135,20 @@
     </ul>
     @if (Route::has('login'))
     @auth
-      <div>
+
+@if ( (Auth::user()->is_admin == 1) )
+<div
+@if( where_i_am($there_is_error)=="Chat")
+  class="active_navbar_item"
+@else
+  onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
+@endif
+>
+<a class="navbar-brand" href="/chat"><div class="tab blink" style="color:orange"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/chat.png'>Chat</div></a>
+</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+@endif
+
+
 <div class="dropdown">
     <a class="navbar-brand" style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <div
@@ -142,6 +166,9 @@
       <a class="dropdown-item" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}/auth/user/update_password"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/change_user_password.png'>Actualizar clave</a>
     </div>
 </div>
+
+
+
     @else
     <div
     @if( where_i_am($there_is_error)=="Login")
@@ -160,7 +187,7 @@
         >
         <a class="navbar-brand" href="/auth/user/register"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/register.png'> Registrarse</a></div>
 
-    </div>
+
     @endauth
     @endif
 </nav>

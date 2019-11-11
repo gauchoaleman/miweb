@@ -27,6 +27,8 @@ function where_i_am($there_is_error)
 
   if( strpos($_SERVER['REQUEST_URI'],"/admin/") !== FALSE )
     return "Configuration";
+    if( strpos($_SERVER['REQUEST_URI'],"/chat/user") !== FALSE )
+      return "UserChat";
   elseif ( $_SERVER['REQUEST_URI']=="/contact/contact" )
     return "Contact";
   elseif ( strpos($_SERVER['REQUEST_URI'],"/documents/user/show_document_user") !== FALSE )

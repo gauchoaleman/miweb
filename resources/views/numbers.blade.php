@@ -10,23 +10,27 @@
                 <div class="card-body">
                         @csrf
                         <div class="form-group row">
-                            <div class="col-md-2  text-md-right">Bariloche:</div>
-
-                            <div class="col-md-1"  style="color:orange">
+                            <div class="col-md-7  text-md-left">Bariloche:
                                 114
                               <script>if (navigator.userAgent.indexOf('Mobile') !== -1) {
-                                document.write("<a href='tel:154301742'><img src='/img/number.png' height=20></a>");
+                                document.write("<a href='tel:154301742'><img src='/img/orange_phone.png' height=20></a>");
                               }</script>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-2  text-md-right">Nacional:</div>
-
-                            <div class="col-md-1"  style="color:orange">
-                                110
+                            <div class="col-md-7  text-md-left">Nacional 1:
+                                135 (línea gratuita)
                               <script>if (navigator.userAgent.indexOf('Mobile') !== -1) {
-                                document.write("<a href='tel:154301742'><img src='/img/number.png' height=20></a>");
+                                document.write("<a href='tel:154301742'><img src='/img/orange_phone.png' height=20></a>");
+                              }</script>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-7  text-md-left">Nacional 2:
+                              (011) 5275-1135
+                              <script>if (navigator.userAgent.indexOf('Mobile') !== -1) {
+                                document.write("<a href='tel:154301742'><img src='/img/orange_phone.png' height=20></a>");
                               }</script>
                             </div>
                         </div>

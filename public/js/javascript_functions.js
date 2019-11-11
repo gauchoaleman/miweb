@@ -25,3 +25,10 @@ function confirm_del_document(id) {
 function go_back() {
   window.history.back();
 }
+
+function blinker() {
+    $('.blinking').fadeOut(500);
+    $('.blinking').fadeIn(500);
+}
+
+setInterval(blinker, 1000);

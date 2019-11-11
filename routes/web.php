@@ -476,6 +476,16 @@ Route::get('/documents/user/show_document_user', function () {
   return view('/documents/user/show_document_user');
 });
 
+Route::get('/chat/user/chat_window_user', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('/chat/user/chat_window_user');
+});
+
+
 Auth::routes();
 
 Route::get('/home', function ()  {
