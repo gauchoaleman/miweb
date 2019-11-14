@@ -13,7 +13,7 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                             <div class="col-md-4  text-md-right">Descripción</div>
 
                             <div class="col-md-6" style="text-align:justify">
-                                {{$event->description}} 
+                                {{$event->description}}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -47,6 +47,31 @@ $event = DB::table('events')->where('id', $_GET['id'])->first();
                                 {{$created_at->format('d/m/Y H:i:s')}}
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-4  text-md-right" >Reseña</div>
+
+                            <div class="col-md-6"  style="text-align:justify">
+                                <?php echo $event->review; ?>
+                            </div>
+                        </div>
+                        <?php if( $foto1_url = get_event_pic_url($_GET['id'],1)){?>
+                        <div class="form-group row">
+                            <div class="col-md-4  text-md-right">Foto 1</div>
+
+                            <div class="col-md-6">
+                                <img src="{{$foto1_url}}" width=400>
+                            </div>
+                        </div>
+                      <?php }
+                      if( $foto2_url = get_event_pic_url($_GET['id'],2)){?>
+                      <div class="form-group row">
+                          <div class="col-md-4  text-md-right">Foto 2</div>
+
+                          <div class="col-md-6">
+                              <img src="{{$foto2_url}}" width=400>
+                          </div>
+                      </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
