@@ -19,7 +19,7 @@
   </div>
   <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
   <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item">
-    <a class="navbar-brand" style="color:orange" href="http://{{$_SERVER['HTTP_HOST']}}"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/download_app.png'>Bajar App</a>&nbsp;
+    <a class="navbar-brand" target="_blank" style="color:orange" href='https://wa.me/542944301742?text=Hola!'><img src='http://{{$_SERVER['HTTP_HOST']}}/img/whatsapp.png'>Whatsapp</a>&nbsp;
   </div>
   <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
   <div onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='#d2d8d8';" class="navbar_item" align=center>

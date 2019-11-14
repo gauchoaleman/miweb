@@ -34,7 +34,11 @@
                               }</script>
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                            <div class="col-md-7  text-md-left">Whatsapp:
+                                <a target="_blank" href='https://wa.me/542944301742?text=Hola!'><img src='/img/whatsapp.png' height=20></a>
+                            </div>
+                        </div>
 
                 </div>
             </div>

@@ -20,5 +20,5 @@
         </div>
     </div>
 </div>
-@include('includes/bottom_bar');
+@include('includes/bottom_bar')
 @include('includes/bottom')
