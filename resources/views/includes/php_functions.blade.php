@@ -25,10 +25,17 @@ function get_event_pic_url($event_id,$pic_id)
 function where_i_am($there_is_error)
 {
 
-  if( strpos($_SERVER['REQUEST_URI'],"/admin/") !== FALSE )
+  if( (strpos($_SERVER['REQUEST_URI'],"auth/admin/") !== FALSE) ||
+      (strpos($_SERVER['REQUEST_URI'],"calendar/admin/") !== FALSE) ||
+      (strpos($_SERVER['REQUEST_URI'],"categories/admin/") !== FALSE) ||
+      (strpos($_SERVER['REQUEST_URI'],"documents/admin/") !== FALSE)
+
+   )
     return "Configuration";
-    if( strpos($_SERVER['REQUEST_URI'],"/chat/user") !== FALSE )
+  elseif( strpos($_SERVER['REQUEST_URI'],"/chat/user") !== FALSE )
       return "UserChat";
+  elseif( $_SERVER['REQUEST_URI']=="/mail/admin/mail_form" )
+      return "SendMail";
   elseif ( $_SERVER['REQUEST_URI']=="/contact/contact" )
     return "Contact";
   elseif ( strpos($_SERVER['REQUEST_URI'],"/documents/user/show_document_user") !== FALSE )
@@ -51,6 +58,7 @@ function where_i_am($there_is_error)
     return "Hello";
   elseif( $_SERVER['REQUEST_URI']=="/" ||
           $_SERVER['REQUEST_URI']=="/contact/send_contact" ||
+          $_SERVER['REQUEST_URI']=="/mail/admin/send_mail" ||
           $_SERVER['REQUEST_URI']=="/logout" ||
           $_SERVER['REQUEST_URI']=="/home" ||
           (strpos($_SERVER['REQUEST_URI'],"/auth/user/write_") !== FALSE && $there_is_error==FALSE)

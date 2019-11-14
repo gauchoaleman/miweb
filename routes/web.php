@@ -485,6 +485,23 @@ Route::get('/chat/user/chat_window_user', function () {
     return view('/chat/user/chat_window_user');
 });
 
+Route::get('/mail/admin/mail_form', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('mail/admin/mail_form');
+});
+
+Route::post('/mail/admin/send_mail', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('mail/admin/send_mail');
+});
 
 Auth::routes();
 

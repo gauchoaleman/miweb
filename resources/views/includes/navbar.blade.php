@@ -126,6 +126,14 @@
           </div>
       </div>
 
+      <div
+      @if( where_i_am($there_is_error)=="SendMail")
+        class="active_navbar_item"
+      @else
+        onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
+      @endif
+      >
+          <a class="navbar-brand" href="/mail/admin/mail_form" style="color:orange"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/send_mail.png'>Enviar mail a todos</a></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
       @endif

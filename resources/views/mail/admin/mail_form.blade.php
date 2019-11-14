@@ -1,0 +1,5 @@
+@include('includes/head')
+@include('includes/navbar')
+@include('mail.admin.forms.mail_form_form')
+@include('includes/bottom_bar')
+@include('includes/bottom')
