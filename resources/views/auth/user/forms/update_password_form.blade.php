@@ -38,7 +38,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Actualize clave') }}
+                                    {{ __('Actualizar clave') }}
                                 </button>
                                 <button type="cancel" class="btn btn-primary" onclick="window.location='/';return false;">
                                   Cancelar

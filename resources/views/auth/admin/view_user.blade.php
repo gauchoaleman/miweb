@@ -34,7 +34,28 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
                                 {{$date->format('d/m/Y H:i:s')}}
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-4  text-md-right">Administrador</div>
 
+                            <div class="col-md-6">
+                              @if( $user->is_admin )
+                                Si
+                              @else
+                                No
+                              @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4  text-md-right">Recibe mails</div>
+
+                            <div class="col-md-6">
+                              @if( $user->send_mail )
+                                Si
+                              @else
+                                No
+                              @endif
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

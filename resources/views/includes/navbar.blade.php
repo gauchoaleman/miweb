@@ -137,7 +137,7 @@
     @auth
 
 @if ( (Auth::user()->is_admin == 1) )
-<div
+<!-- <div
 @if( where_i_am($there_is_error)=="Chat")
   class="active_navbar_item"
 @else
@@ -145,7 +145,7 @@
 @endif
 >
 <a class="navbar-brand" href="/chat"><div class="tab blink" style="color:orange"><img src='http://{{$_SERVER['HTTP_HOST']}}/img/chat.png'>Chat</div></a>
-</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 @endif
 
 

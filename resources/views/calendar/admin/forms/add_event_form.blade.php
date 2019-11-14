@@ -59,7 +59,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Agregue evento') }}
+                                    {{ __('Agregar evento') }}
                                 </button>
                                 <button type="cancel" class="btn btn-primary" onclick="onclick="go_back()">
                                   Cancelar

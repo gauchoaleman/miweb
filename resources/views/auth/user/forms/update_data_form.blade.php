@@ -51,7 +51,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Actualize datos') }}
+                                    {{ __('Actualizar datos') }}
                                 </button>
                                 <button type="cancel" onclick="window.location='/';return false;" class="btn btn-primary">
                                   Cancelar

@@ -46,7 +46,7 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Enviar') }}
+                                    {{ __('Modificar usuario') }}
                                 </button>
                                 <button type="cancel" class="btn btn-primary" onclick="go_back()">
                                   Cancelar
