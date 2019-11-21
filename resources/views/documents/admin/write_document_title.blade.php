@@ -15,7 +15,7 @@ if( sizeof($documents_same_title)){
   @include('includes/navbar')
   @include('documents.admin.forms.change_document_title_form', ['error' => $error])<?php
 }
-elseif( !preg_match('/^[\w áéíóúÁÉÍÓÚ]+$/', $title)){
+elseif( !preg_match('/^[\w áéíóúÁÉÍÓÚñÑ]+$/', $title)){
   $error = "El título no tiene sólo números y letras";
   ?>
   @include('includes/navbar')
