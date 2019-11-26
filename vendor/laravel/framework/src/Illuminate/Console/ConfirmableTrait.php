@@ -22,11 +22,14 @@ trait ConfirmableTrait
         $shouldConfirm = $callback instanceof Closure ? call_user_func($callback) : $callback;
 
         if ($shouldConfirm) {
-            if ($this->hasOption('force') && $this->option('force')) {
+            if ($this->option('force')) {
                 return true;
             }
 
-            $this->alert($warning);
+            $this->comment(str_repeat('*', strlen($warning) + 12));
+            $this->comment('*     '.$warning.'     *');
+            $this->comment(str_repeat('*', strlen($warning) + 12));
+            $this->output->writeln('');
 
             $confirmed = $this->confirm('Do you really wish to run this command?');
 
@@ -48,7 +51,7 @@ trait ConfirmableTrait
     protected function getDefaultConfirmCallback()
     {
         return function () {
-            return $this->getLaravel()->environment() === 'production';
+            return $this->getLaravel()->environment() == 'production';
         };
     }
 }

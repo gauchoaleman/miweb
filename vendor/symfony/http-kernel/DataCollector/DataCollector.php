@@ -11,8 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
-use Symfony\Component\VarDumper\Caster\CutStub;
-use Symfony\Component\VarDumper\Caster\ReflectionCaster;
+use Symfony\Component\HttpKernel\DataCollector\Util\ValueExporter;
+use Symfony\Component\VarDumper\Caster\ClassStub;
+use Symfony\Component\VarDumper\Caster\LinkStub;
+use Symfony\Component\VarDumper\Caster\StubCaster;
 use Symfony\Component\VarDumper\Cloner\ClonerInterface;
 use Symfony\Component\VarDumper\Cloner\Data;
 use Symfony\Component\VarDumper\Cloner\Stub;
@@ -26,39 +28,30 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@symfony.com>
  */
-abstract class DataCollector implements DataCollectorInterface
+abstract class DataCollector implements DataCollectorInterface, \Serializable
 {
+    protected $data = array();
+
     /**
-     * @var array|Data
+     * @var ValueExporter
      */
-    protected $data = [];
+    private $valueExporter;
 
     /**
      * @var ClonerInterface
      */
     private $cloner;
 
-    /**
-     * @deprecated since Symfony 4.3, store all the serialized state in the data property instead
-     */
+    private static $stubsCache = array();
+
     public function serialize()
     {
-        @trigger_error(sprintf('The "%s" method is deprecated since Symfony 4.3, store all the serialized state in the data property instead.', __METHOD__), E_USER_DEPRECATED);
-
-        $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
-        $isCalledFromOverridingMethod = isset($trace[1]['function'], $trace[1]['object']) && 'serialize' === $trace[1]['function'] && $this === $trace[1]['object'];
-
-        return $isCalledFromOverridingMethod ? $this->data : serialize($this->data);
+        return serialize($this->data);
     }
 
-    /**
-     * @deprecated since Symfony 4.3, store all the serialized state in the data property instead
-     */
     public function unserialize($data)
     {
-        @trigger_error(sprintf('The "%s" method is deprecated since Symfony 4.3, store all the serialized state in the data property instead.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->data = \is_array($data) ? $data : unserialize($data);
+        $this->data = unserialize($data);
     }
 
     /**
@@ -73,62 +66,80 @@ abstract class DataCollector implements DataCollectorInterface
      */
     protected function cloneVar($var)
     {
-        if ($var instanceof Data) {
-            return $var;
-        }
         if (null === $this->cloner) {
-            if (!class_exists(CutStub::class)) {
-                throw new \LogicException(sprintf('The VarDumper component is needed for the %s() method. Install symfony/var-dumper version 3.4 or above.', __METHOD__));
+            if (class_exists(ClassStub::class)) {
+                $this->cloner = new VarCloner();
+                $this->cloner->setMaxItems(250);
+                $this->cloner->addCasters(array(
+                    Stub::class => function (Stub $v, array $a, Stub $s, $isNested) {
+                        return $isNested ? $a : StubCaster::castStub($v, $a, $s, true);
+                    },
+                ));
+            } else {
+                @trigger_error(sprintf('Using the %s() method without the VarDumper component is deprecated since version 3.2 and won\'t be supported in 4.0. Install symfony/var-dumper version 3.2 or above.', __METHOD__), E_USER_DEPRECATED);
+                $this->cloner = false;
             }
-            $this->cloner = new VarCloner();
-            $this->cloner->setMaxItems(-1);
-            $this->cloner->addCasters($this->getCasters());
+        }
+        if (false === $this->cloner) {
+            if (null === $this->valueExporter) {
+                $this->valueExporter = new ValueExporter();
+            }
+
+            return $this->valueExporter->exportValue($var);
         }
 
-        return $this->cloner->cloneVar($var);
+        return $this->cloner->cloneVar($this->decorateVar($var));
     }
 
     /**
-     * @return callable[] The casters to add to the cloner
+     * Converts a PHP variable to a string.
+     *
+     * @param mixed $var A PHP variable
+     *
+     * @return string The string representation of the variable
+     *
+     * @deprecated Deprecated since version 3.2, to be removed in 4.0. Use cloneVar() instead.
      */
-    protected function getCasters()
+    protected function varToString($var)
     {
-        $casters = [
-            '*' => function ($v, array $a, Stub $s, $isNested) {
-                if (!$v instanceof Stub) {
-                    foreach ($a as $k => $v) {
-                        if (\is_object($v) && !$v instanceof \DateTimeInterface && !$v instanceof Stub) {
-                            $a[$k] = new CutStub($v);
-                        }
-                    }
+        @trigger_error(sprintf('The %() method is deprecated since version 3.2 and will be removed in 4.0. Use cloneVar() instead.', __METHOD__), E_USER_DEPRECATED);
+
+        if (null === $this->valueExporter) {
+            $this->valueExporter = new ValueExporter();
+        }
+
+        return $this->valueExporter->exportValue($var);
+    }
+
+    private function decorateVar($var)
+    {
+        if (is_array($var)) {
+            if (isset($var[0], $var[1]) && is_callable($var)) {
+                return ClassStub::wrapCallable($var);
+            }
+            foreach ($var as $k => $v) {
+                if ($v !== $d = $this->decorateVar($v)) {
+                    $var[$k] = $d;
                 }
+            }
 
-                return $a;
-            },
-        ];
-
-        if (method_exists(ReflectionCaster::class, 'unsetClosureFileInfo')) {
-            $casters += ReflectionCaster::UNSET_CLOSURE_FILE_INFO;
+            return $var;
+        }
+        if (is_string($var)) {
+            if (isset(self::$stubsCache[$var])) {
+                return self::$stubsCache[$var];
+            }
+            if (false !== strpos($var, '\\')) {
+                $c = (false !== $i = strpos($var, '::')) ? substr($var, 0, $i) : $var;
+                if (class_exists($c, false) || interface_exists($c, false) || trait_exists($c, false)) {
+                    return self::$stubsCache[$var] = new ClassStub($var);
+                }
+            }
+            if (false !== strpos($var, DIRECTORY_SEPARATOR) && false === strpos($var, '://') && false === strpos($var, "\0") && @is_file($var)) {
+                return self::$stubsCache[$var] = new LinkStub($var);
+            }
         }
 
-        return $casters;
-    }
-
-    public function __sleep()
-    {
-        if (__CLASS__ !== $c = (new \ReflectionMethod($this, 'serialize'))->getDeclaringClass()->name) {
-            @trigger_error(sprintf('Implementing the "%s::serialize()" method is deprecated since Symfony 4.3, store all the serialized state in the "data" property instead.', $c), E_USER_DEPRECATED);
-            $this->data = $this->serialize();
-        }
-
-        return ['data'];
-    }
-
-    public function __wakeup()
-    {
-        if (__CLASS__ !== $c = (new \ReflectionMethod($this, 'unserialize'))->getDeclaringClass()->name) {
-            @trigger_error(sprintf('Implementing the "%s::unserialize()" method is deprecated since Symfony 4.3, store all the serialized state in the "data" property instead.', $c), E_USER_DEPRECATED);
-            $this->unserialize($this->data);
-        }
+        return $var;
     }
 }

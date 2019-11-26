@@ -46,13 +46,6 @@ class Factory implements FactoryContract
     protected $implicitExtensions = [];
 
     /**
-     * All of the custom dependent validator extensions.
-     *
-     * @var array
-     */
-    protected $dependentExtensions = [];
-
-    /**
      * All of the custom validator message replacers.
      *
      * @var array
@@ -69,15 +62,15 @@ class Factory implements FactoryContract
     /**
      * The Validator resolver instance.
      *
-     * @var \Closure
+     * @var Closure
      */
     protected $resolver;
 
     /**
      * Create a new Validator factory instance.
      *
-     * @param  \Illuminate\Contracts\Translation\Translator  $translator
-     * @param  \Illuminate\Contracts\Container\Container|null  $container
+     * @param  \Illuminate\Contracts\Translation\Translator $translator
+     * @param  \Illuminate\Contracts\Container\Container  $container
      * @return void
      */
     public function __construct(Translator $translator, Container $container = null)
@@ -97,13 +90,13 @@ class Factory implements FactoryContract
      */
     public function make(array $data, array $rules, array $messages = [], array $customAttributes = [])
     {
+        // The presence verifier is responsible for checking the unique and exists data
+        // for the validator. It is behind an interface so that multiple versions of
+        // it may be written besides database. We'll inject it into the validator.
         $validator = $this->resolve(
             $data, $rules, $messages, $customAttributes
         );
 
-        // The presence verifier is responsible for checking the unique and exists data
-        // for the validator. It is behind an interface so that multiple versions of
-        // it may be written besides database. We'll inject it into the validator.
         if (! is_null($this->verifier)) {
             $validator->setPresenceVerifier($this->verifier);
         }
@@ -127,13 +120,13 @@ class Factory implements FactoryContract
      * @param  array  $rules
      * @param  array  $messages
      * @param  array  $customAttributes
-     * @return array
+     * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function validate(array $data, array $rules, array $messages = [], array $customAttributes = [])
     {
-        return $this->make($data, $rules, $messages, $customAttributes)->validate();
+        $this->make($data, $rules, $messages, $customAttributes)->validate();
     }
 
     /**
@@ -169,8 +162,6 @@ class Factory implements FactoryContract
         // array of data that is given to a validator instances via instantiation.
         $validator->addImplicitExtensions($this->implicitExtensions);
 
-        $validator->addDependentExtensions($this->dependentExtensions);
-
         $validator->addReplacers($this->replacers);
 
         $validator->setFallbackMessages($this->fallbackMessages);
@@ -181,7 +172,7 @@ class Factory implements FactoryContract
      *
      * @param  string  $rule
      * @param  \Closure|string  $extension
-     * @param  string|null  $message
+     * @param  string  $message
      * @return void
      */
     public function extend($rule, $extension, $message = null)
@@ -196,9 +187,9 @@ class Factory implements FactoryContract
     /**
      * Register a custom implicit validator extension.
      *
-     * @param  string  $rule
+     * @param  string   $rule
      * @param  \Closure|string  $extension
-     * @param  string|null  $message
+     * @param  string  $message
      * @return void
      */
     public function extendImplicit($rule, $extension, $message = null)
@@ -211,26 +202,9 @@ class Factory implements FactoryContract
     }
 
     /**
-     * Register a custom dependent validator extension.
+     * Register a custom implicit validator message replacer.
      *
-     * @param  string  $rule
-     * @param  \Closure|string  $extension
-     * @param  string|null  $message
-     * @return void
-     */
-    public function extendDependent($rule, $extension, $message = null)
-    {
-        $this->dependentExtensions[$rule] = $extension;
-
-        if ($message) {
-            $this->fallbackMessages[Str::snake($rule)] = $message;
-        }
-    }
-
-    /**
-     * Register a custom validator message replacer.
-     *
-     * @param  string  $rule
+     * @param  string   $rule
      * @param  \Closure|string  $replacer
      * @return void
      */

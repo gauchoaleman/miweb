@@ -12,7 +12,6 @@
 namespace Symfony\Component\Console\Tests\Descriptor;
 
 use Symfony\Component\Console\Descriptor\TextDescriptor;
-use Symfony\Component\Console\Tests\Fixtures\DescriptorApplication2;
 use Symfony\Component\Console\Tests\Fixtures\DescriptorApplicationMbString;
 use Symfony\Component\Console\Tests\Fixtures\DescriptorCommandMbString;
 
@@ -22,7 +21,7 @@ class TextDescriptorTest extends AbstractDescriptorTest
     {
         return $this->getDescriptionTestData(array_merge(
             ObjectsProvider::getCommands(),
-            ['command_mbstring' => new DescriptorCommandMbString()]
+            array('command_mbstring' => new DescriptorCommandMbString())
         ));
     }
 
@@ -30,15 +29,8 @@ class TextDescriptorTest extends AbstractDescriptorTest
     {
         return $this->getDescriptionTestData(array_merge(
             ObjectsProvider::getApplications(),
-            ['application_mbstring' => new DescriptorApplicationMbString()]
+            array('application_mbstring' => new DescriptorApplicationMbString())
         ));
-    }
-
-    public function testDescribeApplicationWithFilteredNamespace()
-    {
-        $application = new DescriptorApplication2();
-
-        $this->assertDescription(file_get_contents(__DIR__.'/../Fixtures/application_filtered_namespace.txt'), $application, ['namespace' => 'command4']);
     }
 
     protected function getDescriptor()

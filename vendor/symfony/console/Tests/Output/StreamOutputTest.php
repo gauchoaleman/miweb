@@ -11,20 +11,19 @@
 
 namespace Symfony\Component\Console\Tests\Output;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\StreamOutput;
 
-class StreamOutputTest extends TestCase
+class StreamOutputTest extends \PHPUnit_Framework_TestCase
 {
     protected $stream;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->stream = fopen('php://memory', 'a', false);
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->stream = null;
     }
@@ -36,10 +35,12 @@ class StreamOutputTest extends TestCase
         $this->assertTrue($output->isDecorated(), '__construct() takes the decorated flag as its second argument');
     }
 
+    /**
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage The StreamOutput class needs a stream as its first argument.
+     */
     public function testStreamIsRequired()
     {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('The StreamOutput class needs a stream as its first argument.');
         new StreamOutput('foo');
     }
 

@@ -2,7 +2,7 @@
 
 namespace Illuminate\Queue\Jobs;
 
-use Illuminate\Support\InteractsWithTime;
+use Illuminate\Queue\InteractsWithTime;
 
 class DatabaseJobRecord
 {
@@ -11,14 +11,14 @@ class DatabaseJobRecord
     /**
      * The underlying job record.
      *
-     * @var \stdClass
+     * @var \StdClass
      */
     protected $record;
 
     /**
      * Create a new job record instance.
      *
-     * @param  \stdClass  $record
+     * @param  \StdClass  $record
      * @return void
      */
     public function __construct($record)

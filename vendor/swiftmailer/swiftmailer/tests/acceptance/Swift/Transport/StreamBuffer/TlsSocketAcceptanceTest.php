@@ -4,7 +4,7 @@ require_once __DIR__.'/AbstractStreamBufferAcceptanceTest.php';
 
 class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest extends Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 {
-    protected function setUp()
+    public function setUp()
     {
         $streams = stream_get_transports();
         if (!in_array('tls', $streams)) {
@@ -21,19 +21,19 @@ class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest extends Swift_Transpo
         parent::setUp();
     }
 
-    protected function initializeBuffer()
+    protected function _initializeBuffer()
     {
         $parts = explode(':', SWIFT_TLS_HOST);
         $host = $parts[0];
-        $port = $parts[1] ?? 25;
+        $port = isset($parts[1]) ? $parts[1] : 25;
 
-        $this->buffer->initialize([
+        $this->_buffer->initialize(array(
             'type' => Swift_Transport_IoBuffer::TYPE_SOCKET,
             'host' => $host,
             'port' => $port,
             'protocol' => 'tls',
             'blocking' => 1,
             'timeout' => 15,
-            ]);
+            ));
     }
 }

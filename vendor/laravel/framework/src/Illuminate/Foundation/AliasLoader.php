@@ -36,7 +36,6 @@ class AliasLoader
      * Create a new AliasLoader instance.
      *
      * @param  array  $aliases
-     * @return void
      */
     private function __construct($aliases)
     {
@@ -85,11 +84,13 @@ class AliasLoader
      * Load a real-time facade for the given alias.
      *
      * @param  string  $alias
-     * @return void
+     * @return bool
      */
     protected function loadFacade($alias)
     {
-        require $this->ensureFacadeExists($alias);
+        tap($this->ensureFacadeExists($alias), function ($path) {
+            require $path;
+        });
     }
 
     /**

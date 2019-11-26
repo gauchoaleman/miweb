@@ -9,10 +9,10 @@ class MiddlewareNameResolver
     /**
      * Resolve the middleware name to a class name(s) preserving passed parameters.
      *
-     * @param  \Closure|string  $name
+     * @param  string  $name
      * @param  array  $map
      * @param  array  $middlewareGroups
-     * @return \Closure|string|array
+     * @return string|array
      */
     public static function resolve($name, $map, $middlewareGroups)
     {
@@ -21,25 +21,26 @@ class MiddlewareNameResolver
         // convenient on occasions when the developers are experimenting with them.
         if ($name instanceof Closure) {
             return $name;
-        }
-
-        if (isset($map[$name]) && $map[$name] instanceof Closure) {
+        } elseif (isset($map[$name]) && $map[$name] instanceof Closure) {
             return $map[$name];
-        }
 
         // If the middleware is the name of a middleware group, we will return the array
         // of middlewares that belong to the group. This allows developers to group a
         // set of middleware under single keys that can be conveniently referenced.
-        if (isset($middlewareGroups[$name])) {
-            return static::parseMiddlewareGroup($name, $map, $middlewareGroups);
-        }
+        } elseif (isset($middlewareGroups[$name])) {
+            return static::parseMiddlewareGroup(
+                $name, $map, $middlewareGroups
+            );
 
         // Finally, when the middleware is simply a string mapped to a class name the
         // middleware name will get parsed into the full class name and parameters
         // which may be run using the Pipeline which accepts this string format.
-        [$name, $parameters] = array_pad(explode(':', $name, 2), 2, null);
+        } else {
+            list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
 
-        return ($map[$name] ?? $name).(! is_null($parameters) ? ':'.$parameters : '');
+            return (isset($map[$name]) ? $map[$name] : $name).
+                   (! is_null($parameters) ? ':'.$parameters : '');
+        }
     }
 
     /**
@@ -66,7 +67,7 @@ class MiddlewareNameResolver
                 continue;
             }
 
-            [$middleware, $parameters] = array_pad(
+            list($middleware, $parameters) = array_pad(
                 explode(':', $middleware, 2), 2, null
             );
 

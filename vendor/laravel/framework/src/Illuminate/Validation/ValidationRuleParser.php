@@ -2,12 +2,8 @@
 
 namespace Illuminate\Validation;
 
-use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Exists;
-use Illuminate\Validation\Rules\Unique;
-use Illuminate\Contracts\Validation\Rule as RuleContract;
 
 class ValidationRuleParser
 {
@@ -40,7 +36,7 @@ class ValidationRuleParser
      * Parse the human-friendly rules into a full rules array for the validator.
      *
      * @param  array  $rules
-     * @return \stdClass
+     * @return \StdClass
      */
     public function explode($rules)
     {
@@ -86,32 +82,10 @@ class ValidationRuleParser
         if (is_string($rule)) {
             return explode('|', $rule);
         } elseif (is_object($rule)) {
-            return [$this->prepareRule($rule)];
-        }
-
-        return array_map([$this, 'prepareRule'], $rule);
-    }
-
-    /**
-     * Prepare the given rule for the Validator.
-     *
-     * @param  mixed  $rule
-     * @return mixed
-     */
-    protected function prepareRule($rule)
-    {
-        if ($rule instanceof Closure) {
-            $rule = new ClosureValidationRule($rule);
-        }
-
-        if (! is_object($rule) ||
-            $rule instanceof RuleContract ||
-            ($rule instanceof Exists && $rule->queryCallbacks()) ||
-            ($rule instanceof Unique && $rule->queryCallbacks())) {
+            return [$rule];
+        } else {
             return $rule;
         }
-
-        return (string) $rule;
     }
 
     /**
@@ -131,7 +105,7 @@ class ValidationRuleParser
         foreach ($data as $key => $value) {
             if (Str::startsWith($key, $attribute) || (bool) preg_match('/^'.$pattern.'\z/', $key)) {
                 foreach ((array) $rules as $rule) {
-                    $this->implicitAttributes[$attribute][] = strval($key);
+                    $this->implicitAttributes[$attribute][] = $key;
 
                     $results = $this->mergeRules($results, $key, $rule);
                 }
@@ -191,10 +165,6 @@ class ValidationRuleParser
      */
     public static function parse($rules)
     {
-        if ($rules instanceof RuleContract) {
-            return [$rules, []];
-        }
-
         if (is_array($rules)) {
             $rules = static::parseArrayRule($rules);
         } else {
@@ -231,7 +201,7 @@ class ValidationRuleParser
         // easy {rule}:{parameters} formatting convention. For instance the
         // rule "Max:3" states that the value may only be three letters.
         if (strpos($rules, ':') !== false) {
-            [$rules, $parameter] = explode(':', $rules, 2);
+            list($rules, $parameter) = explode(':', $rules, 2);
 
             $parameters = static::parseParameters($rules, $parameter);
         }
@@ -248,9 +218,7 @@ class ValidationRuleParser
      */
     protected static function parseParameters($rule, $parameter)
     {
-        $rule = strtolower($rule);
-
-        if (in_array($rule, ['regex', 'not_regex', 'notregex'], true)) {
+        if (strtolower($rule) == 'regex') {
             return [$parameter];
         }
 

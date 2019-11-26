@@ -52,7 +52,7 @@ class SoftDeletingScope implements Scope
      */
     protected function getDeletedAtColumn(Builder $builder)
     {
-        if (count((array) $builder->getQuery()->joins) > 0) {
+        if (count($builder->getQuery()->joins) > 0) {
             return $builder->getModel()->getQualifiedDeletedAtColumn();
         }
 
@@ -82,11 +82,7 @@ class SoftDeletingScope implements Scope
      */
     protected function addWithTrashed(Builder $builder)
     {
-        $builder->macro('withTrashed', function (Builder $builder, $withTrashed = true) {
-            if (! $withTrashed) {
-                return $builder->withoutTrashed();
-            }
-
+        $builder->macro('withTrashed', function (Builder $builder) {
             return $builder->withoutGlobalScope($this);
         });
     }

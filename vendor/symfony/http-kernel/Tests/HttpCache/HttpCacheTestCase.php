@@ -11,14 +11,13 @@
 
 namespace Symfony\Component\HttpKernel\Tests\HttpCache;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpCache\Esi;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class HttpCacheTestCase extends TestCase
+class HttpCacheTestCase extends \PHPUnit_Framework_TestCase
 {
     protected $kernel;
     protected $cache;
@@ -29,31 +28,27 @@ class HttpCacheTestCase extends TestCase
     protected $responses;
     protected $catch;
     protected $esi;
-
-    /**
-     * @var Store
-     */
     protected $store;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->kernel = null;
 
         $this->cache = null;
         $this->esi = null;
-        $this->caches = [];
-        $this->cacheConfig = [];
+        $this->caches = array();
+        $this->cacheConfig = array();
 
         $this->request = null;
         $this->response = null;
-        $this->responses = [];
+        $this->responses = array();
 
         $this->catch = false;
 
         $this->clearDirectory(sys_get_temp_dir().'/http_cache');
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         if ($this->cache) {
             $this->cache->getStore()->cleanup();
@@ -112,7 +107,7 @@ class HttpCacheTestCase extends TestCase
         $this->assertFalse($this->kernel->isCatchingExceptions());
     }
 
-    public function request($method, $uri = '/', $server = [], $cookies = [], $esi = false, $headers = [])
+    public function request($method, $uri = '/', $server = array(), $cookies = array(), $esi = false, $headers = array())
     {
         if (null === $this->kernel) {
             throw new \LogicException('You must call setNextResponse() before calling request().');
@@ -122,13 +117,11 @@ class HttpCacheTestCase extends TestCase
 
         $this->store = new Store(sys_get_temp_dir().'/http_cache');
 
-        if (!isset($this->cacheConfig['debug'])) {
-            $this->cacheConfig['debug'] = true;
-        }
+        $this->cacheConfig['debug'] = true;
 
         $this->esi = $esi ? new Esi() : null;
         $this->cache = new HttpCache($this->kernel, $this->store, $this->esi, $this->cacheConfig);
-        $this->request = Request::create($uri, $method, [], $cookies, [], $server);
+        $this->request = Request::create($uri, $method, array(), $cookies, array(), $server);
         $this->request->headers->add($headers);
 
         $this->response = $this->cache->handle($this->request, HttpKernelInterface::MASTER_REQUEST, $this->catch);
@@ -138,7 +131,7 @@ class HttpCacheTestCase extends TestCase
 
     public function getMetaStorageValues()
     {
-        $values = [];
+        $values = array();
         foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(sys_get_temp_dir().'/http_cache/md', \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
             $values[] = file_get_contents($file);
         }
@@ -147,7 +140,7 @@ class HttpCacheTestCase extends TestCase
     }
 
     // A basic response with 200 status code and a tiny body.
-    public function setNextResponse($statusCode = 200, array $headers = [], $body = 'Hello World', \Closure $customizer = null)
+    public function setNextResponse($statusCode = 200, array $headers = array(), $body = 'Hello World', \Closure $customizer = null)
     {
         $this->kernel = new TestHttpKernel($body, $statusCode, $headers, $customizer);
     }
@@ -170,7 +163,7 @@ class HttpCacheTestCase extends TestCase
 
         $fp = opendir($directory);
         while (false !== $file = readdir($fp)) {
-            if (!\in_array($file, ['.', '..'])) {
+            if (!in_array($file, array('.', '..'))) {
                 if (is_link($directory.'/'.$file)) {
                     unlink($directory.'/'.$file);
                 } elseif (is_dir($directory.'/'.$file)) {

@@ -3,26 +3,21 @@
 namespace Illuminate\Cache;
 
 use Closure;
+use DateTime;
 use ArrayAccess;
-use DateTimeInterface;
+use Carbon\Carbon;
 use BadMethodCallException;
-use Illuminate\Support\Carbon;
 use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Cache\Events\KeyForgotten;
-use Illuminate\Support\InteractsWithTime;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Cache\Repository as CacheContract;
 
-/**
- * @mixin \Illuminate\Contracts\Cache\Store
- */
 class Repository implements CacheContract, ArrayAccess
 {
-    use InteractsWithTime;
     use Macroable {
         __call as macroCall;
     }
@@ -42,11 +37,11 @@ class Repository implements CacheContract, ArrayAccess
     protected $events;
 
     /**
-     * The default number of seconds to store items.
+     * The default number of minutes to store items.
      *
-     * @var int|null
+     * @var float|int
      */
-    protected $default = 3600;
+    protected $default = 60;
 
     /**
      * Create a new cache repository instance.
@@ -71,21 +66,10 @@ class Repository implements CacheContract, ArrayAccess
     }
 
     /**
-     * Determine if an item doesn't exist in the cache.
-     *
-     * @param  string  $key
-     * @return bool
-     */
-    public function missing($key)
-    {
-        return ! $this->has($key);
-    }
-
-    /**
      * Retrieve an item from the cache by key.
      *
      * @param  string  $key
-     * @param  mixed  $default
+     * @param  mixed   $default
      * @return mixed
      */
     public function get($key, $default = null)
@@ -130,20 +114,6 @@ class Repository implements CacheContract, ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getMultiple($keys, $default = null)
-    {
-        $defaults = [];
-
-        foreach ($keys as $key) {
-            $defaults[$key] = $default;
-        }
-
-        return $this->many($defaults);
-    }
-
-    /**
      * Handle a result for the "many" method.
      *
      * @param  array  $keys
@@ -174,12 +144,12 @@ class Repository implements CacheContract, ArrayAccess
      * Retrieve an item from the cache and delete it.
      *
      * @param  string  $key
-     * @param  mixed  $default
+     * @param  mixed   $default
      * @return mixed
      */
     public function pull($key, $default = null)
     {
-        return tap($this->get($key, $default), function () use ($key) {
+        return tap($this->get($key, $default), function ($value) use ($key) {
             $this->forget($key);
         });
     }
@@ -188,132 +158,71 @@ class Repository implements CacheContract, ArrayAccess
      * Store an item in the cache.
      *
      * @param  string  $key
-     * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
-     * @return bool
+     * @param  mixed   $value
+     * @param  \DateTime|float|int  $minutes
+     * @return void
      */
-    public function put($key, $value, $ttl = null)
+    public function put($key, $value, $minutes = null)
     {
         if (is_array($key)) {
             return $this->putMany($key, $value);
         }
 
-        if ($ttl === null) {
-            return $this->forever($key, $value);
+        if (! is_null($minutes = $this->getMinutes($minutes))) {
+            $this->store->put($this->itemKey($key), $value, $minutes);
+
+            $this->event(new KeyWritten($key, $value, $minutes));
         }
-
-        $seconds = $this->getSeconds($ttl);
-
-        if ($seconds <= 0) {
-            return $this->forget($key);
-        }
-
-        $result = $this->store->put($this->itemKey($key), $value, $seconds);
-
-        if ($result) {
-            $this->event(new KeyWritten($key, $value, $seconds));
-        }
-
-        return $result;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function set($key, $value, $ttl = null)
-    {
-        return $this->put($key, $value, $ttl);
-    }
-
-    /**
-     * Store multiple items in the cache for a given number of seconds.
+     * Store multiple items in the cache for a given number of minutes.
      *
      * @param  array  $values
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
-     * @return bool
+     * @param  float|int  $minutes
+     * @return void
      */
-    public function putMany(array $values, $ttl = null)
+    public function putMany(array $values, $minutes)
     {
-        if ($ttl === null) {
-            return $this->putManyForever($values);
-        }
+        if (! is_null($minutes = $this->getMinutes($minutes))) {
+            $this->store->putMany($values, $minutes);
 
-        $seconds = $this->getSeconds($ttl);
-
-        if ($seconds <= 0) {
-            return $this->deleteMultiple(array_keys($values));
-        }
-
-        $result = $this->store->putMany($values, $seconds);
-
-        if ($result) {
             foreach ($values as $key => $value) {
-                $this->event(new KeyWritten($key, $value, $seconds));
+                $this->event(new KeyWritten($key, $value, $minutes));
             }
         }
-
-        return $result;
-    }
-
-    /**
-     * Store multiple items in the cache indefinitely.
-     *
-     * @param  array  $values
-     * @return bool
-     */
-    protected function putManyForever(array $values)
-    {
-        $result = true;
-
-        foreach ($values as $key => $value) {
-            if (! $this->forever($key, $value)) {
-                $result = false;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setMultiple($values, $ttl = null)
-    {
-        return $this->putMany(is_array($values) ? $values : iterator_to_array($values), $ttl);
     }
 
     /**
      * Store an item in the cache if the key does not exist.
      *
      * @param  string  $key
-     * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  mixed   $value
+     * @param  \DateTime|float|int  $minutes
      * @return bool
      */
-    public function add($key, $value, $ttl = null)
+    public function add($key, $value, $minutes)
     {
-        if ($ttl !== null) {
-            if ($this->getSeconds($ttl) <= 0) {
-                return false;
-            }
+        if (is_null($minutes = $this->getMinutes($minutes))) {
+            return false;
+        }
 
-            // If the store has an "add" method we will call the method on the store so it
-            // has a chance to override this logic. Some drivers better support the way
-            // this operation should work with a total "atomic" implementation of it.
-            if (method_exists($this->store, 'add')) {
-                $seconds = $this->getSeconds($ttl);
-
-                return $this->store->add(
-                    $this->itemKey($key), $value, $seconds
-                );
-            }
+        // If the store has an "add" method we will call the method on the store so it
+        // has a chance to override this logic. Some drivers better support the way
+        // this operation should work with a total "atomic" implementation of it.
+        if (method_exists($this->store, 'add')) {
+            return $this->store->add(
+                $this->itemKey($key), $value, $minutes
+            );
         }
 
         // If the value did not exist in the cache, we will put the value in the cache
         // so it exists for subsequent requests. Then, we will return true so it is
         // easy to know if the value gets added. Otherwise, we will return false.
         if (is_null($this->get($key))) {
-            return $this->put($key, $value, $ttl);
+            $this->put($key, $value, $minutes);
+
+            return true;
         }
 
         return false;
@@ -347,48 +256,44 @@ class Repository implements CacheContract, ArrayAccess
      * Store an item in the cache indefinitely.
      *
      * @param  string  $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  mixed   $value
+     * @return void
      */
     public function forever($key, $value)
     {
-        $result = $this->store->forever($this->itemKey($key), $value);
+        $this->store->forever($this->itemKey($key), $value);
 
-        if ($result) {
-            $this->event(new KeyWritten($key, $value));
-        }
-
-        return $result;
+        $this->event(new KeyWritten($key, $value, 0));
     }
 
     /**
-     * Get an item from the cache, or execute the given Closure and store the result.
+     * Get an item from the cache, or store the default value.
      *
      * @param  string  $key
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTime|float|int  $minutes
      * @param  \Closure  $callback
      * @return mixed
      */
-    public function remember($key, $ttl, Closure $callback)
+    public function remember($key, $minutes, Closure $callback)
     {
         $value = $this->get($key);
 
         // If the item exists in the cache we will just return this immediately and if
         // not we will execute the given Closure and cache the result of that for a
-        // given number of seconds so it's available for all subsequent requests.
+        // given number of minutes so it's available for all subsequent requests.
         if (! is_null($value)) {
             return $value;
         }
 
-        $this->put($key, $value = $callback(), $ttl);
+        $this->put($key, $value = $callback(), $minutes);
 
         return $value;
     }
 
     /**
-     * Get an item from the cache, or execute the given Closure and store the result forever.
+     * Get an item from the cache, or store the default value forever.
      *
-     * @param  string  $key
+     * @param  string   $key
      * @param  \Closure  $callback
      * @return mixed
      */
@@ -398,9 +303,9 @@ class Repository implements CacheContract, ArrayAccess
     }
 
     /**
-     * Get an item from the cache, or execute the given Closure and store the result forever.
+     * Get an item from the cache, or store the default value forever.
      *
-     * @param  string  $key
+     * @param  string   $key
      * @param  \Closure  $callback
      * @return mixed
      */
@@ -408,9 +313,9 @@ class Repository implements CacheContract, ArrayAccess
     {
         $value = $this->get($key);
 
-        // If the item exists in the cache we will just return this immediately
-        // and if not we will execute the given Closure and cache the result
-        // of that forever so it is available for all subsequent requests.
+        // If the item exists in the cache we will just return this immediately and if
+        // not we will execute the given Closure and cache the result of that for a
+        // given number of minutes so it's available for all subsequent requests.
         if (! is_null($value)) {
             return $value;
         }
@@ -428,43 +333,9 @@ class Repository implements CacheContract, ArrayAccess
      */
     public function forget($key)
     {
-        return tap($this->store->forget($this->itemKey($key)), function ($result) use ($key) {
-            if ($result) {
-                $this->event(new KeyForgotten($key));
-            }
+        return tap($this->store->forget($this->itemKey($key)), function () use ($key) {
+            $this->event(new KeyForgotten($key));
         });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete($key)
-    {
-        return $this->forget($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function deleteMultiple($keys)
-    {
-        $result = true;
-
-        foreach ($keys as $key) {
-            if (! $this->forget($key)) {
-                $result = false;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function clear()
-    {
-        return $this->store->flush();
     }
 
     /**
@@ -481,7 +352,7 @@ class Repository implements CacheContract, ArrayAccess
             throw new BadMethodCallException('This cache store does not support tagging.');
         }
 
-        $cache = $this->store->tags(is_array($names) ? $names : func_get_args());
+        $cache = $this->store->tags($names);
 
         if (! is_null($this->events)) {
             $cache->setEventDispatcher($this->events);
@@ -504,7 +375,7 @@ class Repository implements CacheContract, ArrayAccess
     /**
      * Get the default cache time.
      *
-     * @return int
+     * @return float|int
      */
     public function getDefaultCacheTime()
     {
@@ -512,14 +383,14 @@ class Repository implements CacheContract, ArrayAccess
     }
 
     /**
-     * Set the default cache time in seconds.
+     * Set the default cache time in minutes.
      *
-     * @param  int|null  $seconds
+     * @param  float|int  $minutes
      * @return $this
      */
-    public function setDefaultCacheTime($seconds)
+    public function setDefaultCacheTime($minutes)
     {
-        $this->default = $seconds;
+        $this->default = $minutes;
 
         return $this;
     }
@@ -604,27 +475,25 @@ class Repository implements CacheContract, ArrayAccess
     }
 
     /**
-     * Calculate the number of seconds for the given TTL.
+     * Calculate the number of minutes with the given duration.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $ttl
-     * @return int
+     * @param  \DateTime|float|int  $duration
+     * @return float|int|null
      */
-    protected function getSeconds($ttl)
+    protected function getMinutes($duration)
     {
-        $duration = $this->parseDateInterval($ttl);
-
-        if ($duration instanceof DateTimeInterface) {
-            $duration = Carbon::now()->diffInRealSeconds($duration, false);
+        if ($duration instanceof DateTime) {
+            $duration = Carbon::now()->diffInSeconds(Carbon::instance($duration), false) / 60;
         }
 
-        return (int) $duration > 0 ? $duration : 0;
+        return (int) ($duration * 60) > 0 ? $duration : null;
     }
 
     /**
      * Handle dynamic calls into macros or pass missing methods to the store.
      *
      * @param  string  $method
-     * @param  array  $parameters
+     * @param  array   $parameters
      * @return mixed
      */
     public function __call($method, $parameters)

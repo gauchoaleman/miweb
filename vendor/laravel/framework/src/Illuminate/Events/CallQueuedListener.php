@@ -28,37 +28,16 @@ class CallQueuedListener implements ShouldQueue
     /**
      * The data to be passed to the listener.
      *
-     * @var array
+     * @var string
      */
     public $data;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries;
-
-    /**
-     * The timestamp indicating when the job should timeout.
-     *
-     * @var int
-     */
-    public $timeoutAt;
-
-    /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
-     */
-    public $timeout;
 
     /**
      * Create a new job instance.
      *
      * @param  string  $class
      * @param  string  $method
-     * @param  array  $data
+     * @param  string  $data
      * @return void
      */
     public function __construct($class, $method, $data)
@@ -76,14 +55,12 @@ class CallQueuedListener implements ShouldQueue
      */
     public function handle(Container $container)
     {
-        $this->prepareData();
-
         $handler = $this->setJobInstanceIfNecessary(
             $this->job, $container->make($this->class)
         );
 
         call_user_func_array(
-            [$handler, $this->method], $this->data
+            [$handler, $this->method], unserialize($this->data)
         );
     }
 
@@ -96,7 +73,7 @@ class CallQueuedListener implements ShouldQueue
      */
     protected function setJobInstanceIfNecessary(Job $job, $instance)
     {
-        if (in_array(InteractsWithQueue::class, class_uses_recursive($instance))) {
+        if (in_array(InteractsWithQueue::class, class_uses_recursive(get_class($instance)))) {
             $instance->setJob($job);
         }
 
@@ -113,26 +90,12 @@ class CallQueuedListener implements ShouldQueue
      */
     public function failed($e)
     {
-        $this->prepareData();
-
         $handler = Container::getInstance()->make($this->class);
 
-        $parameters = array_merge($this->data, [$e]);
+        $parameters = array_merge(unserialize($this->data), [$e]);
 
         if (method_exists($handler, 'failed')) {
             call_user_func_array([$handler, 'failed'], $parameters);
-        }
-    }
-
-    /**
-     * Unserialize the data if needed.
-     *
-     * @return void
-     */
-    protected function prepareData()
-    {
-        if (is_string($this->data)) {
-            $this->data = unserialize($this->data);
         }
     }
 
@@ -144,17 +107,5 @@ class CallQueuedListener implements ShouldQueue
     public function displayName()
     {
         return $this->class;
-    }
-
-    /**
-     * Prepare the instance for cloning.
-     *
-     * @return void
-     */
-    public function __clone()
-    {
-        $this->data = array_map(function ($data) {
-            return is_object($data) ? clone $data : $data;
-        }, $this->data);
     }
 }

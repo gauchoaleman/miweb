@@ -27,14 +27,14 @@ class Connection implements ConnectionInterface
     /**
      * The active PDO connection.
      *
-     * @var \PDO|\Closure
+     * @var PDO
      */
     protected $pdo;
 
     /**
      * The active PDO connection used for reads.
      *
-     * @var \PDO|\Closure
+     * @var PDO
      */
     protected $readPdo;
 
@@ -107,13 +107,6 @@ class Connection implements ConnectionInterface
      * @var int
      */
     protected $transactions = 0;
-
-    /**
-     * Indicates if changes have been made to the database.
-     *
-     * @var int
-     */
-    protected $recordsModified = false;
 
     /**
      * All of the queries run against the connection.
@@ -453,8 +446,6 @@ class Connection implements ConnectionInterface
 
             $this->bindValues($statement, $this->prepareBindings($bindings));
 
-            $this->recordsHaveBeenModified();
-
             return $statement->execute();
         });
     }
@@ -482,11 +473,7 @@ class Connection implements ConnectionInterface
 
             $statement->execute();
 
-            $this->recordsHaveBeenModified(
-                ($count = $statement->rowCount()) > 0
-            );
-
-            return $count;
+            return $statement->rowCount();
         });
     }
 
@@ -503,11 +490,7 @@ class Connection implements ConnectionInterface
                 return true;
             }
 
-            $this->recordsHaveBeenModified(
-                $change = $this->getPdo()->exec($query) !== false
-            );
-
-            return $change;
+            return (bool) $this->getPdo()->exec($query);
         });
     }
 
@@ -552,7 +535,7 @@ class Connection implements ConnectionInterface
 
         // Now we'll execute this callback and capture the result. Once it has been
         // executed we will restore the value of query logging and give back the
-        // value of the callback so the original callers can have the results.
+        // value of hte callback so the original callers can have the results.
         $result = $callback();
 
         $this->loggingQueries = $loggingQueries;
@@ -593,8 +576,8 @@ class Connection implements ConnectionInterface
             // so we'll just ask the grammar for the format to get from the date.
             if ($value instanceof DateTimeInterface) {
                 $bindings[$key] = $value->format($grammar->getDateFormat());
-            } elseif (is_bool($value)) {
-                $bindings[$key] = (int) $value;
+            } elseif ($value === false) {
+                $bindings[$key] = 0;
             }
         }
 
@@ -700,15 +683,13 @@ class Connection implements ConnectionInterface
     /**
      * Handle a query exception.
      *
-     * @param  \Illuminate\Database\QueryException  $e
+     * @param  \Exception  $e
      * @param  string  $query
      * @param  array  $bindings
      * @param  \Closure  $callback
      * @return mixed
-     *
-     * @throws \Illuminate\Database\QueryException
      */
-    protected function handleQueryException(QueryException $e, $query, $bindings, Closure $callback)
+    protected function handleQueryException($e, $query, $bindings, Closure $callback)
     {
         if ($this->transactions >= 1) {
             throw $e;
@@ -751,8 +732,6 @@ class Connection implements ConnectionInterface
     public function reconnect()
     {
         if (is_callable($this->reconnector)) {
-            $this->doctrineConnection = null;
-
             return call_user_func($this->reconnector, $this);
         }
 
@@ -798,7 +777,7 @@ class Connection implements ConnectionInterface
      * Fire an event for this connection.
      *
      * @param  string  $event
-     * @return array|null
+     * @return void
      */
     protected function fireConnectionEvent($event)
     {
@@ -838,19 +817,6 @@ class Connection implements ConnectionInterface
     public function raw($value)
     {
         return new Expression($value);
-    }
-
-    /**
-     * Indicate if any records have been modified.
-     *
-     * @param  bool  $value
-     * @return void
-     */
-    public function recordsHaveBeenModified($value = true)
-    {
-        if (! $this->recordsModified) {
-            $this->recordsModified = $value;
-        }
     }
 
     /**
@@ -895,14 +861,11 @@ class Connection implements ConnectionInterface
     public function getDoctrineConnection()
     {
         if (is_null($this->doctrineConnection)) {
-            $driver = $this->getDoctrineDriver();
+            $data = ['pdo' => $this->getPdo(), 'dbname' => $this->getConfig('database')];
 
-            $this->doctrineConnection = new DoctrineConnection(array_filter([
-                'pdo' => $this->getPdo(),
-                'dbname' => $this->getConfig('database'),
-                'driver' => $driver->getName(),
-                'serverVersion' => $this->getConfig('server_version'),
-            ]), $driver);
+            $this->doctrineConnection = new DoctrineConnection(
+                $data, $this->getDoctrineDriver()
+            );
         }
 
         return $this->doctrineConnection;
@@ -929,11 +892,7 @@ class Connection implements ConnectionInterface
      */
     public function getReadPdo()
     {
-        if ($this->transactions > 0) {
-            return $this->getPdo();
-        }
-
-        if ($this->recordsModified && $this->getConfig('sticky')) {
+        if ($this->transactions >= 1) {
             return $this->getPdo();
         }
 
@@ -947,7 +906,7 @@ class Connection implements ConnectionInterface
     /**
      * Set the PDO connection.
      *
-     * @param  \PDO|\Closure|null  $pdo
+     * @param  \PDO|null  $pdo
      * @return $this
      */
     public function setPdo($pdo)
@@ -962,7 +921,7 @@ class Connection implements ConnectionInterface
     /**
      * Set the PDO connection used for reading.
      *
-     * @param  \PDO|\Closure|null  $pdo
+     * @param  \PDO|null  $pdo
      * @return $this
      */
     public function setReadPdo($pdo)
@@ -998,10 +957,10 @@ class Connection implements ConnectionInterface
     /**
      * Get an option from the configuration options.
      *
-     * @param  string|null  $option
+     * @param  string  $option
      * @return mixed
      */
-    public function getConfig($option = null)
+    public function getConfig($option)
     {
         return Arr::get($this->config, $option);
     }
@@ -1030,13 +989,11 @@ class Connection implements ConnectionInterface
      * Set the query grammar used by the connection.
      *
      * @param  \Illuminate\Database\Query\Grammars\Grammar  $grammar
-     * @return $this
+     * @return void
      */
     public function setQueryGrammar(Query\Grammars\Grammar $grammar)
     {
         $this->queryGrammar = $grammar;
-
-        return $this;
     }
 
     /**
@@ -1053,13 +1010,11 @@ class Connection implements ConnectionInterface
      * Set the schema grammar used by the connection.
      *
      * @param  \Illuminate\Database\Schema\Grammars\Grammar  $grammar
-     * @return $this
+     * @return void
      */
     public function setSchemaGrammar(Schema\Grammars\Grammar $grammar)
     {
         $this->schemaGrammar = $grammar;
-
-        return $this;
     }
 
     /**
@@ -1076,13 +1031,11 @@ class Connection implements ConnectionInterface
      * Set the query post processor used by the connection.
      *
      * @param  \Illuminate\Database\Query\Processors\Processor  $processor
-     * @return $this
+     * @return void
      */
     public function setPostProcessor(Processor $processor)
     {
         $this->postProcessor = $processor;
-
-        return $this;
     }
 
     /**
@@ -1099,27 +1052,15 @@ class Connection implements ConnectionInterface
      * Set the event dispatcher instance on the connection.
      *
      * @param  \Illuminate\Contracts\Events\Dispatcher  $events
-     * @return $this
+     * @return void
      */
     public function setEventDispatcher(Dispatcher $events)
     {
         $this->events = $events;
-
-        return $this;
     }
 
     /**
-     * Unset the event dispatcher for this connection.
-     *
-     * @return void
-     */
-    public function unsetEventDispatcher()
-    {
-        $this->events = null;
-    }
-
-    /**
-     * Determine if the connection is in a "dry run".
+     * Determine if the connection in a "dry run".
      *
      * @return bool
      */
@@ -1192,13 +1133,11 @@ class Connection implements ConnectionInterface
      * Set the name of the connected database.
      *
      * @param  string  $database
-     * @return $this
+     * @return string
      */
     public function setDatabaseName($database)
     {
         $this->database = $database;
-
-        return $this;
     }
 
     /**
@@ -1215,15 +1154,13 @@ class Connection implements ConnectionInterface
      * Set the table prefix in use by the connection.
      *
      * @param  string  $prefix
-     * @return $this
+     * @return void
      */
     public function setTablePrefix($prefix)
     {
         $this->tablePrefix = $prefix;
 
         $this->getQueryGrammar()->setTablePrefix($prefix);
-
-        return $this;
     }
 
     /**
@@ -1259,6 +1196,7 @@ class Connection implements ConnectionInterface
      */
     public static function getResolver($driver)
     {
-        return static::$resolvers[$driver] ?? null;
+        return isset(static::$resolvers[$driver]) ?
+                     static::$resolvers[$driver] : null;
     }
 }

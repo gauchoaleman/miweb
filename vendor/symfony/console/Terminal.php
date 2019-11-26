@@ -15,7 +15,6 @@ class Terminal
 {
     private static $width;
     private static $height;
-    private static $stty;
 
     /**
      * Gets the terminal width.
@@ -24,9 +23,8 @@ class Terminal
      */
     public function getWidth()
     {
-        $width = getenv('COLUMNS');
-        if (false !== $width) {
-            return (int) trim($width);
+        if ($width = trim(getenv('COLUMNS'))) {
+            return (int) $width;
         }
 
         if (null === self::$width) {
@@ -43,9 +41,8 @@ class Terminal
      */
     public function getHeight()
     {
-        $height = getenv('LINES');
-        if (false !== $height) {
-            return (int) trim($height);
+        if ($height = trim(getenv('LINES'))) {
+            return (int) $height;
         }
 
         if (null === self::$height) {
@@ -55,45 +52,20 @@ class Terminal
         return self::$height ?: 50;
     }
 
-    /**
-     * @internal
-     *
-     * @return bool
-     */
-    public static function hasSttyAvailable()
-    {
-        if (null !== self::$stty) {
-            return self::$stty;
-        }
-
-        exec('stty 2>&1', $output, $exitcode);
-
-        return self::$stty = 0 === $exitcode;
-    }
-
     private static function initDimensions()
     {
-        if ('\\' === \DIRECTORY_SEPARATOR) {
+        if ('\\' === DIRECTORY_SEPARATOR) {
             if (preg_match('/^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$/', trim(getenv('ANSICON')), $matches)) {
                 // extract [w, H] from "wxh (WxH)"
                 // or [w, h] from "wxh"
                 self::$width = (int) $matches[1];
                 self::$height = isset($matches[4]) ? (int) $matches[4] : (int) $matches[2];
-            } elseif (self::hasSttyAvailable()) {
-                self::initDimensionsUsingStty();
             } elseif (null !== $dimensions = self::getConsoleMode()) {
                 // extract [w, h] from "wxh"
                 self::$width = (int) $dimensions[0];
                 self::$height = (int) $dimensions[1];
             }
-        } else {
-            self::initDimensionsUsingStty();
-        }
-    }
-
-    private static function initDimensionsUsingStty()
-    {
-        if ($sttyString = self::getSttyColumns()) {
+        } elseif ($sttyString = self::getSttyColumns()) {
             if (preg_match('/rows.(\d+);.columns.(\d+);/i', $sttyString, $matches)) {
                 // extract [w, h] from "rows h; columns w;"
                 self::$width = (int) $matches[2];
@@ -113,13 +85,25 @@ class Terminal
      */
     private static function getConsoleMode()
     {
-        $info = self::readFromProcess('mode CON');
-
-        if (null === $info || !preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
-            return null;
+        if (!function_exists('proc_open')) {
+            return;
         }
 
-        return [(int) $matches[2], (int) $matches[1]];
+        $descriptorspec = array(
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w'),
+        );
+        $process = proc_open('mode CON', $descriptorspec, $pipes, null, null, array('suppress_errors' => true));
+        if (is_resource($process)) {
+            $info = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            proc_close($process);
+
+            if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
+                return array((int) $matches[2], (int) $matches[1]);
+            }
+        }
     }
 
     /**
@@ -129,35 +113,23 @@ class Terminal
      */
     private static function getSttyColumns()
     {
-        return self::readFromProcess('stty -a | grep columns');
-    }
-
-    /**
-     * @param string $command
-     *
-     * @return string|null
-     */
-    private static function readFromProcess($command)
-    {
-        if (!\function_exists('proc_open')) {
-            return null;
+        if (!function_exists('proc_open')) {
+            return;
         }
 
-        $descriptorspec = [
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w'],
-        ];
+        $descriptorspec = array(
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w'),
+        );
 
-        $process = proc_open($command, $descriptorspec, $pipes, null, null, ['suppress_errors' => true]);
-        if (!\is_resource($process)) {
-            return null;
+        $process = proc_open('stty -a | grep columns', $descriptorspec, $pipes, null, null, array('suppress_errors' => true));
+        if (is_resource($process)) {
+            $info = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            proc_close($process);
+
+            return $info;
         }
-
-        $info = stream_get_contents($pipes[1]);
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-        proc_close($process);
-
-        return $info;
     }
 }

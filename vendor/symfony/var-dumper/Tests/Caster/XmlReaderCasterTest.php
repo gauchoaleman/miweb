@@ -11,26 +11,25 @@
 
 namespace Symfony\Component\VarDumper\Tests\Caster;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 /**
  * @author Baptiste Clavié <clavie.b@gmail.com>
  */
-class XmlReaderCasterTest extends TestCase
+class XmlReaderCasterTest extends \PHPUnit_Framework_TestCase
 {
     use VarDumperTestTrait;
 
     /** @var \XmlReader */
     private $reader;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->reader = new \XmlReader();
         $this->reader->open(__DIR__.'/../Fixtures/xml_reader.xml');
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->reader->close();
     }
@@ -66,15 +65,15 @@ EODUMP;
 
     public function provideNodes()
     {
-        return [
-            [0, <<<'EODUMP'
+        return array(
+            array(0, <<<'EODUMP'
 XMLReader {
   +nodeType: NONE
    …13
 }
 EODUMP
-            ],
-            [1, <<<'EODUMP'
+            ),
+            array(1, <<<'EODUMP'
 XMLReader {
   +localName: "foo"
   +nodeType: ELEMENT
@@ -82,8 +81,8 @@ XMLReader {
    …11
 }
 EODUMP
-            ],
-            [2, <<<'EODUMP'
+            ),
+            array(2, <<<'EODUMP'
 XMLReader {
   +localName: "#text"
   +nodeType: SIGNIFICANT_WHITESPACE
@@ -96,8 +95,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [3, <<<'EODUMP'
+            ),
+            array(3, <<<'EODUMP'
 XMLReader {
   +localName: "bar"
   +nodeType: ELEMENT
@@ -106,8 +105,8 @@ XMLReader {
    …10
 }
 EODUMP
-            ],
-            [4, <<<'EODUMP'
+            ),
+            array(4, <<<'EODUMP'
 XMLReader {
   +localName: "bar"
   +nodeType: END_ELEMENT
@@ -116,8 +115,8 @@ XMLReader {
    …10
 }
 EODUMP
-            ],
-            [6, <<<'EODUMP'
+            ),
+            array(6, <<<'EODUMP'
 XMLReader {
   +localName: "bar"
   +nodeType: ELEMENT
@@ -127,8 +126,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [9, <<<'EODUMP'
+            ),
+            array(9, <<<'EODUMP'
 XMLReader {
   +localName: "#text"
   +nodeType: TEXT
@@ -138,8 +137,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [12, <<<'EODUMP'
+            ),
+            array(12, <<<'EODUMP'
 XMLReader {
   +localName: "bar"
   +nodeType: ELEMENT
@@ -149,8 +148,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [13, <<<'EODUMP'
+            ),
+            array(13, <<<'EODUMP'
 XMLReader {
   +localName: "bar"
   +nodeType: END_ELEMENT
@@ -159,8 +158,8 @@ XMLReader {
    …10
 }
 EODUMP
-            ],
-            [15, <<<'EODUMP'
+            ),
+            array(15, <<<'EODUMP'
 XMLReader {
   +localName: "bar"
   +nodeType: ELEMENT
@@ -170,8 +169,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [16, <<<'EODUMP'
+            ),
+            array(16, <<<'EODUMP'
 XMLReader {
   +localName: "#text"
   +nodeType: SIGNIFICANT_WHITESPACE
@@ -184,8 +183,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [17, <<<'EODUMP'
+            ),
+            array(17, <<<'EODUMP'
 XMLReader {
   +localName: "baz"
   +prefix: "baz"
@@ -196,8 +195,8 @@ XMLReader {
    …8
 }
 EODUMP
-            ],
-            [18, <<<'EODUMP'
+            ),
+            array(18, <<<'EODUMP'
 XMLReader {
   +localName: "baz"
   +prefix: "baz"
@@ -208,8 +207,8 @@ XMLReader {
    …8
 }
 EODUMP
-            ],
-            [19, <<<'EODUMP'
+            ),
+            array(19, <<<'EODUMP'
 XMLReader {
   +localName: "#text"
   +nodeType: SIGNIFICANT_WHITESPACE
@@ -222,8 +221,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [21, <<<'EODUMP'
+            ),
+            array(21, <<<'EODUMP'
 XMLReader {
   +localName: "#text"
   +nodeType: SIGNIFICANT_WHITESPACE
@@ -233,8 +232,8 @@ XMLReader {
    …9
 }
 EODUMP
-            ],
-            [22, <<<'EODUMP'
+            ),
+            array(22, <<<'EODUMP'
 XMLReader {
   +localName: "foo"
   +nodeType: END_ELEMENT
@@ -242,7 +241,7 @@ XMLReader {
    …11
 }
 EODUMP
-            ],
-        ];
+            ),
+        );
     }
 }

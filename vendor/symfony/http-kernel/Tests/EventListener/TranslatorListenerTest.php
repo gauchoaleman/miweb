@@ -11,26 +11,21 @@
 
 namespace Symfony\Component\HttpKernel\Tests\EventListener;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\EventListener\TranslatorListener;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Contracts\Translation\LocaleAwareInterface;
 
-/**
- * @group legacy
- */
-class TranslatorListenerTest extends TestCase
+class TranslatorListenerTest extends \PHPUnit_Framework_TestCase
 {
     private $listener;
     private $translator;
     private $requestStack;
 
-    protected function setUp(): void
+    protected function setUp()
     {
-        $this->translator = $this->getMockBuilder(LocaleAwareInterface::class)->getMock();
+        $this->translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')->getMock();
         $this->requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')->getMock();
         $this->listener = new TranslatorListener($this->translator, $this->requestStack);
     }
@@ -42,7 +37,7 @@ class TranslatorListenerTest extends TestCase
             ->method('setLocale')
             ->with($this->equalTo('fr'));
 
-        $event = new RequestEvent($this->createHttpKernel(), $this->createRequest('fr'), HttpKernelInterface::MASTER_REQUEST);
+        $event = new GetResponseEvent($this->createHttpKernel(), $this->createRequest('fr'), HttpKernelInterface::MASTER_REQUEST);
         $this->listener->onKernelRequest($event);
     }
 
@@ -51,13 +46,13 @@ class TranslatorListenerTest extends TestCase
         $this->translator
             ->expects($this->at(0))
             ->method('setLocale')
-            ->willThrowException(new \InvalidArgumentException());
+            ->will($this->throwException(new \InvalidArgumentException()));
         $this->translator
             ->expects($this->at(1))
             ->method('setLocale')
             ->with($this->equalTo('en'));
 
-        $event = new RequestEvent($this->createHttpKernel(), $this->createRequest('fr'), HttpKernelInterface::MASTER_REQUEST);
+        $event = new GetResponseEvent($this->createHttpKernel(), $this->createRequest('fr'), HttpKernelInterface::MASTER_REQUEST);
         $this->listener->onKernelRequest($event);
     }
 
@@ -88,7 +83,7 @@ class TranslatorListenerTest extends TestCase
         $this->translator
             ->expects($this->at(0))
             ->method('setLocale')
-            ->willThrowException(new \InvalidArgumentException());
+            ->will($this->throwException(new \InvalidArgumentException()));
         $this->translator
             ->expects($this->at(1))
             ->method('setLocale')
@@ -117,6 +112,6 @@ class TranslatorListenerTest extends TestCase
         $this->requestStack
             ->expects($this->any())
             ->method('getParentRequest')
-            ->willReturn($request);
+            ->will($this->returnValue($request));
     }
 }

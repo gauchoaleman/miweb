@@ -11,13 +11,12 @@
 
 namespace Symfony\Component\EventDispatcher\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * @group legacy
+ * Test class for Event.
  */
-class EventTest extends TestCase
+class EventTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Symfony\Component\EventDispatcher\Event
@@ -28,7 +27,7 @@ class EventTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->event = new Event();
     }
@@ -37,7 +36,7 @@ class EventTest extends TestCase
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->event = null;
     }

@@ -11,17 +11,28 @@
 
 namespace Symfony\Component\HttpKernel\Event;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated since Symfony 4.3, use ControllerEvent instead
+ * Allows filtering of a controller callable.
+ *
+ * You can call getController() to retrieve the current controller. With
+ * setController() you can set a new controller that is used in the processing
+ * of the request.
+ *
+ * Controllers should be callables.
+ *
+ * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class FilterControllerEvent extends KernelEvent
 {
+    /**
+     * The current controller.
+     */
     private $controller;
 
-    public function __construct(HttpKernelInterface $kernel, callable $controller, Request $request, ?int $requestType)
+    public function __construct(HttpKernelInterface $kernel, callable $controller, Request $request, $requestType)
     {
         parent::__construct($kernel, $request, $requestType);
 
@@ -38,6 +49,11 @@ class FilterControllerEvent extends KernelEvent
         return $this->controller;
     }
 
+    /**
+     * Sets a new controller.
+     *
+     * @param callable $controller
+     */
     public function setController(callable $controller)
     {
         $this->controller = $controller;

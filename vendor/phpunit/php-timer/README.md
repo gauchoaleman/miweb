@@ -1,34 +1,34 @@
 [![Build Status](https://travis-ci.org/sebastianbergmann/php-timer.svg?branch=master)](https://travis-ci.org/sebastianbergmann/php-timer)
 
-# phpunit/php-timer
+# PHP_Timer
 
 Utility class for timing things, factored out of PHPUnit into a stand-alone component.
 
 ## Installation
 
-You can add this library as a local, per-project dependency to your project using [Composer](https://getcomposer.org/):
+To add this package as a local, per-project dependency to your project, simply add a dependency on `phpunit/php-timer` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a dependency on PHP_Timer:
 
-    composer require phpunit/php-timer
-
-If you only need this library during development, for instance to run your project's test suite, then you should add it as a development-time dependency:
-
-    composer require --dev phpunit/php-timer
+    {
+        "require": {
+            "phpunit/php-timer": "~1.0"
+        }
+    }
 
 ## Usage
 
 ### Basic Timing
 
 ```php
-use SebastianBergmann\Timer\Timer;
+PHP_Timer::start();
 
-Timer::start();
+$timer->start();
 
 // ...
 
-$time = Timer::stop();
+$time = PHP_Timer::stop();
 var_dump($time);
 
-print Timer::secondsToTimeString($time);
+print PHP_Timer::secondsToTimeString($time);
 ```
 
 The code above yields the output below:
@@ -39,9 +39,7 @@ The code above yields the output below:
 ### Resource Consumption Since PHP Startup
 
 ```php
-use SebastianBergmann\Timer\Timer;
-
-print Timer::resourceUsage();
+print PHP_Timer::resourceUsage();
 ```
 
 The code above yields the output below:

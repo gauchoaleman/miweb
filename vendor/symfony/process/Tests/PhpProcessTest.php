@@ -11,11 +11,10 @@
 
 namespace Symfony\Component\Process\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\PhpProcess;
 
-class PhpProcessTest extends TestCase
+class PhpProcessTest extends \PHPUnit_Framework_TestCase
 {
     public function testNonBlockingWorks()
     {
@@ -32,32 +31,19 @@ PHP
     public function testCommandLine()
     {
         $process = new PhpProcess(<<<'PHP'
-<?php echo phpversion().PHP_SAPI;
+<?php echo 'foobar';
 PHP
         );
 
         $commandLine = $process->getCommandLine();
 
+        $f = new PhpExecutableFinder();
+        $this->assertContains($f->find(), $commandLine, '::getCommandLine() returns the command line of PHP before start');
+
         $process->start();
-        $this->assertStringContainsString($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP after start');
+        $this->assertContains($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP after start');
 
         $process->wait();
-        $this->assertStringContainsString($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP after wait');
-
-        $this->assertSame(PHP_VERSION.\PHP_SAPI, $process->getOutput());
-    }
-
-    public function testPassingPhpExplicitly()
-    {
-        $finder = new PhpExecutableFinder();
-        $php = array_merge([$finder->find(false)], $finder->findArguments());
-
-        $expected = 'hello world!';
-        $script = <<<PHP
-<?php echo '$expected';
-PHP;
-        $process = new PhpProcess($script, null, null, 60, $php);
-        $process->run();
-        $this->assertEquals($expected, $process->getOutput());
+        $this->assertContains($commandLine, $process->getCommandLine(), '::getCommandLine() returns the command line of PHP after wait');
     }
 }

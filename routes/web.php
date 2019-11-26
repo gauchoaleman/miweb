@@ -515,3 +515,11 @@ Auth::routes();
 Route::get('/home', function ()  {
   return view('welcome');
 });
+
+Route::get('/chat', function ()  {
+  return view('chat');
+});
+
+//Route::get('/', 'ChatsController@index');
+Route::get('messages', 'ChatsController@fetchMessages');
+Route::post('messages', 'ChatsController@sendMessage');

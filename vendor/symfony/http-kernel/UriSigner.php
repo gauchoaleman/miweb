@@ -19,22 +19,21 @@ namespace Symfony\Component\HttpKernel;
 class UriSigner
 {
     private $secret;
-    private $parameter;
 
     /**
-     * @param string $secret    A secret
-     * @param string $parameter Query string parameter to use
+     * Constructor.
+     *
+     * @param string $secret A secret
      */
-    public function __construct(string $secret, string $parameter = '_hash')
+    public function __construct($secret)
     {
         $this->secret = $secret;
-        $this->parameter = $parameter;
     }
 
     /**
      * Signs a URI.
      *
-     * The given URI is signed by adding the query string parameter
+     * The given URI is signed by adding a _hash query string parameter
      * which value depends on the URI and the secret.
      *
      * @param string $uri A URI to sign
@@ -47,17 +46,20 @@ class UriSigner
         if (isset($url['query'])) {
             parse_str($url['query'], $params);
         } else {
-            $params = [];
+            $params = array();
         }
 
         $uri = $this->buildUrl($url, $params);
-        $params[$this->parameter] = $this->computeHash($uri);
 
-        return $this->buildUrl($url, $params);
+        return $uri.(false === strpos($uri, '?') ? '?' : '&').'_hash='.$this->computeHash($uri);
     }
 
     /**
      * Checks that a URI contains the correct hash.
+     *
+     * The _hash query string parameter must be the last one
+     * (as it is generated that way by the sign() method, it should
+     * never be a problem).
      *
      * @param string $uri A signed URI
      *
@@ -69,25 +71,25 @@ class UriSigner
         if (isset($url['query'])) {
             parse_str($url['query'], $params);
         } else {
-            $params = [];
+            $params = array();
         }
 
-        if (empty($params[$this->parameter])) {
+        if (empty($params['_hash'])) {
             return false;
         }
 
-        $hash = $params[$this->parameter];
-        unset($params[$this->parameter]);
+        $hash = urlencode($params['_hash']);
+        unset($params['_hash']);
 
         return $this->computeHash($this->buildUrl($url, $params)) === $hash;
     }
 
     private function computeHash($uri)
     {
-        return base64_encode(hash_hmac('sha256', $uri, $this->secret, true));
+        return urlencode(base64_encode(hash_hmac('sha256', $uri, $this->secret, true)));
     }
 
-    private function buildUrl(array $url, array $params = [])
+    private function buildUrl(array $url, array $params = array())
     {
         ksort($params, SORT_STRING);
         $url['query'] = http_build_query($params, '', '&');

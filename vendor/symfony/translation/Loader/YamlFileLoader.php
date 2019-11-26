@@ -13,9 +13,8 @@ namespace Symfony\Component\Translation\Loader;
 
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\LogicException;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser as YamlParser;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * YamlFileLoader loads translations from Yaml files.
@@ -40,15 +39,11 @@ class YamlFileLoader extends FileLoader
         }
 
         try {
-            $messages = $this->yamlParser->parseFile($resource, Yaml::PARSE_CONSTANT);
+            $messages = $this->yamlParser->parse(file_get_contents($resource));
         } catch (ParseException $e) {
             throw new InvalidResourceException(sprintf('Error parsing YAML, invalid file "%s"', $resource), 0, $e);
         }
 
-        if (null !== $messages && !\is_array($messages)) {
-            throw new InvalidResourceException(sprintf('Unable to load file "%s".', $resource));
-        }
-
-        return $messages ?: [];
+        return $messages;
     }
 }

@@ -3,6 +3,7 @@
 namespace Illuminate\Cache;
 
 use Memcached;
+use RuntimeException;
 
 class MemcachedConnector
 {
@@ -14,6 +15,8 @@ class MemcachedConnector
      * @param  array  $options
      * @param  array  $credentials
      * @return \Memcached
+     *
+     * @throws \RuntimeException
      */
     public function connect(array $servers, $connectionId = null, array $options = [], array $credentials = [])
     {
@@ -32,7 +35,7 @@ class MemcachedConnector
             }
         }
 
-        return $memcached;
+        return $this->validateConnection($memcached);
     }
 
     /**
@@ -47,7 +50,7 @@ class MemcachedConnector
     {
         $memcached = $this->createMemcachedInstance($connectionId);
 
-        if (count($credentials) === 2) {
+        if (count($credentials) == 2) {
             $this->setCredentials($memcached, $credentials);
         }
 
@@ -78,10 +81,31 @@ class MemcachedConnector
      */
     protected function setCredentials($memcached, $credentials)
     {
-        [$username, $password] = $credentials;
+        list($username, $password) = $credentials;
 
         $memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
 
         $memcached->setSaslAuthData($username, $password);
+    }
+
+    /**
+     * Validate the given Memcached connection.
+     *
+     * @param  \Memcached  $memcached
+     * @return \Memcached
+     */
+    protected function validateConnection($memcached)
+    {
+        $status = $memcached->getVersion();
+
+        if (! is_array($status)) {
+            throw new RuntimeException('No Memcached servers added.');
+        }
+
+        if (in_array('255.255.255', $status) && count(array_unique($status)) === 1) {
+            throw new RuntimeException('Could not establish Memcached connection.');
+        }
+
+        return $memcached;
     }
 }

@@ -60,17 +60,6 @@ class Encrypter implements EncrypterContract
     }
 
     /**
-     * Create a new encryption key for the given cipher.
-     *
-     * @param  string  $cipher
-     * @return string
-     */
-    public static function generateKey($cipher)
-    {
-        return random_bytes($cipher === 'AES-128-CBC' ? 16 : 32);
-    }
-
-    /**
      * Encrypt the given value.
      *
      * @param  mixed  $value
@@ -81,7 +70,7 @@ class Encrypter implements EncrypterContract
      */
     public function encrypt($value, $serialize = true)
     {
-        $iv = random_bytes(openssl_cipher_iv_length($this->cipher));
+        $iv = random_bytes(16);
 
         // First we will encrypt the value using OpenSSL. After this is encrypted we
         // will proceed to calculating a MAC for the encrypted value so that this
@@ -95,14 +84,14 @@ class Encrypter implements EncrypterContract
             throw new EncryptException('Could not encrypt the data.');
         }
 
-        // Once we get the encrypted value we'll go ahead and base64_encode the input
-        // vector and create the MAC for the encrypted value so we can then verify
-        // its authenticity. Then, we'll JSON the data into the "payload" array.
+        // Once we have the encrypted value we will go ahead base64_encode the input
+        // vector and create the MAC for the encrypted value so we can verify its
+        // authenticity. Then, we'll JSON encode the data in a "payload" array.
         $mac = $this->hash($iv = base64_encode($iv), $value);
 
         $json = json_encode(compact('iv', 'value', 'mac'));
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        if (! is_string($json)) {
             throw new EncryptException('Could not encrypt the data.');
         }
 
@@ -114,8 +103,6 @@ class Encrypter implements EncrypterContract
      *
      * @param  string  $value
      * @return string
-     *
-     * @throws \Illuminate\Contracts\Encryption\EncryptException
      */
     public function encryptString($value)
     {
@@ -125,9 +112,9 @@ class Encrypter implements EncrypterContract
     /**
      * Decrypt the given value.
      *
-     * @param  string  $payload
+     * @param  mixed  $payload
      * @param  bool  $unserialize
-     * @return mixed
+     * @return string
      *
      * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
@@ -156,8 +143,6 @@ class Encrypter implements EncrypterContract
      *
      * @param  string  $payload
      * @return string
-     *
-     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function decryptString($payload)
     {
@@ -210,8 +195,9 @@ class Encrypter implements EncrypterContract
      */
     protected function validPayload($payload)
     {
-        return is_array($payload) && isset($payload['iv'], $payload['value'], $payload['mac']) &&
-               strlen(base64_decode($payload['iv'], true)) === openssl_cipher_iv_length($this->cipher);
+        return is_array($payload) && isset(
+            $payload['iv'], $payload['value'], $payload['mac']
+        );
     }
 
     /**

@@ -11,15 +11,14 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Profiler;
 
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
 use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\VarDumper\Cloner\Data;
 
-class ProfilerTest extends TestCase
+class ProfilerTest extends \PHPUnit_Framework_TestCase
 {
     private $tmp;
     private $storage;
@@ -34,24 +33,10 @@ class ProfilerTest extends TestCase
         $profiler = new Profiler($this->storage);
         $profiler->add($collector);
         $profile = $profiler->collect($request, $response);
-        $profiler->saveProfile($profile);
 
         $this->assertSame(204, $profile->getStatusCode());
         $this->assertSame('GET', $profile->getMethod());
-        $this->assertSame('bar', $profile->getCollector('request')->getRequestQuery()->all()['foo']->getValue());
-    }
-
-    public function testReset()
-    {
-        $collector = $this->getMockBuilder(DataCollectorInterface::class)
-            ->setMethods(['collect', 'getName', 'reset'])
-            ->getMock();
-        $collector->expects($this->any())->method('getName')->willReturn('mock');
-        $collector->expects($this->once())->method('reset');
-
-        $profiler = new Profiler($this->storage);
-        $profiler->add($collector);
-        $profiler->reset();
+        $this->assertInstanceOf(Data::class, $profiler->get('request')->getRequestQuery()->all()['foo']);
     }
 
     public function testFindWorksWithDates()
@@ -82,9 +67,9 @@ class ProfilerTest extends TestCase
         $this->assertCount(0, $profiler->find(null, null, null, null, null, null, '204'));
     }
 
-    protected function setUp(): void
+    protected function setUp()
     {
-        $this->tmp = tempnam(sys_get_temp_dir(), 'sf_profiler');
+        $this->tmp = tempnam(sys_get_temp_dir(), 'sf2_profiler');
         if (file_exists($this->tmp)) {
             @unlink($this->tmp);
         }
@@ -93,7 +78,7 @@ class ProfilerTest extends TestCase
         $this->storage->purge();
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         if (null !== $this->storage) {
             $this->storage->purge();

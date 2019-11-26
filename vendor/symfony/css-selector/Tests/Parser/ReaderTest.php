@@ -11,10 +11,9 @@
 
 namespace Symfony\Component\CssSelector\Tests\Parser;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\CssSelector\Parser\Reader;
 
-class ReaderTest extends TestCase
+class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsEOF()
     {
@@ -70,11 +69,11 @@ class ReaderTest extends TestCase
         $reader = new Reader('hello');
 
         $this->assertFalse($reader->findPattern('/world/'));
-        $this->assertEquals(['hello', 'h'], $reader->findPattern('/^([a-z]).*/'));
+        $this->assertEquals(array('hello', 'h'), $reader->findPattern('/^([a-z]).*/'));
 
         $this->assignPosition($reader, 2);
         $this->assertFalse($reader->findPattern('/^h.*/'));
-        $this->assertEquals(['llo'], $reader->findPattern('/^llo$/'));
+        $this->assertEquals(array('llo'), $reader->findPattern('/^llo$/'));
     }
 
     public function testMoveForward()

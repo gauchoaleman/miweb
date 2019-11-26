@@ -11,21 +11,16 @@
 
 namespace Symfony\Component\Routing\Tests\Annotation;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RouteTest extends TestCase
+class RouteTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException \BadMethodCallException
+     */
     public function testInvalidRouteParameter()
     {
-        $this->expectException('BadMethodCallException');
-        new Route(['foo' => 'bar']);
-    }
-
-    public function testTryingToSetLocalesDirectly()
-    {
-        $this->expectException('BadMethodCallException');
-        new Route(['locales' => ['nl' => 'bar']]);
+        $route = new Route(array('foo' => 'bar'));
     }
 
     /**
@@ -33,23 +28,22 @@ class RouteTest extends TestCase
      */
     public function testRouteParameters($parameter, $value, $getter)
     {
-        $route = new Route([$parameter => $value]);
+        $route = new Route(array($parameter => $value));
         $this->assertEquals($route->$getter(), $value);
     }
 
     public function getValidParameters()
     {
-        return [
-            ['value', '/Blog', 'getPath'],
-            ['requirements', ['locale' => 'en'], 'getRequirements'],
-            ['options', ['compiler_class' => 'RouteCompiler'], 'getOptions'],
-            ['name', 'blog_index', 'getName'],
-            ['defaults', ['_controller' => 'MyBlogBundle:Blog:index'], 'getDefaults'],
-            ['schemes', ['https'], 'getSchemes'],
-            ['methods', ['GET', 'POST'], 'getMethods'],
-            ['host', '{locale}.example.com', 'getHost'],
-            ['condition', 'context.getMethod() == "GET"', 'getCondition'],
-            ['value', ['nl' => '/hier', 'en' => '/here'], 'getLocalizedPaths'],
-        ];
+        return array(
+            array('value', '/Blog', 'getPath'),
+            array('requirements', array('locale' => 'en'), 'getRequirements'),
+            array('options', array('compiler_class' => 'RouteCompiler'), 'getOptions'),
+            array('name', 'blog_index', 'getName'),
+            array('defaults', array('_controller' => 'MyBlogBundle:Blog:index'), 'getDefaults'),
+            array('schemes', array('https'), 'getSchemes'),
+            array('methods', array('GET', 'POST'), 'getMethods'),
+            array('host', '{locale}.example.com', 'getHost'),
+            array('condition', 'context.getMethod() == "GET"', 'getCondition'),
+        );
     }
 }

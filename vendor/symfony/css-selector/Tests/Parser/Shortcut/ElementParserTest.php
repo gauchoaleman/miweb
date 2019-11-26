@@ -11,14 +11,13 @@
 
 namespace Symfony\Component\CssSelector\Tests\Parser\Shortcut;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\CssSelector\Node\SelectorNode;
 use Symfony\Component\CssSelector\Parser\Shortcut\ElementParser;
 
 /**
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
-class ElementParserTest extends TestCase
+class ElementParserTest extends \PHPUnit_Framework_TestCase
 {
     /** @dataProvider getParseTestData */
     public function testParse($source, $representation)
@@ -34,11 +33,11 @@ class ElementParserTest extends TestCase
 
     public function getParseTestData()
     {
-        return [
-            ['*', 'Element[*]'],
-            ['testel', 'Element[testel]'],
-            ['testns|*', 'Element[testns|*]'],
-            ['testns|testel', 'Element[testns|testel]'],
-        ];
+        return array(
+            array('*', 'Element[*]'),
+            array('testel', 'Element[testel]'),
+            array('testns|*', 'Element[testns|*]'),
+            array('testns|testel', 'Element[testns|testel]'),
+        );
     }
 }

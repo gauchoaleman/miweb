@@ -80,7 +80,7 @@
         >
           <img src='http://{{$_SERVER['HTTP_HOST']}}/img/number.png'>Nros. de emergencia</div></a>&nbsp;
 @if (Auth::user() && Auth::user()->is_admin != 1)
-          <a target="_blank" class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/user/chat_window_user">
+          <a target="popup" class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/user/chat_window_user">
             <div
             @if( where_i_am($there_is_error)=="UserChat")
               class="active_navbar_item"

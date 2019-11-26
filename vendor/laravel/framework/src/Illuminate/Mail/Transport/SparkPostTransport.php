@@ -2,7 +2,7 @@
 
 namespace Illuminate\Mail\Transport;
 
-use Swift_Mime_SimpleMessage;
+use Swift_Mime_Message;
 use GuzzleHttp\ClientInterface;
 
 class SparkPostTransport extends Transport
@@ -22,7 +22,7 @@ class SparkPostTransport extends Transport
     protected $key;
 
     /**
-     * The SparkPost transmission options.
+     * Transmission options.
      *
      * @var array
      */
@@ -46,7 +46,7 @@ class SparkPostTransport extends Transport
     /**
      * {@inheritdoc}
      */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $this->beforeSendPerformed($message);
 
@@ -54,7 +54,7 @@ class SparkPostTransport extends Transport
 
         $message->setBcc([]);
 
-        $response = $this->client->request('POST', $this->getEndpoint(), [
+        $this->client->post('https://api.sparkpost.com/api/v1/transmissions', [
             'headers' => [
                 'Authorization' => $this->key,
             ],
@@ -66,10 +66,6 @@ class SparkPostTransport extends Transport
             ], $this->options),
         ]);
 
-        $message->getHeaders()->addTextHeader(
-            'X-SparkPost-Transmission-ID', $this->getTransmissionId($response)
-        );
-
         $this->sendPerformed($message);
 
         return $this->numberOfRecipients($message);
@@ -80,10 +76,10 @@ class SparkPostTransport extends Transport
      *
      * Note that SparkPost still respects CC, BCC headers in raw message itself.
      *
-     * @param  \Swift_Mime_SimpleMessage $message
+     * @param  \Swift_Mime_Message $message
      * @return array
      */
-    protected function getRecipients(Swift_Mime_SimpleMessage $message)
+    protected function getRecipients(Swift_Mime_Message $message)
     {
         $recipients = [];
 
@@ -100,19 +96,6 @@ class SparkPostTransport extends Transport
         }
 
         return $recipients;
-    }
-
-    /**
-     * Get the transmission ID from the response.
-     *
-     * @param  \GuzzleHttp\Psr7\Response  $response
-     * @return string
-     */
-    protected function getTransmissionId($response)
-    {
-        return object_get(
-            json_decode($response->getBody()->getContents()), 'results.id'
-        );
     }
 
     /**
@@ -137,19 +120,9 @@ class SparkPostTransport extends Transport
     }
 
     /**
-     * Get the SparkPost API endpoint.
-     *
-     * @return string
-     */
-    public function getEndpoint()
-    {
-        return $this->getOptions()['endpoint'] ?? 'https://api.sparkpost.com/api/v1/transmissions';
-    }
-
-    /**
      * Get the transmission options being used by the transport.
      *
-     * @return array
+     * @return string
      */
     public function getOptions()
     {

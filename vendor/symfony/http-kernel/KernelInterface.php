@@ -11,30 +11,30 @@
 
 namespace Symfony\Component\HttpKernel;
 
-use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * The Kernel is the heart of the Symfony system.
  *
- * It manages an environment made of application kernel and bundles.
+ * It manages an environment made of bundles.
  *
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @method string getProjectDir() Gets the project dir (path of the project's composer file) - not defining it is deprecated since Symfony 4.2
  */
-interface KernelInterface extends HttpKernelInterface
+interface KernelInterface extends HttpKernelInterface, \Serializable
 {
     /**
      * Returns an array of bundles to register.
      *
-     * @return iterable|BundleInterface[] An iterable of bundle instances
+     * @return BundleInterface[] An array of bundle instances
      */
     public function registerBundles();
 
     /**
      * Loads the container configuration.
+     *
+     * @param LoaderInterface $loader A LoaderInterface instance
      */
     public function registerContainerConfiguration(LoaderInterface $loader);
 
@@ -58,18 +58,19 @@ interface KernelInterface extends HttpKernelInterface
     public function getBundles();
 
     /**
-     * Returns a bundle.
+     * Returns a bundle and optionally its descendants by its name.
      *
-     * @param string $name Bundle name
+     * @param string $name  Bundle name
+     * @param bool   $first Whether to return the first bundle only or together with its descendants
      *
-     * @return BundleInterface A BundleInterface instance
+     * @return BundleInterface|BundleInterface[] A BundleInterface instance or an array of BundleInterface instances if $first is false
      *
      * @throws \InvalidArgumentException when the bundle is not enabled
      */
-    public function getBundle($name);
+    public function getBundle($name, $first = true);
 
     /**
-     * Returns the file path for a given bundle resource.
+     * Returns the file path for a given resource.
      *
      * A Resource can be a file or a directory.
      *
@@ -102,8 +103,6 @@ interface KernelInterface extends HttpKernelInterface
      * Gets the name of the kernel.
      *
      * @return string The kernel name
-     *
-     * @deprecated since Symfony 4.2
      */
     public function getName();
 
@@ -122,25 +121,23 @@ interface KernelInterface extends HttpKernelInterface
     public function isDebug();
 
     /**
-     * Gets the application root dir (path of the project's Kernel class).
+     * Gets the application root dir.
      *
-     * @return string The Kernel root dir
-     *
-     * @deprecated since Symfony 4.2
+     * @return string The application root dir
      */
     public function getRootDir();
 
     /**
      * Gets the current container.
      *
-     * @return ContainerInterface|null A ContainerInterface instance or null when the Kernel is shutdown
+     * @return ContainerInterface A ContainerInterface instance
      */
     public function getContainer();
 
     /**
      * Gets the request start time (not available if debug is disabled).
      *
-     * @return float The request start timestamp
+     * @return int The request start timestamp
      */
     public function getStartTime();
 

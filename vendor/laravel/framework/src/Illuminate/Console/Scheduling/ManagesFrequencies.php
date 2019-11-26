@@ -2,7 +2,7 @@
 
 namespace Illuminate\Console\Scheduling;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 trait ManagesFrequencies
 {
@@ -53,62 +53,10 @@ trait ManagesFrequencies
     private function inTimeInterval($startTime, $endTime)
     {
         return function () use ($startTime, $endTime) {
-            return Carbon::now($this->timezone)->between(
-                Carbon::parse($startTime, $this->timezone),
-                Carbon::parse($endTime, $this->timezone),
-                true
-            );
+            $now = Carbon::now()->getTimestamp();
+
+            return $now >= strtotime($startTime) && $now <= strtotime($endTime);
         };
-    }
-
-    /**
-     * Schedule the event to run every minute.
-     *
-     * @return $this
-     */
-    public function everyMinute()
-    {
-        return $this->spliceIntoPosition(1, '*');
-    }
-
-    /**
-     * Schedule the event to run every five minutes.
-     *
-     * @return $this
-     */
-    public function everyFiveMinutes()
-    {
-        return $this->spliceIntoPosition(1, '*/5');
-    }
-
-    /**
-     * Schedule the event to run every ten minutes.
-     *
-     * @return $this
-     */
-    public function everyTenMinutes()
-    {
-        return $this->spliceIntoPosition(1, '*/10');
-    }
-
-    /**
-     * Schedule the event to run every fifteen minutes.
-     *
-     * @return $this
-     */
-    public function everyFifteenMinutes()
-    {
-        return $this->spliceIntoPosition(1, '*/15');
-    }
-
-    /**
-     * Schedule the event to run every thirty minutes.
-     *
-     * @return $this
-     */
-    public function everyThirtyMinutes()
-    {
-        return $this->spliceIntoPosition(1, '0,30');
     }
 
     /**
@@ -124,13 +72,11 @@ trait ManagesFrequencies
     /**
      * Schedule the event to run hourly at a given offset in the hour.
      *
-     * @param  array|int  $offset
+     * @param  int  $offset
      * @return $this
      */
     public function hourlyAt($offset)
     {
-        $offset = is_array($offset) ? implode(',', $offset) : $offset;
-
         return $this->spliceIntoPosition(1, $offset);
     }
 
@@ -167,7 +113,7 @@ trait ManagesFrequencies
         $segments = explode(':', $time);
 
         return $this->spliceIntoPosition(2, (int) $segments[0])
-                    ->spliceIntoPosition(1, count($segments) === 2 ? (int) $segments[1] : '0');
+                    ->spliceIntoPosition(1, count($segments) == 2 ? (int) $segments[1] : '0');
     }
 
     /**
@@ -328,22 +274,6 @@ trait ManagesFrequencies
     }
 
     /**
-     * Schedule the event to run twice monthly.
-     *
-     * @param  int  $first
-     * @param  int  $second
-     * @return $this
-     */
-    public function twiceMonthly($first = 1, $second = 16)
-    {
-        $days = $first.','.$second;
-
-        return $this->spliceIntoPosition(1, 0)
-            ->spliceIntoPosition(2, 0)
-            ->spliceIntoPosition(3, $days);
-    }
-
-    /**
      * Schedule the event to run quarterly.
      *
      * @return $this
@@ -353,7 +283,7 @@ trait ManagesFrequencies
         return $this->spliceIntoPosition(1, 0)
                     ->spliceIntoPosition(2, 0)
                     ->spliceIntoPosition(3, 1)
-                    ->spliceIntoPosition(4, '1-12/3');
+                    ->spliceIntoPosition(4, '*/3');
     }
 
     /**
@@ -367,6 +297,46 @@ trait ManagesFrequencies
                     ->spliceIntoPosition(2, 0)
                     ->spliceIntoPosition(3, 1)
                     ->spliceIntoPosition(4, 1);
+    }
+
+    /**
+     * Schedule the event to run every minute.
+     *
+     * @return $this
+     */
+    public function everyMinute()
+    {
+        return $this->spliceIntoPosition(1, '*');
+    }
+
+    /**
+     * Schedule the event to run every five minutes.
+     *
+     * @return $this
+     */
+    public function everyFiveMinutes()
+    {
+        return $this->spliceIntoPosition(1, '*/5');
+    }
+
+    /**
+     * Schedule the event to run every ten minutes.
+     *
+     * @return $this
+     */
+    public function everyTenMinutes()
+    {
+        return $this->spliceIntoPosition(1, '*/10');
+    }
+
+    /**
+     * Schedule the event to run every thirty minutes.
+     *
+     * @return $this
+     */
+    public function everyThirtyMinutes()
+    {
+        return $this->spliceIntoPosition(1, '0,30');
     }
 
     /**

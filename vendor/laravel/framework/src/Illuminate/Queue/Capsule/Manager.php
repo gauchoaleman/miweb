@@ -7,10 +7,6 @@ use Illuminate\Container\Container;
 use Illuminate\Queue\QueueServiceProvider;
 use Illuminate\Support\Traits\CapsuleManagerTrait;
 
-/**
- * @mixin \Illuminate\Queue\QueueManager
- * @mixin \Illuminate\Contracts\Queue\Queue
- */
 class Manager
 {
     use CapsuleManagerTrait;
@@ -25,7 +21,7 @@ class Manager
     /**
      * Create a new queue capsule manager.
      *
-     * @param  \Illuminate\Container\Container|null  $container
+     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(Container $container = null)
@@ -77,7 +73,7 @@ class Manager
     /**
      * Get a connection instance from the global manager.
      *
-     * @param  string|null  $connection
+     * @param  string  $connection
      * @return \Illuminate\Contracts\Queue\Queue
      */
     public static function connection($connection = null)
@@ -90,8 +86,8 @@ class Manager
      *
      * @param  string  $job
      * @param  mixed   $data
-     * @param  string|null  $queue
-     * @param  string|null  $connection
+     * @param  string  $queue
+     * @param  string  $connection
      * @return mixed
      */
     public static function push($job, $data = '', $queue = null, $connection = null)
@@ -104,8 +100,8 @@ class Manager
      *
      * @param  array   $jobs
      * @param  mixed   $data
-     * @param  string|null  $queue
-     * @param  string|null  $connection
+     * @param  string  $queue
+     * @param  string  $connection
      * @return mixed
      */
     public static function bulk($jobs, $data = '', $queue = null, $connection = null)
@@ -116,11 +112,11 @@ class Manager
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTime|int  $delay
      * @param  string  $job
      * @param  mixed   $data
-     * @param  string|null  $queue
-     * @param  string|null  $connection
+     * @param  string  $queue
+     * @param  string  $connection
      * @return mixed
      */
     public static function later($delay, $job, $data = '', $queue = null, $connection = null)
@@ -131,7 +127,7 @@ class Manager
     /**
      * Get a registered connection instance.
      *
-     * @param  string|null  $name
+     * @param  string  $name
      * @return \Illuminate\Contracts\Queue\Queue
      */
     public function getConnection($name = null)

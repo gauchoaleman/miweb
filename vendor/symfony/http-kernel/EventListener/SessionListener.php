@@ -11,41 +11,43 @@
 
 namespace Symfony\Component\HttpKernel\EventListener;
 
-use Psr\Container\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Sets the session in the request.
  *
- * When the passed container contains a "session_storage" entry which
- * holds a NativeSessionStorage instance, the "cookie_secure" option
- * will be set to true whenever the current master request is secure.
- *
- * @author Fabien Potencier <fabien@symfony.com>
- *
- * @final
+ * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-class SessionListener extends AbstractSessionListener
+abstract class SessionListener implements EventSubscriberInterface
 {
-    public function __construct(ContainerInterface $container)
+    public function onKernelRequest(GetResponseEvent $event)
     {
-        $this->container = $container;
-    }
-
-    protected function getSession()
-    {
-        if (!$this->container->has('session')) {
-            return null;
+        if (!$event->isMasterRequest()) {
+            return;
         }
 
-        if ($this->container->has('session_storage')
-            && ($storage = $this->container->get('session_storage')) instanceof NativeSessionStorage
-            && ($masterRequest = $this->container->get('request_stack')->getMasterRequest())
-            && $masterRequest->isSecure()
-        ) {
-            $storage->setOptions(['cookie_secure' => true]);
+        $request = $event->getRequest();
+        $session = $this->getSession();
+        if (null === $session || $request->hasSession()) {
+            return;
         }
 
-        return $this->container->get('session');
+        $request->setSession($session);
     }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::REQUEST => array('onKernelRequest', 128),
+        );
+    }
+
+    /**
+     * Gets the session object.
+     *
+     * @return SessionInterface|null A SessionInterface instance or null if no session is available
+     */
+    abstract protected function getSession();
 }

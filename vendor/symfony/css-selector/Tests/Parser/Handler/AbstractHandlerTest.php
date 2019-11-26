@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\CssSelector\Tests\Parser\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\CssSelector\Parser\Reader;
 use Symfony\Component\CssSelector\Parser\Token;
 use Symfony\Component\CssSelector\Parser\TokenStream;
@@ -19,7 +18,7 @@ use Symfony\Component\CssSelector\Parser\TokenStream;
 /**
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
-abstract class AbstractHandlerTest extends TestCase
+abstract class AbstractHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /** @dataProvider getHandleValueTestData */
     public function testHandleValue($value, Token $expectedToken, $remainingContent)
@@ -54,7 +53,7 @@ abstract class AbstractHandlerTest extends TestCase
         $property = new \ReflectionProperty($stream, 'tokens');
         $property->setAccessible(true);
 
-        $this->assertEquals([], $property->getValue($stream));
+        $this->assertEquals(array(), $property->getValue($stream));
     }
 
     protected function assertRemainingContent(Reader $reader, $remainingContent)
@@ -63,7 +62,7 @@ abstract class AbstractHandlerTest extends TestCase
             $this->assertEquals(0, $reader->getRemainingLength());
             $this->assertTrue($reader->isEOF());
         } else {
-            $this->assertEquals(\strlen($remainingContent), $reader->getRemainingLength());
+            $this->assertEquals(strlen($remainingContent), $reader->getRemainingLength());
             $this->assertEquals(0, $reader->getOffset($remainingContent));
         }
     }

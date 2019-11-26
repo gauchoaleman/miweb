@@ -4,11 +4,10 @@ namespace Illuminate\Redis\Connectors;
 
 use Predis\Client;
 use Illuminate\Support\Arr;
-use Illuminate\Contracts\Redis\Connector;
 use Illuminate\Redis\Connections\PredisConnection;
 use Illuminate\Redis\Connections\PredisClusterConnection;
 
-class PredisConnector implements Connector
+class PredisConnector
 {
     /**
      * Create a new clustered Predis connection.
@@ -19,11 +18,9 @@ class PredisConnector implements Connector
      */
     public function connect(array $config, array $options)
     {
-        $formattedOptions = array_merge(
+        return new PredisConnection(new Client($config, array_merge(
             ['timeout' => 10.0], $options, Arr::pull($config, 'options', [])
-        );
-
-        return new PredisConnection(new Client($config, $formattedOptions));
+        )));
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Illuminate\Foundation;
 
-use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 
@@ -181,16 +180,10 @@ class ProviderRepository
      *
      * @param  array  $manifest
      * @return array
-     *
-     * @throws \Exception
      */
     public function writeManifest($manifest)
     {
-        if (! is_writable($dirname = dirname($this->manifestPath))) {
-            throw new Exception("The {$dirname} directory must be present and writable.");
-        }
-
-        $this->files->replace(
+        $this->files->put(
             $this->manifestPath, '<?php return '.var_export($manifest, true).';'
         );
 

@@ -4,8 +4,8 @@ namespace Illuminate\Broadcasting;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Illuminate\Support\Arr;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\Job;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Broadcasting\Broadcaster;
@@ -19,7 +19,7 @@ class BroadcastEvent implements ShouldQueue
      *
      * @var mixed
      */
-    public $event;
+    protected $event;
 
     /**
      * Create a new job handler instance.
@@ -44,7 +44,7 @@ class BroadcastEvent implements ShouldQueue
                 ? $this->event->broadcastAs() : get_class($this->event);
 
         $broadcaster->broadcast(
-            Arr::wrap($this->event->broadcastOn()), $name,
+            array_wrap($this->event->broadcastOn()), $name,
             $this->getPayloadFromEvent($this->event)
         );
     }
@@ -68,8 +68,6 @@ class BroadcastEvent implements ShouldQueue
         foreach ((new ReflectionClass($event))->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
             $payload[$property->getName()] = $this->formatProperty($property->getValue($event));
         }
-
-        unset($payload['broadcastQueue']);
 
         return $payload;
     }
@@ -97,15 +95,5 @@ class BroadcastEvent implements ShouldQueue
     public function displayName()
     {
         return get_class($this->event);
-    }
-
-    /**
-     * Prepare the instance for cloning.
-     *
-     * @return void
-     */
-    public function __clone()
-    {
-        $this->event = clone $this->event;
     }
 }

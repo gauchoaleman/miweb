@@ -11,28 +11,59 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage\Proxy;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Storage\Proxy\AbstractProxy;
-use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
+
+// Note until PHPUnit_Mock_Objects 1.2 is released you cannot mock abstracts due to
+// https://github.com/sebastianbergmann/phpunit-mock-objects/issues/73
+class ConcreteProxy extends AbstractProxy
+{
+}
+
+class ConcreteSessionHandlerInterfaceProxy extends AbstractProxy implements \SessionHandlerInterface
+{
+    public function open($savePath, $sessionName)
+    {
+    }
+
+    public function close()
+    {
+    }
+
+    public function read($id)
+    {
+    }
+
+    public function write($id, $data)
+    {
+    }
+
+    public function destroy($id)
+    {
+    }
+
+    public function gc($maxlifetime)
+    {
+    }
+}
 
 /**
  * Test class for AbstractProxy.
  *
  * @author Drak <drak@zikula.org>
  */
-class AbstractProxyTest extends TestCase
+class AbstractProxyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var AbstractProxy
      */
     protected $proxy;
 
-    protected function setUp(): void
+    protected function setUp()
     {
-        $this->proxy = $this->getMockForAbstractClass(AbstractProxy::class);
+        $this->proxy = new ConcreteProxy();
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->proxy = null;
     }
@@ -45,7 +76,7 @@ class AbstractProxyTest extends TestCase
     public function testIsSessionHandlerInterface()
     {
         $this->assertFalse($this->proxy->isSessionHandlerInterface());
-        $sh = new SessionHandlerProxy(new \SessionHandler());
+        $sh = new ConcreteSessionHandlerInterfaceProxy();
         $this->assertTrue($sh->isSessionHandlerInterface());
     }
 
@@ -80,10 +111,10 @@ class AbstractProxyTest extends TestCase
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
+     * @expectedException \LogicException
      */
     public function testNameException()
     {
-        $this->expectException('LogicException');
         session_start();
         $this->proxy->setName('foo');
     }
@@ -103,10 +134,10 @@ class AbstractProxyTest extends TestCase
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
+     * @expectedException \LogicException
      */
     public function testIdException()
     {
-        $this->expectException('LogicException');
         session_start();
         $this->proxy->setId('foo');
     }

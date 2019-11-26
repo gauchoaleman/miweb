@@ -11,19 +11,18 @@
 
 namespace Symfony\Component\HttpKernel\Tests\CacheWarmer;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmer;
 
-class CacheWarmerTest extends TestCase
+class CacheWarmerTest extends \PHPUnit_Framework_TestCase
 {
     protected static $cacheFile;
 
-    public static function setUpBeforeClass(): void
+    public static function setUpBeforeClass()
     {
-        self::$cacheFile = tempnam(sys_get_temp_dir(), 'sf_cache_warmer_dir');
+        self::$cacheFile = tempnam(sys_get_temp_dir(), 'sf2_cache_warmer_dir');
     }
 
-    public static function tearDownAfterClass(): void
+    public static function tearDownAfterClass()
     {
         @unlink(self::$cacheFile);
     }
@@ -31,17 +30,19 @@ class CacheWarmerTest extends TestCase
     public function testWriteCacheFileCreatesTheFile()
     {
         $warmer = new TestCacheWarmer(self::$cacheFile);
-        $warmer->warmUp(\dirname(self::$cacheFile));
+        $warmer->warmUp(dirname(self::$cacheFile));
 
         $this->assertFileExists(self::$cacheFile);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testWriteNonWritableCacheFileThrowsARuntimeException()
     {
-        $this->expectException('RuntimeException');
         $nonWritableFile = '/this/file/is/very/probably/not/writable';
         $warmer = new TestCacheWarmer($nonWritableFile);
-        $warmer->warmUp(\dirname($nonWritableFile));
+        $warmer->warmUp(dirname($nonWritableFile));
     }
 }
 

@@ -11,9 +11,8 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage;
 
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 
 /**
  * Test class for PhpSessionStorage.
@@ -25,20 +24,20 @@ use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PhpBridgeSessionStorageTest extends TestCase
+class PhpBridgeSessionStorageTest extends \PHPUnit_Framework_TestCase
 {
     private $savePath;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->iniSet('session.save_handler', 'files');
-        $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sftest');
+        $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test');
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath);
         }
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         session_write_close();
         array_map('unlink', glob($this->savePath.'/*'));
@@ -64,19 +63,20 @@ class PhpBridgeSessionStorageTest extends TestCase
     {
         $storage = $this->getStorage();
 
-        $this->assertNotSame(\PHP_SESSION_ACTIVE, session_status());
+        $this->assertFalse($storage->getSaveHandler()->isActive());
         $this->assertFalse($storage->isStarted());
 
         session_start();
         $this->assertTrue(isset($_SESSION));
-        $this->assertSame(\PHP_SESSION_ACTIVE, session_status());
+        // in PHP 5.4 we can reliably detect a session started
+        $this->assertTrue($storage->getSaveHandler()->isActive());
         // PHP session might have started, but the storage driver has not, so false is correct here
         $this->assertFalse($storage->isStarted());
 
         $key = $storage->getMetadataBag()->getStorageKey();
-        $this->assertArrayNotHasKey($key, $_SESSION);
+        $this->assertFalse(isset($_SESSION[$key]));
         $storage->start();
-        $this->assertArrayHasKey($key, $_SESSION);
+        $this->assertTrue(isset($_SESSION[$key]));
     }
 
     public function testClear()
@@ -86,10 +86,10 @@ class PhpBridgeSessionStorageTest extends TestCase
         $_SESSION['drak'] = 'loves symfony';
         $storage->getBag('attributes')->set('symfony', 'greatness');
         $key = $storage->getBag('attributes')->getStorageKey();
-        $this->assertEquals($_SESSION[$key], ['symfony' => 'greatness']);
+        $this->assertEquals($_SESSION[$key], array('symfony' => 'greatness'));
         $this->assertEquals($_SESSION['drak'], 'loves symfony');
         $storage->clear();
-        $this->assertEquals($_SESSION[$key], []);
+        $this->assertEquals($_SESSION[$key], array());
         $this->assertEquals($_SESSION['drak'], 'loves symfony');
     }
 }

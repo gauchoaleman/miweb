@@ -14,7 +14,7 @@ class SqlServerGrammar extends Grammar
      */
     protected $operators = [
         '=', '<', '>', '<=', '>=', '!<', '!>', '<>', '!=',
-        'like', 'not like', 'ilike',
+        'like', 'not like', 'between', 'ilike',
         '&', '&=', '|', '|=', '^', '^=',
     ];
 
@@ -104,60 +104,6 @@ class SqlServerGrammar extends Grammar
     }
 
     /**
-     * Compile a "where time" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereTime(Builder $query, $where)
-    {
-        $value = $this->parameter($where['value']);
-
-        return 'cast('.$this->wrap($where['column']).' as time) '.$where['operator'].' '.$value;
-    }
-
-    /**
-     * Compile a "JSON contains" statement into SQL.
-     *
-     * @param  string  $column
-     * @param  string  $value
-     * @return string
-     */
-    protected function compileJsonContains($column, $value)
-    {
-        [$field, $path] = $this->wrapJsonFieldAndPath($column);
-
-        return $value.' in (select [value] from openjson('.$field.$path.'))';
-    }
-
-    /**
-     * Prepare the binding for a "JSON contains" statement.
-     *
-     * @param  mixed  $binding
-     * @return string
-     */
-    public function prepareBindingForJsonContains($binding)
-    {
-        return is_bool($binding) ? json_encode($binding) : $binding;
-    }
-
-    /**
-     * Compile a "JSON length" statement into SQL.
-     *
-     * @param  string  $column
-     * @param  string  $operator
-     * @param  string  $value
-     * @return string
-     */
-    protected function compileJsonLength($column, $operator, $value)
-    {
-        [$field, $path] = $this->wrapJsonFieldAndPath($column);
-
-        return '(select count(*) from openjson('.$field.$path.')) '.$operator.' '.$value;
-    }
-
-    /**
      * Create a full ANSI offset clause for the query.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -210,7 +156,7 @@ class SqlServerGrammar extends Grammar
     {
         $constraint = $this->compileRowConstraint($query);
 
-        return "select * from ({$sql}) as temp_table where row_num {$constraint} order by row_num";
+        return "select * from ({$sql}) as temp_table where row_num {$constraint}";
     }
 
     /**
@@ -323,10 +269,7 @@ class SqlServerGrammar extends Grammar
     {
         $joins = ' '.$this->compileJoins($query, $query->joins);
 
-        $alias = stripos($table, ' as ') !== false
-                ? explode(' as ', $table)[1] : $table;
-
-        return trim("delete {$alias} from {$table}{$joins} {$where}");
+        return trim("delete {$table} from {$table}{$joins} {$where}");
     }
 
     /**
@@ -349,7 +292,7 @@ class SqlServerGrammar extends Grammar
      */
     public function compileUpdate(Builder $query, $values)
     {
-        [$table, $alias] = $this->parseUpdateTable($query->from);
+        list($table, $alias) = $this->parseUpdateTable($query->from);
 
         // Each one of the columns in the update statements needs to be wrapped in the
         // keyword identifiers, also a place-holder needs to be created for each of
@@ -389,7 +332,7 @@ class SqlServerGrammar extends Grammar
     {
         $table = $alias = $this->wrapTable($table);
 
-        if (stripos($table, '] as [') !== false) {
+        if (strpos(strtolower($table), '] as [') !== false) {
             $alias = '['.explode('] as [', $table)[1];
         }
 
@@ -405,33 +348,24 @@ class SqlServerGrammar extends Grammar
      */
     public function prepareBindingsForUpdate(array $bindings, array $values)
     {
-        $cleanBindings = Arr::except($bindings, 'select');
+        // Update statements with joins in SQL Servers utilize an unique syntax. We need to
+        // take all of the bindings and put them on the end of this array since they are
+        // added to the end of the "where" clause statements as typical where clauses.
+        $bindingsWithoutJoin = Arr::except($bindings, 'join');
 
         return array_values(
-            array_merge($values, Arr::flatten($cleanBindings))
+            array_merge($values, $bindings['join'], Arr::flatten($bindingsWithoutJoin))
         );
     }
 
     /**
-     * Compile the SQL statement to define a savepoint.
+     * Determine if the grammar supports savepoints.
      *
-     * @param  string  $name
-     * @return string
+     * @return bool
      */
-    public function compileSavepoint($name)
+    public function supportsSavepoints()
     {
-        return 'SAVE TRANSACTION '.$name;
-    }
-
-    /**
-     * Compile the SQL statement to execute a savepoint rollback.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    public function compileSavepointRollBack($name)
-    {
-        return 'ROLLBACK TRANSACTION '.$name;
+        return false;
     }
 
     /**
@@ -441,7 +375,7 @@ class SqlServerGrammar extends Grammar
      */
     public function getDateFormat()
     {
-        return 'Y-m-d H:i:s.v';
+        return 'Y-m-d H:i:s.000';
     }
 
     /**
@@ -456,30 +390,6 @@ class SqlServerGrammar extends Grammar
     }
 
     /**
-     * Wrap the given JSON selector.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    protected function wrapJsonSelector($value)
-    {
-        [$field, $path] = $this->wrapJsonFieldAndPath($value);
-
-        return 'json_value('.$field.$path.')';
-    }
-
-    /**
-     * Wrap the given JSON boolean value.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    protected function wrapJsonBooleanValue($value)
-    {
-        return "'".$value."'";
-    }
-
-    /**
      * Wrap a table in keyword identifiers.
      *
      * @param  \Illuminate\Database\Query\Expression|string  $table
@@ -487,11 +397,7 @@ class SqlServerGrammar extends Grammar
      */
     public function wrapTable($table)
     {
-        if (! $this->isExpression($table)) {
-            return $this->wrapTableValuedFunction(parent::wrapTable($table));
-        }
-
-        return $this->getValue($table);
+        return $this->wrapTableValuedFunction(parent::wrapTable($table));
     }
 
     /**
