@@ -79,8 +79,8 @@
         @endif
         >
           <img src='http://{{$_SERVER['HTTP_HOST']}}/img/number.png'>Nros. de emergencia</div></a>&nbsp;
-@if (Auth::user())
-          <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/user/chat_window_user">
+@if (Auth::user() && Auth::user()->is_admin != 1)
+          <a target="_blank" class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/user/chat_window_user">
             <div
             @if( where_i_am($there_is_error)=="UserChat")
               class="active_navbar_item"
@@ -89,6 +89,18 @@
             @endif
             >
               <img src='http://{{$_SERVER['HTTP_HOST']}}/img/chat.png'>Chat</div></a>&nbsp;
+@endif
+
+@if (Auth::user() && Auth::user()->is_admin == 1)
+          <a target="_blank" class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/admin/chat_window_admin">
+            <div
+            @if( where_i_am($there_is_error)=="UserChat")
+              class="active_navbar_item"
+            @else
+              onmouseover="this.style.background='#ffdca4';" onmouseout="this.style.background='white';" class="navbar_item"
+            @endif
+            >
+              <img src='http://{{$_SERVER['HTTP_HOST']}}/img/chat.png'>Disponible Chat</div></a>&nbsp;
 @endif
       @auth
       @if ( (Auth::user()->is_admin == 1) )

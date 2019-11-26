@@ -479,10 +479,17 @@ Route::get('/documents/user/show_document_user', function () {
 Route::get('/chat/user/chat_window_user', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
+  else
+    return view('/chat/user/chat_window_user');
+});
+
+Route::get('/chat/admin/chat_window_admin', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
   elseif (Auth::user()->is_admin == 0)
     return view('no_access');
   else
-    return view('/chat/user/chat_window_user');
+    return view('/chat/admin/chat_window_admin');
 });
 
 Route::get('/mail/admin/mail_form', function () {
