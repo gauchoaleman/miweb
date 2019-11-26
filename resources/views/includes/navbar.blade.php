@@ -60,7 +60,7 @@
                     <ul class="dropdown-menu">
                     <?php $category_documents = DB::table('documents')->where('category_id', $category->id)->get(); ?>
                     @foreach ($category_documents as $category_document)
-                       <li>&nbsp;&nbsp;<a href="/documents/user/show_document_user?id={{ $category_document->id }}"><div style="color:orange" class="navbar-brand">{{ $category_document->title }}</div></a></li>
+                       <li><a href="/documents/user/show_document_user?id={{ $category_document->id }}"><div style="color:orange" class="navbar-brand">{{ $category_document->title }}</div></a></li>
                     @endforeach
                     @if (!sizeof($category_documents))
                        <li>&nbsp;</li>
@@ -79,7 +79,7 @@
         @endif
         >
           <img src='http://{{$_SERVER['HTTP_HOST']}}/img/number.png'>Nros. de emergencia</div></a>&nbsp;
-
+@if (Auth::user())
           <a class="navbar-brand" href="http://{{$_SERVER['HTTP_HOST']}}/chat/user/chat_window_user">
             <div
             @if( where_i_am($there_is_error)=="UserChat")
@@ -89,7 +89,7 @@
             @endif
             >
               <img src='http://{{$_SERVER['HTTP_HOST']}}/img/chat.png'>Chat</div></a>&nbsp;
-
+@endif
       @auth
       @if ( (Auth::user()->is_admin == 1) )
 
