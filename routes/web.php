@@ -520,6 +520,7 @@ Route::get('/chat', function ()  {
   return view('chat');
 });
 
-//Route::get('/', 'ChatsController@index');
+Route::get('/chat/admin/chat_window_admin', 'ChatsController@index');
+Route::get('/chat/user/chat_window_user', 'ChatsController@index');
 Route::get('messages', 'ChatsController@fetchMessages');
 Route::post('messages', 'ChatsController@sendMessage');
