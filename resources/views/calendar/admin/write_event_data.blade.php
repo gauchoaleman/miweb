@@ -8,6 +8,14 @@ $date= $_POST['date'];
 $time= $_POST['time'];
 $id = $_GET["id"];
 
+if( !validateDate($date) ){
+  $error =  "La fecha ingresada es inválida";
+  ?>
+  @include('includes/navbar')
+  @include('calendar.admin.forms.change_event_data_form', ['error' => $error])
+  <?php
+}
+else {
 $res = DB::table('events')
 ->where('id', $id)
 ->update(['name' => $name,'description'=>$description,'address'=>$address,'date'=>$date,'time'=>$time]);
@@ -30,5 +38,9 @@ foreach ($users as $user) {
 @include('includes/navbar')
 <div class='high_text' style='color:orange'>Datos actualizados</div>
 @include('calendar.admin.tables.view_events_table')
+<?php
+}
+?>
+
 @include('includes/bottom_bar')
 @include('includes/bottom')

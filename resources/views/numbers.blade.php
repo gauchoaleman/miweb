@@ -8,10 +8,9 @@
                 <div class="card-header"><div align=center>Números de emergencia</div></div>
 
                 <div class="card-body">
-                        @csrf
                         <div class="form-group row">
                             <div class="col-md-7  text-md-left">Bariloche:
-                                114
+                                114 (línea gratuita)
                               <script>if (navigator.userAgent.indexOf('Mobile') !== -1) {
                                 document.write("<a href='tel:154301742'><img src='/img/orange_phone.png' height=20></a>");
                               }</script>
@@ -36,7 +35,12 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-7  text-md-left">Whatsapp:
-                                <a target="_blank" href='https://wa.me/542944301742?text=Hola!'><img src='/img/whatsapp.png' height=20></a>
+                              +54 9 2944 301742
+                              <script>if (navigator.userAgent.indexOf('Mobile') !== -1) {
+                                document.write("<a target=\"_blank\" href='https://wa.me/542944301742?text=Hola!'><img src='/img/whatsapp.png' height=20></a>");
+                              }</script>
+
+
                             </div>
                         </div>
 
