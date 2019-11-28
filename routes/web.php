@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -492,6 +492,18 @@ Route::get('/chat/admin/chat_window_admin', function () {
     return view('/chat/admin/chat_window_admin');
 });
 
+Route::post('/chat/admin/chat_post', function () {
+  if (!isset(Auth::user()->name))
+    return view('no_access');
+  elseif (Auth::user()->is_admin == 0)
+    return view('no_access');
+  else
+    return view('/chat/admin/chat_post');
+});
+
+
+
+
 Route::get('/mail/admin/mail_form', function () {
   if (!isset(Auth::user()->name))
     return view('no_access');
@@ -519,8 +531,3 @@ Route::get('/home', function ()  {
 Route::get('/chat', function ()  {
   return view('chat');
 });
-
-Route::get('/chat/admin/chat_window_admin', 'ChatsController@index');
-Route::get('/chat/user/chat_window_user', 'ChatsController@index');
-Route::get('messages', 'ChatsController@fetchMessages');
-Route::post('messages', 'ChatsController@sendMessage');

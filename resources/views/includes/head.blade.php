@@ -11,5 +11,6 @@
         <link rel="stylesheet" href="/css/dropdown_submenu.css" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/bootstrap_changes.css" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/custom_styles.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/chat_styles.css" crossorigin="anonymous">
     </head>
     <body>

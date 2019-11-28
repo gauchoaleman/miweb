@@ -13,19 +13,15 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
 
                 <div class="card-body">
                     <form method="POST" action="/auth/admin/write_user_data?id={{ $_GET["id"] }}">
-                        @csrf
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$user->name}}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{$user->name}}" required autocomplete="name" autofocus>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+
                             </div>
                         </div>
 
@@ -33,13 +29,9 @@ $user = DB::table('users')->where('id', $_GET['id'])->first();
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$user->email}}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control" name="email" value="{{$user->email}}" required autocomplete="email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+
                             </div>
                         </div>
 
